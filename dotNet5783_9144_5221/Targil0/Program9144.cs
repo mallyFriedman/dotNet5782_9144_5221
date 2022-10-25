@@ -5,8 +5,8 @@ partial class Program
 {
     static void Main(string[] args)
     {
-        welcome9144();
         welcome5221();
+        welcome9144();
         Console.ReadKey();
     }
 
@@ -18,7 +18,4 @@ partial class Program
         Console.Write(name + " welcome to my first console application");
     }
 
-    private static void welcome5221()
-    {
-    }
     }
