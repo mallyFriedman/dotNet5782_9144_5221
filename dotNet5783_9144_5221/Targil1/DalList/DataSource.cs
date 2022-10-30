@@ -31,9 +31,28 @@ public void CreateProductList()
         ProductList[i].Price = productId[price];
     }
 }
-    void pushOrder(Order order){
+    void CreateOrderList(Order order){
+         int[] productId = { 0,1,2,3,4,5,6,7,8,9};
+    string[] productNames = { "NecklacesGold","NecklacesSilver","BraceletsGold","BraceletsSilver",
+       "EarringsGold","EarringsSilver","RingsGold","RingsSilver","WatchGold","WatchSilver"};
+    int[] productInstok = { 0,1 };
+
+    for (int i = 0; i < 10; i++)
+    {
+        OrderList[i] = new Order();
+        // הגרלנו מספר שהוא מיקום במערך השמות
+        int number =(int) rand.NextInt64(productNames.Length);
+        int id =(int) rand.NextInt64(productId.Length);
+        int InStock =(int) rand.NextInt64(productInstok.Length);
+        int price =(int) rand.NextInt64(6000,7000);
+        OrderList[i].ProductName = productNames[number];
+        OrderList[i].ID = productId[id];
+        OrderList[i].InStock = productId[InStock];
+        OrderList[i].Price = productId[price];
+    }
 
            }
     void pushOrderItem(OrderItem orderItem){
+
    }
     }
