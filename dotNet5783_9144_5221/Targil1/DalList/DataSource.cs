@@ -2,8 +2,27 @@
 namespace DO.Dal;
 
 
+
+
+
+
+
+
 public class DataSource
 {
+
+    internal static class Config
+{
+    internal static int IndexArrProduct=0;
+    internal static int IndexArrOrder=0;
+    internal static int IndexArrOrderItem=0;
+
+    private static int ProductId { get=>} =0;
+    private static int OrderId=0;
+    private static int OrderItemId=0 props      
+    
+
+}
  //static int readonly=1;
  const int NumOfProduct = 50; // אפשר לעשות מחלקה של קבועים
     const int NumOfOrder = 50;
