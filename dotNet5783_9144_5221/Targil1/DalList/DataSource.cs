@@ -2,95 +2,111 @@
 namespace DO.Dal;
 
 
-
-
-
-
-
-
 public class DataSource
 {
+    static DataSource()
+    {
+      //  s_Initialize();
+    }
 
     internal static class Config
-{
-    internal static int IndexArrProduct=0;
-    internal static int IndexArrOrder=0;
-    internal static int IndexArrOrderItem=0;
+    {
 
-    private static int ProductId { get=>} =0;
-    private static int OrderId=0;
-    private static int OrderItemId=0 props      
-    
+        internal static int IndexArrProduct = 0;
+        internal static int IndexArrOrder = 0;
+        internal static int IndexArrOrderItem = 0;
 
-}
- //static int readonly=1;
- const int NumOfProduct = 50; // אפשר לעשות מחלקה של קבועים
+        private static int ProductId = 0;
+        private static int OrderId = 0;
+        private static int OrderItemId = 0;
+
+        public static int productId { get => ProductId++; }
+        public static int orderId { get => OrderId++; }
+        public static int orderItemId { get => OrderItemId++; }
+        public static int indexArrProduct { get => IndexArrProduct++; }
+        public static int indexArrOrder { get => IndexArrOrder++; }
+        public static int indexArrOrderItem { get => IndexArrOrderItem++; }
+    }
+    //static int readonly=1;
+    const int NumOfProduct = 50; // אפשר לעשות מחלקה של קבועים
     const int NumOfOrder = 50;
-    Product[] ProductList = new Product[NumOfProduct];
-    static Order[] order;
- static OrderItem[] orderitem;
-Random rand = new Random();
+    const int NumOfOrderItem = 50;
+    public static Product[] ProductList = new Product[NumOfProduct];
+    public static Order[] orderArr = new Order[NumOfOrder];
+    public static OrderItem[] orderitem = new OrderItem[NumOfOrderItem];
+    Random rand = new Random();
     string[] CustomerName = { "a","b","c","d","e","f","k","l","m","n"
                 ,"o","p","q","r","s","t","u","v","x","w"};
-    int[] productId = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
     string[] productNames = { "NecklacesGold","NecklacesSilver","BraceletsGold","BraceletsSilver",
        "EarringsGold","EarringsSilver","RingsGold","RingsSilver","WatchGold","WatchSilver"};
+    int[] productId = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
     TimeSpan t_ShipDate = TimeSpan.FromDays(10);
     TimeSpan t_DeliveryDate = TimeSpan.FromDays(30);
-    public void CreateProductList()
-{
-    for (int i = 0; i < 10; i++)
+    public void s_Initialize()
     {
-        ProductList[i] = new Product();
-        // הגרלנו מספר שהוא מיקום במערך השמות
-        int number =(int) rand.NextInt64(productNames.Length);
-        int id =(int) rand.NextInt64(productId.Length);
-        int InStock =(int) rand.NextInt64(0,50);
-        int price =(int) rand.NextInt64(6000,7000);
-        ProductList[i].ProductName = productNames[number];
-        ProductList[i].ID = productId[id];
-        ProductList[i].InStock = InStock;
-        ProductList[i].Price = productId[price];
+        CreateProductList();
+        CreateOrderList();
+        pushOrderItem();
     }
-}
-    void CreateOrderList(Order order){
-        for (int i = 0; i < 20; i++)
+    public void CreateProductList()
     {
-            order[i] = new Order();
-        // הגרלנו מספר שהוא מיקום במערך השמות
-        int number =(int) rand.NextInt64(CustomerName.Length);
-        int id =(int) rand.NextInt64(0,19);
-        order[i].CustomerName = CustomerName[number];
-        order[i].ID = id;
-        order[i].CustomerEmail = CustomerName[number] + "@gmail.com";
-        order[i].CustomerAdress = CustomerName[number] + "Street";
-        order[i].ShipDate = id;
-        order[i].DeliveryDate = id;
-        order[i].OrderDate = DateTime.MinValue;
-        order[i].ShipDate = (order[i].OrderDate + t_ShipDate);
-        order[i].DeliveryDate = (order[i].ShipDate + t_DeliveryDate);
+        for (int i = 0; i < 10; i++)
+        {
+            Product product = new Product();
+            // הגרלנו מספר שהוא מיקום במערך השמות
+            int number = (int)rand.NextInt64(productNames.Length);
+            int id = (int)rand.NextInt64(productId.Length);
+            int InStock = (int)rand.NextInt64(0, 50);
+            int price = (int)rand.NextInt64(6000, 7000);
+            product.ProductName = productNames[number];
+            product.ID = productId[id];
+            product.InStock = InStock;
+            product.Price = productId[price];
+            ProductList[Config.indexArrProduct] = product;
         }
-
-}
-    void pushOrderItem(OrderItem orderItem){
+    }
+    public void CreateOrderList()
+    {
         for (int i = 0; i < 20; i++)
         {
-            orderItem[i] = new OrderItem();
-            int orderId = order[i].ID;
-            int min =(int) rand.NextInt64(1,4);
+            Order orderi = new Order();
+            // הגרלנו מספר שהוא מיקום במערך השמות
+            int number = (int)rand.NextInt64(CustomerName.Length);
+            int id = (int)rand.NextInt64(0, 19);
+            orderi.CustomerName = CustomerName[number];
+            orderi.ID = id;
+            orderi.CustomerEmail = CustomerName[number] + "@gmail.com";
+            orderi.CustomerAdress = CustomerName[number] + "Street";
+            orderi.OrderDate = DateTime.MinValue;
+            orderi.ShipDate = (orderArr[i].OrderDate + t_ShipDate);
+            orderi.DeliveryDate = (orderArr[i].ShipDate + t_DeliveryDate);
+            orderArr[Config.indexArrOrder] = orderi;
+        }
+
+    }
+    public void pushOrderItem()
+    {
+        for (int i = 0; i < 20; i++)
+        {
+            OrderItem orderItemi = new OrderItem();
+            int orderId = orderArr[i].ID;
+            int min = (int)rand.NextInt64(1, 4);
             for (int j = 0; j < min; j++)
             {
                 int numberPoduct = (int)rand.NextInt64(0, ProductList.Length);
                 int amount = (int)rand.NextInt64(0, ProductList[numberPoduct].InStock);
-                orderItem[i].OrderID = orderId;
-                orderItem[i].ProductID = ProductList[numberPoduct].ID;
-                orderItem[i].Price = ProductList[numberPoduct].Price;
-                orderItem[i].Amount = amount;
+                orderItemi.OrderID = orderId;
+                orderItemi.ProductID = ProductList[numberPoduct].ID;
+                orderItemi.Price = ProductList[numberPoduct].Price;
+                orderItemi.Amount = amount;
                 ProductList[numberPoduct].InStock = ProductList[numberPoduct].InStock - amount;
             }
         }
     }
-    private s_Initialize() { }
+  
+
+
+
 }
 /*לעשות בדיקה שלא יוצא יותר מבן אדם אחד עם אותו איידי
 /* string[] CustomerEmail = { "a@gmail.com","b@gmail.com","c@gmail.com","d@gmail.com","e@gmail.com"
