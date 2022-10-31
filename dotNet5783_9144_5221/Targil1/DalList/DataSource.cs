@@ -1,12 +1,12 @@
-﻿
-namespace DO.Dal;
+﻿using DO;
+namespace Dal;
 
 
-public class DataSource
+public static class DataSource
 {
     static DataSource()
     {
-       // s_Initialize();
+        s_Initialize();
     }
 
     internal static class Config
@@ -27,35 +27,33 @@ public class DataSource
         public static int indexArrOrder { get => IndexArrOrder++; }
         public static int indexArrOrderItem { get => IndexArrOrderItem++; }
     }
-    //static int readonly=1;
     const int NumOfProduct = 50; // אפשר לעשות מחלקה של קבועים
     const int NumOfOrder = 50;
     const int NumOfOrderItem = 50;
     public static Product[] ProductList = new Product[NumOfProduct];
     public static Order[] orderArr = new Order[NumOfOrder];
     public static OrderItem[] orderitem = new OrderItem[NumOfOrderItem];
-    Random rand = new Random();
-    string[] CustomerName = { "a","b","c","d","e","f","k","l","m","n"
+    static readonly Random rand = new Random();
+    static string[] CustomerName = { "a","b","c","d","e","f","k","l","m","n"
                 ,"o","p","q","r","s","t","u","v","x","w"};
-    string[] productNames = { "NecklacesGold","NecklacesSilver","BraceletsGold","BraceletsSilver",
+    static string[] productNames = { "NecklacesGold","NecklacesSilver","BraceletsGold","BraceletsSilver",
        "EarringsGold","EarringsSilver","RingsGold","RingsSilver","WatchGold","WatchSilver"};
-    int[] productId = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
-    TimeSpan t_ShipDate = TimeSpan.FromDays(10);
-    TimeSpan t_DeliveryDate = TimeSpan.FromDays(30);
-    public void s_Initialize()
+    static int[] productId = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+
+    static public void s_Initialize()
     {
         CreateProductList();
         CreateOrderList();
         pushOrderItem();
     }
-    public void CreateProductList()
+    static public void CreateProductList()
     {
         for (int i = 0; i < 10; i++)
         {
             Product product = new Product();
             // הגרלנו מספר שהוא מיקום במערך השמות
             int number = (int)rand.NextInt64(productNames.Length);
-            int id = (int)rand.NextInt64(productId.Length);
+            int id = Config.productId;
             int InStock = (int)rand.NextInt64(0, 50);
             int price = (int)rand.NextInt64(6000, 7000);
             product.ProductName = productNames[number];
@@ -65,14 +63,16 @@ public class DataSource
             ProductList[Config.indexArrProduct] = product;
         }
     }
-    public void CreateOrderList()
+    static public void CreateOrderList()
     {
+        TimeSpan t_ShipDate = TimeSpan.FromDays(10);
+        TimeSpan t_DeliveryDate = TimeSpan.FromDays(30);
         for (int i = 0; i < 20; i++)
         {
             Order orderi = new Order();
             // הגרלנו מספר שהוא מיקום במערך השמות
             int number = (int)rand.NextInt64(CustomerName.Length);
-            int id = (int)rand.NextInt64(0, 19);
+            int id = Config.orderId;
             orderi.CustomerName = CustomerName[number];
             orderi.ID = id;
             orderi.CustomerEmail = CustomerName[number] + "@gmail.com";
@@ -84,8 +84,9 @@ public class DataSource
         }
 
     }
-    public void pushOrderItem()
+    static public void pushOrderItem()
     {
+     
         for (int i = 0; i < 20; i++)
         {
             OrderItem orderItemi = new OrderItem();
@@ -93,8 +94,10 @@ public class DataSource
             int min = (int)rand.NextInt64(1, 4);
             for (int j = 0; j < min; j++)
             {
+                int id = Config.orderItemId;
                 int numberPoduct = (int)rand.NextInt64(0, ProductList.Length);
                 int amount = (int)rand.NextInt64(0, ProductList[numberPoduct].InStock);
+                orderItemi.ID = id;
                 orderItemi.OrderID = orderId;
                 orderItemi.ProductID = ProductList[numberPoduct].ID;
                 orderItemi.Price = ProductList[numberPoduct].Price;
