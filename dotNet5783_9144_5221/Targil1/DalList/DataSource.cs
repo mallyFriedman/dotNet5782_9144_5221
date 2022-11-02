@@ -1,5 +1,6 @@
 ﻿using DO;
-namespace Dal;
+using DalList;
+namespace DalList;
 
 
 public static class DataSource
