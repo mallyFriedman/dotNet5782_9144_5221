@@ -1,7 +1,7 @@
 ﻿
 using System;
 using System.Collections.Generic;
-using DO;
+using DalFacade;
 using DalList;
 namespace DalList;
 
@@ -16,11 +16,11 @@ public static class DalOrderItem
         return obj.ID;
     }
 
-    public static void Delete(OrderItem obj)
+    public static void Delete(int id)
     {
         for (int i = 0; i < DataSource.orderitem.Length; i++)
         {
-            if (DataSource.orderitem[i].ID == obj.ID)
+            if (DataSource.orderitem[i].ID == id)
             {
                 int index = DataSource.orderitem.Length;
                 DataSource.orderitem[i] = DataSource.orderitem[index];
@@ -31,20 +31,26 @@ public static class DalOrderItem
         }
         return;
     }
-    public static OrderItem Read(int id)
+    public static OrderItem[] Read(int id)
     {
+        OrderItem[] arr = new OrderItem[4];
+        int num = 0;
         for (int i = 0; i < (DataSource.Config.IndexArrOrderItem); i++)
         {
-            if (id == DataSource.orderitem[i].ID)
+            if (id == DataSource.orderitem[i].OrderID)
             {
-                return DataSource.orderitem[i];
+                arr[num] = DataSource.orderitem[i];
+                num++;
             }
         }
-        throw new Exception("baddddddd");
+        if (num!=0) return arr;
+        throw new Exception ("no items in this order...")
+
     }
 
     public static OrderItem[] Read()
     {
+
         return DataSource.orderitem;
     }
 

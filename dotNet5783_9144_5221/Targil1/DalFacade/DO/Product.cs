@@ -1,6 +1,6 @@
-﻿
+﻿using DalFacade;
 
-namespace Dal;
+namespace DalFacade;
 
     public struct Product
 {

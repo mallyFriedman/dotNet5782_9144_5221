@@ -1,6 +1,6 @@
 ﻿
 using System;
-using DO;
+using DalFacade;
 using DalList;
 namespace DalList;
 
@@ -12,11 +12,11 @@ public static class DalOrder
         return obj.ID;
     }
 
-    public static void Delete(Order obj)
+    public static void Delete(int id)
     {
         for (int i = 0; i < DataSource.orderArr.Length; i++)
         {
-            if (DataSource.orderArr[i].ID == obj.ID)
+            if (DataSource.orderArr[i].ID == id)
             {
                 int index = DataSource.orderArr.Length;
                 DataSource.orderArr[i] = DataSource.orderArr[index];

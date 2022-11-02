@@ -1,6 +1,6 @@
-﻿
+﻿using DalFacade;
 
-namespace DO;
+namespace DalFacade;
     public struct OrderItem
     {
     public int ID { get; set; }

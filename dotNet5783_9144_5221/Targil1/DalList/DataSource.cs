@@ -1,4 +1,4 @@
-﻿using DO;
+﻿using DalFacade;
 using DalList;
 namespace DalList;
 
@@ -10,7 +10,7 @@ public static class DataSource
         s_Initialize();
     }
 
-    internal static class Config
+    public static class Config
     {
 
         internal static int IndexArrProduct = 0;

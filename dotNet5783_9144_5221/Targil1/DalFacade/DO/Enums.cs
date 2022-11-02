@@ -1,6 +1,6 @@
-﻿
+﻿using DalFacade;
 
-namespace Dal.DO;
+namespace DalFacade;
     public struct Enums
     {
     public enum eCategory

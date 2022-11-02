@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using DO;
+using DalFacade;
 using DalList;
 namespace DalList;
 
@@ -12,11 +12,11 @@ public static class DalProduct
         return obj.ID;
     }
 
-    public static void Delete(Product obj)
+    public static void Delete(int id)
     {
         for (int i = 0; i < DataSource.ProductList.Length; i++)
         {
-            if (DataSource.ProductList[i].ID== obj.ID)
+            if (DataSource.ProductList[i].ID== id)
             {
                 int index = DataSource.ProductList.Length;
                 DataSource.ProductList[i] = DataSource.ProductList[index];
