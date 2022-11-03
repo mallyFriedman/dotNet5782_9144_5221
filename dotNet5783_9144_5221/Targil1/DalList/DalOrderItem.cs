@@ -31,6 +31,19 @@ public static class DalOrderItem
         }
         return;
     }
+    public static OrderItem find(int id)
+    {
+        OrderItem a = new OrderItem();
+        for (int i = 0; i < DataSource.orderitem.Length; i++)
+        {
+            if (DataSource.orderitem[i].ID == id)
+            {
+                a= DataSource.orderitem[i];
+                break;
+            }
+        }
+        return a;
+    }
     public static OrderItem[] Read(int id)
     {
         OrderItem[] arr = new OrderItem[4];
@@ -44,7 +57,7 @@ public static class DalOrderItem
             }
         }
         if (num!=0) return arr;
-        throw new Exception ("no items in this order...")
+        throw new Exception("no items in this order...");
 
     }
 

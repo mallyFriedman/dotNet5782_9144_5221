@@ -17,16 +17,16 @@ public static class DataSource
         internal static int IndexArrOrder = 0;
         internal static int IndexArrOrderItem = 0;
 
-        private static int ProductId = 0;
-        private static int OrderId = 0;
-        private static int OrderItemId = 0;
+        private static int ProductId = 10;
+        private static int OrderId = 10;
+        private static int OrderItemId = 10;
 
-        public static int productId { get => ProductId++; }
-        public static int orderId { get => OrderId++; }
-        public static int orderItemId { get => OrderItemId++; }
-        public static int indexArrProduct { get => IndexArrProduct++; }
-        public static int indexArrOrder { get => IndexArrOrder++; }
-        public static int indexArrOrderItem { get => IndexArrOrderItem++; }
+        public static int productId { get { return ProductId++;  } }
+        public static int orderId { get { return OrderId++; } }
+        public static int orderItemId { get { return OrderItemId++; } }
+        public static int indexArrProduct { get { return IndexArrProduct++; } }
+        public static int indexArrOrder { get { return IndexArrOrder++; } }
+        public static int indexArrOrderItem { get { return IndexArrOrderItem++; } }
     }
     const int NumOfProduct = 50; // אפשר לעשות מחלקה של קבועים
     const int NumOfOrder = 50;
@@ -43,7 +43,7 @@ public static class DataSource
 
     static public void s_Initialize()
     {
-        CreateProductList();
+        //CreateProductList();
         CreateOrderList();
         pushOrderItem();
     }
@@ -54,7 +54,8 @@ public static class DataSource
             Product product = new Product();
             // הגרלנו מספר שהוא מיקום במערך השמות
             int number = (int)rand.NextInt64(productNames.Length);
-            int id = Config.productId;
+            //int id = Config.productId;
+            int id = 2;
             int InStock = (int)rand.NextInt64(0, 50);
             int price = (int)rand.NextInt64(6000, 7000);
             product.ProductName = productNames[number];
