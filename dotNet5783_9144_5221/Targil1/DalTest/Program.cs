@@ -11,10 +11,10 @@ public class Program
     //OrderItem ordrI=new OrderItem();
     public static void Main()
     {
-        Console.Write("enter 0 for exit," +
-            "1 for product" +
-            "2 for order" +
-            "3 for orderItem");
+        Console.Write("enter 0 for exit, " +
+            "1 for product, " +
+            "2 for order, " +
+            "3 for orderItem. ");
         Console.Write("Enter your choice:");
         int choice = Convert.ToInt32(Console.ReadLine());
         while (choice != 0)
@@ -296,10 +296,10 @@ public class Program
 
     public static void options()
     {
-        Console.Write("enter 0 for add," +
-                          "1 for readId" +
-                          "2 for read" +
-                          "3 for update" +
-                          "4 for delete");
+        Console.Write("enter 0 for add, " +
+                          "1 for readId, " +
+                          "2 for read, " +
+                          "3 for update, " +
+                          "4 for delete : ");
     }
 }
