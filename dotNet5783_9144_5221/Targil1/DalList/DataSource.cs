@@ -2,8 +2,9 @@
 namespace DalList;
 
 
-public static class DataSource
+public  class DataSource
 {
+
     static DataSource()
     {
         s_Initialize();
@@ -20,12 +21,12 @@ public static class DataSource
         private static int OrderId = 0;
         private static int OrderItemId = 0;
 
-        public static int productId { get { return ProductId++;  } set { ProductId = ProductId++; } }
-        public static int orderId { get { return OrderId++; } set { OrderId = OrderId++; } }
-        public static int orderItemId { get { return OrderItemId++; } set { OrderItemId = OrderItemId++; } }
-        public static int indexArrProduct { get { return IndexArrProduct++; } set { IndexArrProduct = IndexArrProduct++; } }
-        public static int indexArrOrder { get { return IndexArrOrder++; } set { IndexArrOrder=IndexArrOrder++; } }
-        public static int indexArrOrderItem { get { return IndexArrOrderItem++; } set { IndexArrOrderItem = IndexArrOrderItem++; } }
+        public static int productId { get { return ++ProductId;  } set { ProductId = ++ProductId; } }
+        public static int orderId { get { return ++OrderId; } set { OrderId = ++OrderId; } }
+        public static int orderItemId { get { return ++OrderItemId; } set { OrderItemId = ++OrderItemId; } }
+        public static int indexArrProduct { get { return ++IndexArrProduct; } set { IndexArrProduct = ++IndexArrProduct; } }
+        public static int indexArrOrder { get { return ++IndexArrOrder; } set { IndexArrOrder= ++IndexArrOrder; } }
+        public static int indexArrOrderItem { get { return ++IndexArrOrderItem; } set { IndexArrOrderItem = ++IndexArrOrderItem; } }
     }
     const int NumOfProduct = 50; // אפשר לעשות מחלקה של קבועים
     const int NumOfOrder = 50;
@@ -38,11 +39,10 @@ public static class DataSource
                 ,"o","p","q","r","s","t","u","v","x","w"};
     static string[] productNames = { "NecklacesGold","NecklacesSilver","BraceletsGold","BraceletsSilver",
        "EarringsGold","EarringsSilver","RingsGold","RingsSilver","WatchGold","WatchSilver"};
-    static int[] productId = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
 
     static public void s_Initialize()
     {
-        //CreateProductList();
+        CreateProductList();
         CreateOrderList();
         pushOrderItem();
     }
@@ -53,14 +53,14 @@ public static class DataSource
             Product product = new Product();
             // הגרלנו מספר שהוא מיקום במערך השמות
             int number = (int)rand.NextInt64(productNames.Length);
-            //int id = Config.productId;
-            int id = 2;
+            int id = Config.productId;
+            //int id = 2;
             int InStock = (int)rand.NextInt64(0, 50);
             int price = (int)rand.NextInt64(6000, 7000);
             product.ProductName = productNames[number];
-            product.ID = productId[id];
+            product.ID = id;
             product.InStock = InStock;
-            product.Price = productId[price];
+            product.Price = price;
             ProductList[Config.indexArrProduct] = product;
         }
     }
@@ -87,24 +87,27 @@ public static class DataSource
     }
     static public void pushOrderItem()
     {
-     
         for (int i = 0; i < 20; i++)
         {
             OrderItem orderItemi = new OrderItem();
             int orderId = orderArr[i].ID;
             int min = (int)rand.NextInt64(1, 4);
+           
             for (int j = 0; j < min; j++)
             {
                 int id = Config.orderItemId;
-                int numberPoduct = (int)rand.NextInt64(0, ProductList.Length);
-                int amount = (int)rand.NextInt64(0, ProductList[numberPoduct].InStock);
+                int numberPoduct = (int)rand.NextInt64(0, Config.IndexArrProduct);
+                int amount = (int)rand.NextInt64(0,ProductList[numberPoduct].InStock);
                 orderItemi.ID = id;
                 orderItemi.OrderID = orderId;
                 orderItemi.ProductID = ProductList[numberPoduct].ID;
                 orderItemi.Price = ProductList[numberPoduct].Price;
-                orderItemi.Amount = amount;
+                orderItemi.Amount = amount+1;
                 ProductList[numberPoduct].InStock = ProductList[numberPoduct].InStock - amount;
+                orderitem[Config.indexArrOrderItem] = orderItemi;
+                ///////////////update the source ????????????
             }
+
         }
     }
   

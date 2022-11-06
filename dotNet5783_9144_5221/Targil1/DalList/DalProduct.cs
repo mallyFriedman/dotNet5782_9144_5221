@@ -14,11 +14,11 @@ public static class DalProduct
 
     public static void Delete(int id)
     {
-        for (int i = 0; i < DataSource.ProductList.Length; i++)
+        for (int i = 0; i < DataSource.Config.IndexArrProduct; i++)
         {
             if (DataSource.ProductList[i].ID== id)
             {
-                int index = DataSource.ProductList.Length;
+                int index = DataSource.Config.IndexArrProduct;
                 DataSource.ProductList[i] = DataSource.ProductList[index];
                 DataSource.ProductList[index].ID = 0;
                 DataSource.Config.IndexArrProduct = (DataSource.Config.IndexArrProduct - 1);

@@ -4,6 +4,7 @@ using DalList;
 namespace Dal;
 public class Program
 {
+    DataSource ds = new DataSource();
     enum Options { exit, product, order, orderItem };
     enum InnerOptions { add,  readId, read, update, delete };
     //private Product obj=new Product();
@@ -19,7 +20,6 @@ public class Program
         int choice = Convert.ToInt32(Console.ReadLine());
         while (choice != 0)
         {
-
             try
             {
                 switch ((Options)choice)
@@ -34,6 +34,7 @@ public class Program
                         switchOrderItem();
                         break;
                     default:
+                        Console.Write("Worng choice! ");
                         break;
                 }
             }
@@ -41,6 +42,7 @@ public class Program
             {
                 Console.WriteLine(ex);
             }
+            Console.Write("Enter your choice: ");
             choice = Convert.ToInt32(Console.ReadLine());
         }
     }
@@ -53,69 +55,72 @@ public class Program
         switch ((InnerOptions)choice)
         {
             case InnerOptions.add:
-                Console.Write("Enter");
                 obj = new Product();
-                Console.Write("Enter the product name:");
+                Console.Write("Enter the product name: ");
                 obj.ProductName = Console.ReadLine();
-                Console.Write("Enter the product price:");
+                Console.Write("Enter the product price: ");
                 obj.Price = Convert.ToInt32(Console.ReadLine());
-                Console.Write("Enter the products number in stock:");
+                Console.Write("Enter the products number in stock: ");
                 obj.InStock = Convert.ToInt32(Console.ReadLine());
                 obj.ID = DataSource.Config.productId;
                 DalProduct.Create(obj);
                 break;
             case InnerOptions.readId:
-                Console.Write("Enter the id");
+                Console.Write("Enter the id: ");
                 id = Convert.ToInt32(Console.ReadLine());
-                DalProduct.Read(id);
+                Console.WriteLine(DalProduct.Read(id));
                 break;
             case InnerOptions.read:
-                DalProduct.Read();
+                Product[] orders = DalProduct.Read();
+                foreach (Product item in orders) if (item.ID > 0)
+                    {
+                        Console.WriteLine(item);
+                    }
                 break;
             case InnerOptions.update:
-                Console.Write("Enter id:");
+                Console.Write("Enter id: ");
                 id = Convert.ToInt32(Console.ReadLine());
                 Product a = DalProduct.Read(id);
                 if (a.ProductName == null) throw new Exception("no product found");
                 Console.WriteLine(a);
                 obj = new Product();
-                Console.Write("Enter the product name:");
+                Console.Write("Enter the product name: ");
                 string mishtane = Console.ReadLine();
                 if (string.IsNullOrEmpty(mishtane))
                 {
-                    obj.ProductName = mishtane;
+                    obj.ProductName = a.ProductName;
                 }
                 else
                 {
-                    obj.ProductName = a.ProductName;
+                    obj.ProductName = mishtane;
                 }
                 Console.WriteLine(a);
                 
-                Console.Write("Enter the product price:");
+                Console.Write("Enter the product price: ");
                 mishtane = Console.ReadLine();
                 if (string.IsNullOrEmpty(mishtane))
-                {
-                    obj.Price = Convert.ToInt32(mishtane);
-                }
-                else
                 {
                     obj.Price = a.Price;
                 }
-                Console.Write("Enter the products number in stock:");
+                else
+                {
+                    obj.Price =Convert.ToInt32(mishtane);
+                }
+                Console.Write("Enter the products number in stock: ");
                 mishtane = Console.ReadLine();
                 if (string.IsNullOrEmpty(mishtane))
                 {
-                    obj.InStock = Convert.ToInt32(mishtane);
+                    obj.InStock = a.InStock;
                 }
                 else
                 {
-                    obj.InStock = a.InStock;
+                    obj.InStock =   Convert.ToInt32(mishtane);
                 }
                 obj.ID = id;
                 DalProduct.Update(obj);
                 break;
             case InnerOptions.delete:
-                Console.Write("Enter id:");
+                Console.Write("Enter id: ");
                 id = Convert.ToInt32(Console.ReadLine());
                 if (DalProduct.Read(id).ProductName == null) throw new Exception("no product found");
                 DalProduct.Delete(id);
@@ -131,13 +136,12 @@ public class Program
         switch ((InnerOptions)choice)
         {
             case InnerOptions.add:
-
                 ord = new Order();
-                Console.Write("Enter the name:");
+                Console.Write("Enter the name: ");
                 ord.CustomerName = Console.ReadLine();
-                Console.Write("Enter the email:");
+                Console.Write("Enter the email: ");
                 ord.CustomerEmail = Console.ReadLine();
-                Console.Write("Enter the adress");
+                Console.Write("Enter the adress: ");
                 ord.CustomerAdress = Console.ReadLine();
                 ord.OrderDate = DateTime.Now;
                 ord.ShipDate = DateTime.MinValue;
@@ -146,7 +150,7 @@ public class Program
                 DalOrder.Create(ord);
                 break;
             case InnerOptions.readId:
-                Console.Write("Enter the id");
+                Console.Write("Enter the id: ");
                 id = Convert.ToInt32(Console.ReadLine());
                 Console.WriteLine(DalOrder.Read(id));
                 break;
@@ -158,13 +162,13 @@ public class Program
                 }
                 break;
             case InnerOptions.update:
-                Console.Write("Enter id:");
+                Console.Write("Enter id: ");
                 id = Convert.ToInt32(Console.ReadLine());
                 Order a = DalOrder.Read(id);
                 if (a.CustomerEmail == null) throw new Exception("no product found");
                 Console.WriteLine(a);
                 ord = new Order();
-                Console.Write("Enter the your name:");
+                Console.Write("Enter the your name: ");
                 string mishtane = Console.ReadLine();
                 if (string.IsNullOrEmpty(mishtane))
                 {
@@ -174,7 +178,7 @@ public class Program
                 {
                     ord.CustomerName = mishtane;
                 }
-                Console.Write("Enter the your email:");
+                Console.Write("Enter the your email: ");
                 mishtane = Console.ReadLine();
                 if (string.IsNullOrEmpty(mishtane))
                 {
@@ -201,9 +205,9 @@ public class Program
                 DalOrder.Update(ord);
                 break;
             case InnerOptions.delete:
-                Console.Write("Enter id:");
+                Console.Write("Enter id: ");
                 id = Convert.ToInt32(Console.ReadLine());
-                if (DalOrder.Read(id).CustomerEmail == null) throw new Exception("no product found");
+               // if (DalOrder.Read(id).CustomerEmail == null) throw new Exception("no product found");
                 DalOrder.Delete(id);
                 break;
         }
@@ -220,80 +224,79 @@ public class Program
             case InnerOptions.add:
                 ordrI = new OrderItem();
                 ordrI.ID = DataSource.Config.orderItemId;
-                Console.Write("Enter the order id");
+                Console.Write("Enter the order id: ");
                 ordrI.OrderID = Convert.ToInt32(Console.ReadLine());
-                Console.Write("Enter the product id");
+                Console.Write("Enter the product id: ");
                 ordrI.ProductID = Convert.ToInt32(Console.ReadLine());
-                Console.Write("Enter the price");
+                Console.Write("Enter the price: ");
                 ordrI.Price = Convert.ToInt32(Console.ReadLine());
                 DalOrderItem.Create(ordrI);
                 break;
             case InnerOptions.readId:
-                Console.Write("Enter the id");
+                Console.Write("Enter the id: ");
+
                 id = Convert.ToInt32(Console.ReadLine());
-                DalOrderItem.Read(id);
+                OrderItem[] items = DalOrderItem.Read(id);
+                foreach (OrderItem item in items) if (item.ID > 0)
+                    {
+                        Console.WriteLine(item);
+                    }
                 break;
             case InnerOptions.read:
-                DalOrderItem.Read();
+                OrderItem[] orders = DalOrderItem.Read();
+                foreach (OrderItem item in orders) if (item.ID > 0)
+                    {
+                        Console.WriteLine(item);
+                    }
                 break;
             case InnerOptions.update:
                 ordrI = new OrderItem();
-                Console.Write("Enter id:");
+                Console.Write("Enter id: ");
                 id = Convert.ToInt32(Console.ReadLine());
                 OrderItem a = new OrderItem();
                 a=DalOrderItem.find(id);
-                if (a.ID != null) throw new Exception("no product found");
+                if (a.ID == 0) throw new Exception("no product found");
                     Console.Write(a);
-                Console.Write("Enter order id");
+                Console.Write("Enter order id: ");
                 string mishtane= Console.ReadLine();
                 if (string.IsNullOrEmpty(mishtane))
                 {
-                    ordrI.OrderID = Convert.ToInt32(mishtane);
-                }
-                else
-                {
                     ordrI.OrderID = a.OrderID;
                 }
-                Console.Write("Enter the product id");
+                else
+                {
+                    ordrI.OrderID = Convert.ToInt32(mishtane) ;
+                }
+                Console.Write("Enter the product id: ");
                 mishtane = Console.ReadLine();
                 if (string.IsNullOrEmpty(mishtane))
-                {
-                    ordrI.ProductID = Convert.ToInt32(mishtane);
-                }
-                else
                 {
                     ordrI.ProductID = a.ProductID;
                 }
-                Console.Write("Enter the price");
+                else
+                {
+                    ordrI.ProductID = Convert.ToInt32(mishtane);
+                }
+                Console.Write("Enter the price: ");
                 mishtane = Console.ReadLine();
                 if (string.IsNullOrEmpty(mishtane))
                 {
-                    ordrI.Price = Convert.ToInt32(mishtane);
+                    ordrI.Price = a.Price;
                 }
                 else
                 {
-                    ordrI.Price = a.Price;
+                    ordrI.Price = Convert.ToInt32(mishtane);
                 }
+                ordrI.ID = a.ID;
                 DalOrderItem.Update(ordrI);
                 break;
             case InnerOptions.delete:
                 Console.Write("Enter order id:");
                 id = Convert.ToInt32(Console.ReadLine());
-                OrderItem[] arr = DalOrderItem.Read(id);
-                if (arr.Length != null) throw new Exception("no product found");
-                Console.Write("Enter product id:");
-                int prodId = Convert.ToInt32(Console.ReadLine());
-                bool flag = false;
-                for (int i = 0; i < arr.Length; i++)
-                {
-                    if (arr[i].ProductID == prodId)
-                    {
-                        flag = true;
-                        DalOrderItem.Delete(arr[i].ID);
-                        break;
-                    }
-                }
-                if (!flag) Console.Write("item does not exist in this order");
+                OrderItem ab = new OrderItem();
+                ab = DalOrderItem.find(id);
+                if (ab.ID==0) throw new Exception("no product found");
+                DalOrderItem.Delete(ab.ID);
                 break;
         }
     }

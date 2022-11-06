@@ -18,11 +18,11 @@ public static class DalOrderItem
 
     public static void Delete(int id)
     {
-        for (int i = 0; i < DataSource.orderitem.Length; i++)
+        for (int i = 0; i < DataSource.Config.IndexArrOrderItem; i++)
         {
             if (DataSource.orderitem[i].ID == id)
             {
-                int index = DataSource.orderitem.Length;
+                int index = DataSource.Config.IndexArrOrderItem;
                 DataSource.orderitem[i] = DataSource.orderitem[index];
                 DataSource.orderitem[index].ID = 0;
                 DataSource.Config.IndexArrOrderItem = (DataSource.Config.IndexArrOrderItem - 1);
@@ -34,7 +34,7 @@ public static class DalOrderItem
     public static OrderItem find(int id)
     {
         OrderItem a = new OrderItem();
-        for (int i = 0; i < DataSource.orderitem.Length; i++)
+        for (int i = 0; i < DataSource.Config.IndexArrOrderItem; i++)
         {
             if (DataSource.orderitem[i].ID == id)
             {
