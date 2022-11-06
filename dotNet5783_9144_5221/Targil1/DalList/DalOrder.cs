@@ -1,7 +1,4 @@
-﻿
-using System;
-using DalFacade;
-using DalList;
+﻿using DalFacade;
 namespace DalList;
 
 public static class DalOrder
@@ -18,7 +15,7 @@ public static class DalOrder
         {
             if (DataSource.orderArr[i].ID == id)
             {
-                int index = DataSource.orderArr.Length;
+                int index = DataSource.Config.IndexArrOrder;
                 DataSource.orderArr[i] = DataSource.orderArr[index];
                 DataSource.orderArr[index].ID = 0;
                 DataSource.Config.IndexArrOrder = (DataSource.Config.IndexArrOrder - 1);
@@ -29,7 +26,7 @@ public static class DalOrder
     }
     public static Order Read(int id)
     {
-        for (int i = 0; i < (DataSource.Config.IndexArrOrder); i++)
+        for (int i = 0; i < ((DataSource.Config.IndexArrOrder)); i++)
         {
             if (id == DataSource.orderArr[i].ID)
             {

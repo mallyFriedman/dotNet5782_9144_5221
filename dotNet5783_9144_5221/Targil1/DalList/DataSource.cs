@@ -1,5 +1,4 @@
 ﻿using DalFacade;
-using DalList;
 namespace DalList;
 
 
@@ -17,16 +16,16 @@ public static class DataSource
         internal static int IndexArrOrder = 0;
         internal static int IndexArrOrderItem = 0;
 
-        private static int ProductId = 10;
-        private static int OrderId = 10;
-        private static int OrderItemId = 10;
+        private static int ProductId = 0;
+        private static int OrderId = 0;
+        private static int OrderItemId = 0;
 
-        public static int productId { get { return ProductId++;  } }
-        public static int orderId { get { return OrderId++; } }
-        public static int orderItemId { get { return OrderItemId++; } }
-        public static int indexArrProduct { get { return IndexArrProduct++; } }
-        public static int indexArrOrder { get { return IndexArrOrder++; } }
-        public static int indexArrOrderItem { get { return IndexArrOrderItem++; } }
+        public static int productId { get { return ProductId++;  } set { ProductId = ProductId++; } }
+        public static int orderId { get { return OrderId++; } set { OrderId = OrderId++; } }
+        public static int orderItemId { get { return OrderItemId++; } set { OrderItemId = OrderItemId++; } }
+        public static int indexArrProduct { get { return IndexArrProduct++; } set { IndexArrProduct = IndexArrProduct++; } }
+        public static int indexArrOrder { get { return IndexArrOrder++; } set { IndexArrOrder=IndexArrOrder++; } }
+        public static int indexArrOrderItem { get { return IndexArrOrderItem++; } set { IndexArrOrderItem = IndexArrOrderItem++; } }
     }
     const int NumOfProduct = 50; // אפשר לעשות מחלקה של קבועים
     const int NumOfOrder = 50;
