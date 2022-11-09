@@ -1,41 +1,38 @@
-﻿using DalFacade;
-namespace DalList;
+﻿using DO;
+namespace Dal;
 
 
-public  class DataSource
+public static class DataSource ///internal ???????????
 {
-
     static DataSource()
     {
         s_Initialize();
     }
-
-    public static class Config
+    public static class Config  ///internal ???????????
     {
+        internal static int _indexArrProduct = 0;
+        internal static int _indexArrOrder = 0;
+        internal static int _indexArrOrderItem = 0;
 
-        internal static int IndexArrProduct = 0;
-        internal static int IndexArrOrder = 0;
-        internal static int IndexArrOrderItem = 0;
+        private static int _productId = 100000;
+        private static int _orderId = 100000;
+        private static int _orderItemId = 100000;
 
-        private static int ProductId = 0;
-        private static int OrderId = 0;
-        private static int OrderItemId = 0;
-
-        public static int productId { get { return ++ProductId;  } set { ProductId = ++ProductId; } }
-        public static int orderId { get { return ++OrderId; } set { OrderId = ++OrderId; } }
-        public static int orderItemId { get { return ++OrderItemId; } set { OrderItemId = ++OrderItemId; } }
-        public static int indexArrProduct { get { return ++IndexArrProduct; } set { IndexArrProduct = ++IndexArrProduct; } }
-        public static int indexArrOrder { get { return ++IndexArrOrder; } set { IndexArrOrder= ++IndexArrOrder; } }
-        public static int indexArrOrderItem { get { return ++IndexArrOrderItem; } set { IndexArrOrderItem = ++IndexArrOrderItem; } }
+        public static int ProductId { get { return ++_productId;  }  }
+        public static int OrderId { get { return ++_orderId; }  }
+        public static int OrderItemId { get { return ++_orderItemId; }  }
+        public static int IndexArrProduct { get { return ++_indexArrProduct; } set { _indexArrProduct = ++_indexArrProduct; } }
+        public static int IndexArrOrder { get { return ++_indexArrOrder; } set { _indexArrOrder = ++_indexArrOrder; } }
+        public static int IndexArrOrderItem { get { return ++_indexArrOrderItem; } set { _indexArrOrderItem = ++_indexArrOrderItem; } }
     }
     const int NumOfProduct = 50; // אפשר לעשות מחלקה של קבועים
-    const int NumOfOrder = 50;
-    const int NumOfOrderItem = 50;
-    public static Product[] ProductList = new Product[NumOfProduct];
-    public static Order[] orderArr = new Order[NumOfOrder];
-    public static OrderItem[] orderitem = new OrderItem[NumOfOrderItem];
-    static readonly Random rand = new Random();
-    static string[] CustomerName = { "a","b","c","d","e","f","k","l","m","n"
+    const int NumOfOrder = 100;
+    const int NumOfOrderItem = 200;
+    public static Product[] ProductList = new Product[NumOfProduct]; ///internal ???????????
+    public static Order[] OrderArr = new Order[NumOfOrder];             ///internal ???????????
+    public static OrderItem[] OrderItems = new OrderItem[NumOfOrderItem]; ///internal ???????????
+    static readonly Random rand = new Random();              //internal ???????????
+    static string[] customerName = { "a","b","c","d","e","f","k","l","m","n"
                 ,"o","p","q","r","s","t","u","v","x","w"};
     static string[] productNames = { "NecklacesGold","NecklacesSilver","BraceletsGold","BraceletsSilver",
        "EarringsGold","EarringsSilver","RingsGold","RingsSilver","WatchGold","WatchSilver"};
@@ -44,24 +41,24 @@ public  class DataSource
     {
         CreateProductList();
         CreateOrderList();
-        pushOrderItem();
+        PushOrderItem();
     }
     static public void CreateProductList()
     {
         for (int i = 0; i < 10; i++)
         {
             Product product = new Product();
-            // הגרלנו מספר שהוא מיקום במערך השמות
             int number = (int)rand.NextInt64(productNames.Length);
-            int id = Config.productId;
-            //int id = 2;
-            int InStock = (int)rand.NextInt64(0, 50);
-            int price = (int)rand.NextInt64(6000, 7000);
+            int category = (int)rand.NextInt64(0,4);
+            int id = Config.ProductId;
+            int inStock = (int)rand.NextInt64(0, 50);
+            int price = (int)rand.NextInt64(1000, 9000);
             product.ProductName = productNames[number];
-            product.ID = id;
-            product.InStock = InStock;
+            product.Id = id;
+            product.Category = (Enums.Category)category;
+            product.InStock = inStock;
             product.Price = price;
-            ProductList[Config.indexArrProduct] = product;
+            ProductList[Config.IndexArrProduct] = product;
         }
     }
     static public void CreateOrderList()
@@ -72,39 +69,39 @@ public  class DataSource
         {
             Order orderi = new Order();
             // הגרלנו מספר שהוא מיקום במערך השמות
-            int number = (int)rand.NextInt64(CustomerName.Length);
-            int id = Config.orderId;
-            orderi.CustomerName = CustomerName[number];
-            orderi.ID = id;
-            orderi.CustomerEmail = CustomerName[number] + "@gmail.com";
-            orderi.CustomerAdress = CustomerName[number] + "Street";
+            int number = (int)rand.NextInt64(customerName.Length);
+            int id = Config.OrderId;
+            orderi.CustomerName = customerName[number];
+            orderi.Id = id;
+            orderi.CustomerEmail = customerName[number] + "@gmail.com";
+            orderi.CustomerAdress = customerName[number] + "Street";
             orderi.OrderDate = DateTime.MinValue;
-            orderi.ShipDate = (orderArr[i].OrderDate + t_ShipDate);
-            orderi.DeliveryDate = (orderArr[i].ShipDate + t_DeliveryDate);
-            orderArr[Config.indexArrOrder] = orderi;
+            orderi.ShipDate = (OrderArr[i].OrderDate + t_ShipDate);
+            orderi.DeliveryDate = (OrderArr[i].ShipDate + t_DeliveryDate);
+            OrderArr[Config.IndexArrOrder] = orderi;
         }
 
     }
-    static public void pushOrderItem()
+    static public void PushOrderItem()
     {
         for (int i = 0; i < 20; i++)
         {
             OrderItem orderItemi = new OrderItem();
-            int orderId = orderArr[i].ID;
+            int orderId = OrderArr[i].Id;
             int min = (int)rand.NextInt64(1, 4);
            
             for (int j = 0; j < min; j++)
             {
-                int id = Config.orderItemId;
-                int numberPoduct = (int)rand.NextInt64(0, Config.IndexArrProduct);
+                int id = Config.OrderItemId;
+                int numberPoduct = (int)rand.NextInt64(0, Config._indexArrProduct);
                 int amount = (int)rand.NextInt64(0,ProductList[numberPoduct].InStock);
-                orderItemi.ID = id;
+                orderItemi.Id = id;
                 orderItemi.OrderID = orderId;
-                orderItemi.ProductID = ProductList[numberPoduct].ID;
+                orderItemi.ProductID = ProductList[numberPoduct].Id;
                 orderItemi.Price = ProductList[numberPoduct].Price;
                 orderItemi.Amount = amount+1;
                 ProductList[numberPoduct].InStock = ProductList[numberPoduct].InStock - amount;
-                orderitem[Config.indexArrOrderItem] = orderItemi;
+                OrderItems[Config.IndexArrOrderItem] = orderItemi;
                 ///////////////update the source ????????????
             }
 

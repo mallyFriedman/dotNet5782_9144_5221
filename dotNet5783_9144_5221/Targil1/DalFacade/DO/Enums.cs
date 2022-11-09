@@ -1,9 +1,9 @@
-﻿using DalFacade;
+﻿
+namespace DO;
 
-namespace DalFacade;
     public struct Enums
     {
-    public enum eCategory
+    public enum Category
     {
         Necklaces,
         Bracelets,

@@ -1,12 +1,12 @@
-﻿
-using DalFacade;
-using DalList;
+﻿using DO;
 namespace Dal;
-public class Program
+
+public static class Program
 {
-    DataSource ds = new DataSource();
     enum Options { exit, product, order, orderItem };
     enum InnerOptions { add,  readId, read, update, delete };
+    enum InnerOptionsOredrItem { add, readId, readOrderItem, read, update, delete };
+    
     //private Product obj=new Product();
     //Order ord=new Order();
     //OrderItem ordrI=new OrderItem();
@@ -25,13 +25,13 @@ public class Program
                 switch ((Options)choice)
                 {
                     case Options.product:
-                        switchProduct();
+                        SwitchProduct();
                         break;
                     case Options.order:
-                        switchOrder();
+                        SwitchOrder();
                         break;
                     case Options.orderItem:
-                        switchOrderItem();
+                        SwitchOrderItem();
                         break;
                     default:
                         Console.Write("Worng choice! ");
@@ -46,7 +46,7 @@ public class Program
             choice = Convert.ToInt32(Console.ReadLine());
         }
     }
-    public static void switchProduct()
+    public static void SwitchProduct()
     {
         options();
         int choice = Convert.ToInt32(Console.ReadLine());
@@ -62,7 +62,13 @@ public class Program
                 obj.Price = Convert.ToInt32(Console.ReadLine());
                 Console.Write("Enter the products number in stock: ");
                 obj.InStock = Convert.ToInt32(Console.ReadLine());
-                obj.ID = DataSource.Config.productId;
+                Console.Write("Enter the products category:" +
+                    "1 for  Necklaces"+
+                    "2 for Bracelets"+
+                    "3 for Earrings"+
+                    "4 for Rings");
+                obj.Category = (Enums.Category)Convert.ToInt32(Console.ReadLine());
+                obj.Id = DataSource.Config.ProductId;
                 DalProduct.Create(obj);
                 break;
             case InnerOptions.readId:
@@ -72,7 +78,7 @@ public class Program
                 break;
             case InnerOptions.read:
                 Product[] orders = DalProduct.Read();
-                foreach (Product item in orders) if (item.ID > 0)
+                foreach (Product item in orders)
                     {
                         Console.WriteLine(item);
                     }
@@ -116,7 +122,7 @@ public class Program
                 {
                     obj.InStock =   Convert.ToInt32(mishtane);
                 }
-                obj.ID = id;
+                obj.Id = id;
                 DalProduct.Update(obj);
                 break;
             case InnerOptions.delete:
@@ -127,7 +133,7 @@ public class Program
                 break;
         }
     }
-    public static void switchOrder()
+    public static void SwitchOrder()
     {
         options();
         int choice = Convert.ToInt32(Console.ReadLine());
@@ -146,7 +152,7 @@ public class Program
                 ord.OrderDate = DateTime.Now;
                 ord.ShipDate = DateTime.MinValue;
                 ord.DeliveryDate = DateTime.MinValue;
-                ord.ID = DataSource.Config.orderId;
+                ord.Id = DataSource.Config.OrderId;
                 DalOrder.Create(ord);
                 break;
             case InnerOptions.readId:
@@ -156,7 +162,7 @@ public class Program
                 break;
             case InnerOptions.read:
                 Order []orders=DalOrder.Read();
-                foreach (Order item in orders) if ( item.ID>0)
+                foreach (Order item in orders)
                 {
                     Console.WriteLine(item);
                 }
@@ -201,7 +207,7 @@ public class Program
                 ord.OrderDate = a.OrderDate;
                 ord.ShipDate = a.ShipDate;
                 ord.DeliveryDate = a.DeliveryDate;
-                ord.ID = id;
+                ord.Id = id;
                 DalOrder.Update(ord);
                 break;
             case InnerOptions.delete:
@@ -213,17 +219,17 @@ public class Program
         }
     }
 
-    public static void switchOrderItem()
+    public static void SwitchOrderItem()
     {
-        options();
+        optionsOrderItem();
         int choice = Convert.ToInt32(Console.ReadLine());
         int id;
         OrderItem ordrI;
-        switch ((InnerOptions)choice)
+        switch ((InnerOptionsOredrItem)choice)
         {
-            case InnerOptions.add:
+            case InnerOptionsOredrItem.add:
                 ordrI = new OrderItem();
-                ordrI.ID = DataSource.Config.orderItemId;
+                ordrI.Id = DataSource.Config.OrderItemId;
                 Console.Write("Enter the order id: ");
                 ordrI.OrderID = Convert.ToInt32(Console.ReadLine());
                 Console.Write("Enter the product id: ");
@@ -232,30 +238,35 @@ public class Program
                 ordrI.Price = Convert.ToInt32(Console.ReadLine());
                 DalOrderItem.Create(ordrI);
                 break;
-            case InnerOptions.readId:
+            case InnerOptionsOredrItem.readId:
                 Console.Write("Enter the id: ");
 
                 id = Convert.ToInt32(Console.ReadLine());
-                OrderItem[] items = DalOrderItem.Read(id);
-                foreach (OrderItem item in items) if (item.ID > 0)
+                OrderItem[] items = DalOrderItem.ReadOrderId(id);
+                foreach (OrderItem item in items)
                     {
                         Console.WriteLine(item);
                     }
                 break;
-            case InnerOptions.read:
+            case InnerOptionsOredrItem.readOrderItem:
+                Console.Write("Enter the order id: ");
+                id = Convert.ToInt32(Console.ReadLine());
+                Console.WriteLine(DalOrderItem.ReadOrderItem(id));
+                break;
+            case InnerOptionsOredrItem.read:
                 OrderItem[] orders = DalOrderItem.Read();
-                foreach (OrderItem item in orders) if (item.ID > 0)
+                foreach (OrderItem item in orders)
                     {
                         Console.WriteLine(item);
                     }
                 break;
-            case InnerOptions.update:
+            case InnerOptionsOredrItem.update:
                 ordrI = new OrderItem();
                 Console.Write("Enter id: ");
                 id = Convert.ToInt32(Console.ReadLine());
                 OrderItem a = new OrderItem();
-                a=DalOrderItem.find(id);
-                if (a.ID == 0) throw new Exception("no product found");
+                a=DalOrderItem.ReadOrderItem(id);
+                if (a.Id == 0) throw new Exception("no product found");
                     Console.Write(a);
                 Console.Write("Enter order id: ");
                 string mishtane= Console.ReadLine();
@@ -287,16 +298,16 @@ public class Program
                 {
                     ordrI.Price = Convert.ToInt32(mishtane);
                 }
-                ordrI.ID = a.ID;
+                ordrI.Id = a.Id;
                 DalOrderItem.Update(ordrI);
                 break;
-            case InnerOptions.delete:
+            case InnerOptionsOredrItem.delete:
                 Console.Write("Enter order id:");
                 id = Convert.ToInt32(Console.ReadLine());
                 OrderItem ab = new OrderItem();
-                ab = DalOrderItem.find(id);
-                if (ab.ID==0) throw new Exception("no product found");
-                DalOrderItem.Delete(ab.ID);
+                ab = DalOrderItem.ReadOrderItem(id);
+                if (ab.Id==0) throw new Exception("no product found");
+                DalOrderItem.Delete(ab.Id);
                 break;
         }
     }
@@ -309,4 +320,14 @@ public class Program
                           "3 for update, " +
                           "4 for delete : ");
     }
+    public static void optionsOrderItem()
+    {
+        Console.Write("enter 0 for add, " +
+                          "1 for readOrderId, " +
+                          "2 for readOrderItem, " +
+                          "3 for read, " +
+                          "4 for update, " +
+                          "5 for delete : ");
+    }
+    
 }

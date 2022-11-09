@@ -1,24 +1,24 @@
-﻿using DalFacade;
-namespace DalList;
+﻿using DO;
+namespace Dal;
 
 public static class DalOrder
 {
     public static int Create(Order obj)
     {
-        DataSource.orderArr[DataSource.Config.IndexArrOrder++] = obj;
-        return obj.ID;
+        DataSource.OrderArr[DataSource.Config._indexArrOrder++] = obj;
+        return obj.Id;
     }
 
     public static void Delete(int id)
     {
-        for (int i = 0; i < DataSource.orderArr.Length; i++)
+        for (int i = 0; i < DataSource.OrderArr.Length; i++)
         {
-            if (DataSource.orderArr[i].ID == id)
+            if (DataSource.OrderArr[i].Id == id)
             {
-                int index = DataSource.Config.IndexArrOrder;
-                DataSource.orderArr[i] = DataSource.orderArr[index];
-                DataSource.orderArr[index].ID = 0;
-                DataSource.Config.IndexArrOrder = (DataSource.Config.IndexArrOrder - 1);
+                int index = DataSource.Config._indexArrOrder;
+                DataSource.OrderArr[i] = DataSource.OrderArr[index];
+                DataSource.OrderArr[index].Id = 0;
+                DataSource.Config._indexArrOrder = (DataSource.Config._indexArrOrder - 1);
                 break;
             }
         }
@@ -26,11 +26,11 @@ public static class DalOrder
     }
     public static Order Read(int id)
     {
-        for (int i = 0; i < ((DataSource.Config.IndexArrOrder)); i++)
+        for (int i = 0; i < ((DataSource.Config._indexArrOrder)); i++)
         {
-            if (id == DataSource.orderArr[i].ID)
+            if (id == DataSource.OrderArr[i].Id)
             {
-                return DataSource.orderArr[i];
+                return DataSource.OrderArr[i];
             }
         }
         throw new Exception("baddddddd");
@@ -38,16 +38,21 @@ public static class DalOrder
 
     public static Order[] Read()
     {
-        return DataSource.orderArr;
+        Order[] arr = new Order[DataSource.Config._indexArrOrder];
+        for (int i = 0; i < arr.Length; i++)
+        {
+            arr[i] = DataSource.OrderArr[i];
+        }
+        return arr;
     }
 
     public static void Update(Order obj)
     {
-        for (int i = 0; i < (DataSource.Config.IndexArrOrder); i++)
+        for (int i = 0; i < (DataSource.Config._indexArrOrder); i++)
         {
-            if (obj.ID == DataSource.orderArr[i].ID)
+            if (obj.Id == DataSource.OrderArr[i].Id)
             {
-                DataSource.orderArr[i] = obj;
+                DataSource.OrderArr[i] = obj;
             }
         }
     }
