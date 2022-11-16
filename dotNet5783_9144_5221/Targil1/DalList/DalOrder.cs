@@ -1,39 +1,40 @@
-﻿using DO;
+﻿using DalApi;
+using DO;
 namespace Dal;
 
-public static class DalOrder
+
+public class DalOrder : IOrder
 {
-    public static int Create(Order obj)
+    public int Add(Order obj)
     {
         DataSource.OrderArr.Add(obj);
-        DataSource.Config._indexArrOrder++;
         return obj.Id;
     }
 
-    public static void Delete(int id)
+    public void Delete(int id)
     {
         DataSource.OrderArr.Remove(DataSource.OrderArr.Find(o => o.Id == id));
     }
-    public static Order Read(int id)
+    public Order Get(int id)
     {
         Order p = DataSource.OrderArr.Find(o => o.Id == id);
-       //if (p.Id == 0)/////////////
-       //{
-       //    throw new Exception("baddddddd");
-       //}
+        if (p.Id == 0)/////////////
+        {
+            throw new EntryPointNotFoundException("baddddddd");
+        }
         return p;
     }
 
-    public static List<Order> Read()
+    public IEnumerable<Order> Get()
     {
         return DataSource.OrderArr;
     }
 
-    public static void Update(Order obj)
+    public void Update(Order obj)
     {
         int i = DataSource.OrderArr.FindIndex(o => o.Id == obj.Id);
         if (i == -1)
-            throw new Exception("no items in this order...");
+            throw new EntryPointNotFoundException("no items in this order...");
         DataSource.OrderArr[i] = obj;
     }
 }

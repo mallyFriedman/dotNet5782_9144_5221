@@ -1,4 +1,6 @@
-﻿using DO;
+﻿
+using DalApi;
+    using DO;
 namespace Dal;
 
 public static class Program
@@ -38,7 +40,7 @@ public static class Program
                         break;
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Console.WriteLine(ex);
             }
@@ -69,15 +71,15 @@ public static class Program
                     "4 for Rings");
                 obj.Category = (Enums.Category)Convert.ToInt32(Console.ReadLine());
                 obj.Id = DataSource.Config.ProductId;
-                DalProduct.Create(obj);
+                DalProduct.Add(obj);
                 break;
             case InnerOptions.readId:
                 Console.Write("Enter the id: ");
                 id = Convert.ToInt32(Console.ReadLine());
-                Console.WriteLine(DalProduct.Read(id));
+                Console.WriteLine(DalProduct.Get(id));
                 break;
             case InnerOptions.read:
-                List<Product> orders = DalProduct.Read();
+                List<Product> orders = DalProduct.Get();
                 foreach (Product item in orders)
                     {
                         Console.WriteLine(item);
@@ -86,7 +88,7 @@ public static class Program
             case InnerOptions.update:
                 Console.Write("Enter id: ");
                 id = Convert.ToInt32(Console.ReadLine());
-                Product a = DalProduct.Read(id);
+                Product a = DalProduct.Get(id);
                 if (a.ProductName == null) throw new Exception("no product found");
                 Console.WriteLine(a);
                 obj = new Product();
@@ -126,7 +128,7 @@ public static class Program
             case InnerOptions.delete:
                 Console.Write("Enter id: ");
                 id = Convert.ToInt32(Console.ReadLine());
-                if (DalProduct.Read(id).ProductName == null) throw new Exception("no product found");
+                if (DalProduct.Get(id).ProductName == null) throw new Exception("no product found");
                 DalProduct.Delete(id);
                 break;
         }
@@ -151,15 +153,15 @@ public static class Program
                 ord.ShipDate = DateTime.MinValue;
                 ord.DeliveryDate = DateTime.MinValue;
                 ord.Id = DataSource.Config.OrderId;
-                DalOrder.Create(ord);
+                DalOrder.Add(ord);
                 break;
             case InnerOptions.readId:
                 Console.Write("Enter the id: ");
                 id = Convert.ToInt32(Console.ReadLine());
-                Console.WriteLine(DalOrder.Read(id));
+                Console.WriteLine(DalOrder.Get(id));
                 break;
             case InnerOptions.read:
-                List<Order> orders=DalOrder.Read();
+                List<Order> orders=DalOrder.Get();
                 foreach (Order item in orders)
                 {
                     Console.WriteLine(item);
@@ -168,7 +170,7 @@ public static class Program
             case InnerOptions.update:
                 Console.Write("Enter id: ");
                 id = Convert.ToInt32(Console.ReadLine());
-                Order a = DalOrder.Read(id);
+                Order a = DalOrder.Get(id);
                 if (a.CustomerEmail == null) throw new Exception("no product found");
                 Console.WriteLine(a);
                 ord = new Order();
@@ -212,7 +214,7 @@ public static class Program
                 Console.Write("Enter id: ");
                 id = Convert.ToInt32(Console.ReadLine());
                // if (DalOrder.Read(id).CustomerEmail == null) throw new Exception("no product found");
-                DalOrder.Delete(id);
+                IOrder.Delete(id);
                 break;
         }
     }
@@ -234,7 +236,7 @@ public static class Program
                 ordrI.ProductID = Convert.ToInt32(Console.ReadLine());
                 Console.Write("Enter the price: ");
                 ordrI.Price = Convert.ToInt32(Console.ReadLine());
-                DalOrderItem.Create(ordrI);
+                DalOrderItem.Add(ordrI);
                 break;
             case InnerOptionsOredrItem.readId:
                 Console.Write("Enter the id: ");
@@ -249,10 +251,10 @@ public static class Program
             case InnerOptionsOredrItem.readOrderItem:
                 Console.Write("Enter the order id: ");
                 id = Convert.ToInt32(Console.ReadLine());
-                Console.WriteLine(DalOrderItem.ReadOrderItem(id));
+                Console.WriteLine(DalOrderItem.Get(id));
                 break;
             case InnerOptionsOredrItem.read:
-                List<OrderItem> orders = DalOrderItem.Read();
+                List<OrderItem> orders = DalOrderItem.Get();
                 foreach (OrderItem item in orders)
                     {
                         Console.WriteLine(item);
@@ -263,7 +265,7 @@ public static class Program
                 Console.Write("Enter id: ");
                 id = Convert.ToInt32(Console.ReadLine());
                 OrderItem a = new OrderItem();
-                a=DalOrderItem.ReadOrderItem(id);
+                a=DalOrderItem.Get(id);
                 if (a.Id == 0) throw new Exception("no product found");
                     Console.Write(a);
                 string mishtane = Console.ReadLine();               
@@ -316,7 +318,7 @@ public static class Program
                 Console.Write("Enter order id:");
                 id = Convert.ToInt32(Console.ReadLine());
                 OrderItem ab = new OrderItem();
-                ab = DalOrderItem.ReadOrderItem(id);
+                ab = DalOrderItem.Get(id);
                 if (ab.Id==0) throw new Exception("no product found");
                 DalOrderItem.Delete(ab.Id);
                 break;
