@@ -77,7 +77,7 @@ public static class Program
                 Console.WriteLine(DalProduct.Read(id));
                 break;
             case InnerOptions.read:
-                Product[] orders = DalProduct.Read();
+                List<Product> orders = DalProduct.Read();
                 foreach (Product item in orders)
                     {
                         Console.WriteLine(item);
@@ -100,8 +100,6 @@ public static class Program
                 {
                     obj.ProductName = mishtane;
                 }
-                Console.WriteLine(a);
-                
                 Console.Write("Enter the product price: ");
                 mishtane = Console.ReadLine();
                 if (string.IsNullOrEmpty(mishtane))
@@ -161,7 +159,7 @@ public static class Program
                 Console.WriteLine(DalOrder.Read(id));
                 break;
             case InnerOptions.read:
-                Order []orders=DalOrder.Read();
+                List<Order> orders=DalOrder.Read();
                 foreach (Order item in orders)
                 {
                     Console.WriteLine(item);
@@ -174,7 +172,7 @@ public static class Program
                 if (a.CustomerEmail == null) throw new Exception("no product found");
                 Console.WriteLine(a);
                 ord = new Order();
-                Console.Write("Enter the your name: ");
+                Console.Write("Enter your name: ");
                 string mishtane = Console.ReadLine();
                 if (string.IsNullOrEmpty(mishtane))
                 {
@@ -254,7 +252,7 @@ public static class Program
                 Console.WriteLine(DalOrderItem.ReadOrderItem(id));
                 break;
             case InnerOptionsOredrItem.read:
-                OrderItem[] orders = DalOrderItem.Read();
+                List<OrderItem> orders = DalOrderItem.Read();
                 foreach (OrderItem item in orders)
                     {
                         Console.WriteLine(item);
@@ -268,18 +266,10 @@ public static class Program
                 a=DalOrderItem.ReadOrderItem(id);
                 if (a.Id == 0) throw new Exception("no product found");
                     Console.Write(a);
-                Console.Write("Enter order id: ");
-                string mishtane= Console.ReadLine();
-                if (string.IsNullOrEmpty(mishtane))
-                {
-                    ordrI.OrderID = a.OrderID;
-                }
-                else
-                {
-                    ordrI.OrderID = Convert.ToInt32(mishtane) ;
-                }
+                string mishtane = Console.ReadLine();               
                 Console.Write("Enter the product id: ");
                 mishtane = Console.ReadLine();
+
                 if (string.IsNullOrEmpty(mishtane))
                 {
                     ordrI.ProductID = a.ProductID;
@@ -288,6 +278,17 @@ public static class Program
                 {
                     ordrI.ProductID = Convert.ToInt32(mishtane);
                 }
+
+                Console.Write("Enter order id: ");
+                if (string.IsNullOrEmpty(mishtane))
+                {
+                    ordrI.OrderID = a.OrderID;
+                }
+                else
+                {
+                    ordrI.OrderID = Convert.ToInt32(mishtane);
+                }
+
                 Console.Write("Enter the price: ");
                 mishtane = Console.ReadLine();
                 if (string.IsNullOrEmpty(mishtane))
@@ -297,6 +298,16 @@ public static class Program
                 else
                 {
                     ordrI.Price = Convert.ToInt32(mishtane);
+                }
+                Console.Write("Enter the amount: ");
+                mishtane = Console.ReadLine();
+                if (string.IsNullOrEmpty(mishtane))
+                {
+                    ordrI.Amount = a.Amount;
+                }
+                else
+                {
+                    ordrI.Amount = Convert.ToInt32(mishtane);
                 }
                 ordrI.Id = a.Id;
                 DalOrderItem.Update(ordrI);

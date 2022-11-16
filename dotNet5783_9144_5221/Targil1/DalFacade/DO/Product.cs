@@ -12,9 +12,10 @@
         Product ID={Id}, 
         Product ProductName={ProductName}, 
     	Price: {Price}
-    	Amount in stock: {InStock}";
-    }
-/*category - {Category}*/
+    	Amount in stock: {InStock}
+        category - {Category}";
+}
+
 
 
 

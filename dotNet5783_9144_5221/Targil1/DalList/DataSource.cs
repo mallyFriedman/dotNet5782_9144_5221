@@ -19,8 +19,9 @@ public static class DataSource ///internal ???????????
         private static int _orderItemId = 100000;
 
         public static int ProductId { get { return ++_productId;  }  }
-        public static int OrderId { get { return ++_orderId; }  }
+        public static int OrderId { get { return ++_orderId; } }
         public static int OrderItemId { get { return ++_orderItemId; }  }
+
         public static int IndexArrProduct { get { return ++_indexArrProduct; } set { _indexArrProduct = ++_indexArrProduct; } }
         public static int IndexArrOrder { get { return ++_indexArrOrder; } set { _indexArrOrder = ++_indexArrOrder; } }
         public static int IndexArrOrderItem { get { return ++_indexArrOrderItem; } set { _indexArrOrderItem = ++_indexArrOrderItem; } }
@@ -28,9 +29,10 @@ public static class DataSource ///internal ???????????
     const int NumOfProduct = 50; // אפשר לעשות מחלקה של קבועים
     const int NumOfOrder = 100;
     const int NumOfOrderItem = 200;
-    public static Product[] ProductList = new Product[NumOfProduct]; ///internal ???????????
-    public static Order[] OrderArr = new Order[NumOfOrder];             ///internal ???????????
-    public static OrderItem[] OrderItems = new OrderItem[NumOfOrderItem]; ///internal ???????????
+   
+    public static List <Product> ProductList = new List<Product>();
+    public static List<Order> OrderArr = new List<Order>();
+    public static List<OrderItem> OrderItems = new List<OrderItem>();
     static readonly Random rand = new Random();              //internal ???????????
     static string[] customerName = { "a","b","c","d","e","f","k","l","m","n"
                 ,"o","p","q","r","s","t","u","v","x","w"};
@@ -58,7 +60,7 @@ public static class DataSource ///internal ???????????
             product.Category = (Enums.Category)category;
             product.InStock = inStock;
             product.Price = price;
-            ProductList[Config.IndexArrProduct] = product;
+            ProductList.Add(product);
         }
     }
     static public void CreateOrderList()
@@ -70,15 +72,15 @@ public static class DataSource ///internal ???????????
             Order orderi = new Order();
             // הגרלנו מספר שהוא מיקום במערך השמות
             int number = (int)rand.NextInt64(customerName.Length);
-            int id = Config.OrderId;
+            int id = DataSource.Config.OrderId;
             orderi.CustomerName = customerName[number];
             orderi.Id = id;
             orderi.CustomerEmail = customerName[number] + "@gmail.com";
             orderi.CustomerAdress = customerName[number] + "Street";
             orderi.OrderDate = DateTime.MinValue;
-            orderi.ShipDate = (OrderArr[i].OrderDate + t_ShipDate);
-            orderi.DeliveryDate = (OrderArr[i].ShipDate + t_DeliveryDate);
-            OrderArr[Config.IndexArrOrder] = orderi;
+            orderi.ShipDate = (orderi.OrderDate + t_ShipDate);
+            orderi.DeliveryDate = (orderi.ShipDate + t_DeliveryDate);
+            OrderArr.Add(orderi) ;
         }
 
     }
@@ -99,9 +101,10 @@ public static class DataSource ///internal ???????????
                 orderItemi.OrderID = orderId;
                 orderItemi.ProductID = ProductList[numberPoduct].Id;
                 orderItemi.Price = ProductList[numberPoduct].Price;
-                orderItemi.Amount = amount+1;
-                ProductList[numberPoduct].InStock = ProductList[numberPoduct].InStock - amount;
-                OrderItems[Config.IndexArrOrderItem] = orderItemi;
+                orderItemi.Amount = amount;
+                Product p = ProductList[numberPoduct];
+                p.InStock = ProductList[numberPoduct].InStock - amount;
+                OrderItems.Add(orderItemi) ;
                 ///////////////update the source ????????????
             }
 

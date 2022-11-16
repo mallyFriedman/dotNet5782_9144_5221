@@ -11,8 +11,8 @@
     public DateTime OrderDate { get; set; }
     public DateTime DeliveryDate { get; set; }
     public override string ToString() => $@"
-        Product ID={Id}, 
-        Product CustomerName={CustomerName}, 
+        Order ID={Id}, 
+        Order CustomerName={CustomerName}, 
     	CustomerEmail: {CustomerEmail},
     	CustomerAdress: {CustomerAdress},
         ShipDate: {ShipDate},

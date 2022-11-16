@@ -8,8 +8,8 @@
     public double Price { get; set; }
     public int Amount { get; set; }
     public override string ToString() => $@"
-        Product ID={Id}, 
-        Product ProductID={ProductID}, 
+        OrderItem ID={Id}, 
+         ProductID={ProductID}, 
     	OrderID: {OrderID},
     	Price: {Price},
        Amount: {Amount}";

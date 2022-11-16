@@ -8,37 +8,24 @@ public static class DalOrderItem
 {
     public static int Create(OrderItem obj)
     {
-        DataSource.OrderItems[DataSource.Config._indexArrOrderItem++] = obj;
+        DataSource.OrderItems.Add(obj);
+        DataSource.Config._indexArrOrderItem++;
         return obj.Id;
     }
 
     public static void Delete(int id)
     {
-        for (int i = 0; i < DataSource.Config._indexArrOrderItem; i++)
-        {
-            if (DataSource.OrderItems[i].Id == id)
-            {
-                int index = DataSource.Config._indexArrOrderItem;
-                DataSource.OrderItems[i] = DataSource.OrderItems[index];
-                DataSource.OrderItems[index].Id= 0;
-                DataSource.Config._indexArrOrderItem = (DataSource.Config._indexArrOrderItem - 1);
-                break;
-            }
-        }
-        return;
+        DataSource.OrderItems.Remove(DataSource.OrderItems.Find(o => o.Id == id));
     }
     public static OrderItem ReadOrderItem(int id)
     {
-        OrderItem a = new OrderItem();
-        for (int i = 0; i < DataSource.Config._indexArrOrderItem; i++)
-        {
-            if (DataSource.OrderItems[i].Id == id)
-            {
-                a= DataSource.OrderItems[i];
-                break;
-            }
-        }
-        return a;
+        OrderItem p = DataSource.OrderItems.Find(o => o.Id == id);
+       //if (p.Id == 0)/////////////
+       //{
+       //    throw new Exception("baddddddd");
+       //}
+        return p;
+
     }
     public static OrderItem[] ReadOrderId(int id)
     {
@@ -66,25 +53,23 @@ public static class DalOrderItem
 
     }
 
-    public static OrderItem[] Read()
+    public static List<OrderItem> Read()
     {
-        OrderItem[] arr = new OrderItem[DataSource.Config._indexArrOrderItem];
-        for (int i = 0; i < arr.Length; i++)
-        {
-            arr[i] = DataSource.OrderItems[i];
-        }
-        return arr;
+        return DataSource.OrderItems;
     }
 
     public static void Update(OrderItem obj)
     {
-        for (int i = 0; i < (DataSource.Config._indexArrOrderItem); i++)
+        int w = DataSource.OrderArr.FindIndex(o => o.Id == obj.OrderID);
+        int p = DataSource.ProductList.FindIndex(o => o.Id == obj.ProductID);
+        if (w == -1 || p == -1)
         {
-            if (obj.Id == DataSource.OrderItems[i].Id)
-            {
-                DataSource.OrderItems[i] = obj;
-            }
+            throw new Exception("wrong detailes");
         }
+        int i = DataSource.OrderItems.FindIndex(o => o.Id == obj.Id);
+        if (i == -1)
+            throw new Exception("no items in this order...");
+        DataSource.OrderItems[i] = obj;
     }
 }
 
