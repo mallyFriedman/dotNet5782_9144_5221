@@ -9,6 +9,4 @@ namespace DalApi
         public IEnumerable<T>  Get();
         public void Update(T item);     
     }
-
-  
 }
