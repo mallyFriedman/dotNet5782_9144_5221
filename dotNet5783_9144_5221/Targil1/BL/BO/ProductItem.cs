@@ -12,7 +12,7 @@ namespace BO
         public string ProductName { get; set; }
         public double Price { get; set; }
         public Category Category { get; set; }
-        public int InStock { get; set; }
+        public bool InStock { get; set; }
         public int AmountInCart { get; set; }
 
         public override string ToString() => $@"

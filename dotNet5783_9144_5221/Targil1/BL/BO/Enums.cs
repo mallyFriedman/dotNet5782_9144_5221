@@ -7,4 +7,11 @@
         Earrings,
         Rings
     }
+
+    public enum eOrderStatus
+    {
+        Ordered,
+        Shipped,
+        Delivered
+    }
 }

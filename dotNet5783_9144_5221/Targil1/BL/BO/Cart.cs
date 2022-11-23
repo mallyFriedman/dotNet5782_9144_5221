@@ -11,7 +11,7 @@ namespace BO
         public string CustomerName { get; set; }
         public string CustomerEmail { get; set; }
         public string CustomerAdress { get; set; }
-        public IEnumerable<OrderItem> OrderItems { get; set; }
+        public IEnumerable<OrderItem> Items { get; set; }
         public int TotalPrice { get; set; }
 
     }

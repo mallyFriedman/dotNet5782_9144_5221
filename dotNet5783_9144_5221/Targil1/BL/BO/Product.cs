@@ -1,7 +1,11 @@
-﻿namespace BO
+﻿using Dal;
+using Dal
+namespace BO
 {
+
     public class Product
     {
+        IDal Dal = new DalList();
         public int Id { get; set; }
         public string ProductName { get; set; }
         public double Price { get; set; }
