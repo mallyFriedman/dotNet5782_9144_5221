@@ -8,6 +8,7 @@ public class DalOrderItem : IOrderItem
 {
     public int Add(OrderItem obj)
     {
+        obj.Id = DataSource.Config.OrderItemId;
         DataSource.OrderItems.Add(obj);
         return obj.Id;
     }

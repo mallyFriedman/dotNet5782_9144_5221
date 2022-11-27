@@ -6,6 +6,7 @@ public class DalProduct:IProduct
 {
     public  int Add(Product obj)
     {
+        obj.Id = DataSource.Config.ProductId;
         DataSource.ProductList.Add(obj);
         return obj.Id;
     }
