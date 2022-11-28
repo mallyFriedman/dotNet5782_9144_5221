@@ -5,8 +5,8 @@ namespace BlApi
     {
 
         //get arr:
-        public IEnumerable<BO.ProductForList> Get();
-        public IEnumerable<BO.ProductItem> Read();
+        public IEnumerable<BO.ProductForList> GetAllForCustomer();
+        public IEnumerable<BO.ProductItem> GetAllForManager();
         //get one product:
         public Product GetManager(int id);
 

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BO
 {
-    internal class OrderForList
+    public class OrderForList
     {
         public int Id { get; set; }
         public string CustomerName { get; set; }

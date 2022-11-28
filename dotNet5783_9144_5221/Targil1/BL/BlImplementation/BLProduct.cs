@@ -7,7 +7,7 @@ namespace BlImplementation
     {
         IDal Dal = new DalList();
         //get arr:
-        public IEnumerable<BO.ProductForList> Get()
+        public IEnumerable<BO.ProductForList> GetAllForCustomer()
         {
             IEnumerable<DO.Product> a = Dal.Product.Get();
 
@@ -23,7 +23,7 @@ namespace BlImplementation
             }
             return ForList;
         }
-        public IEnumerable<BO.ProductItem> Read()
+        public IEnumerable<BO.ProductItem> GetAllForManager()
         {
             IEnumerable<DO.Product> a = Dal.Product.Get();
             IEnumerable<BO.ProductItem> Prod = new List<BO.ProductItem>(a.Count());

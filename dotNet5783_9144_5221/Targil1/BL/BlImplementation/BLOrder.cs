@@ -10,7 +10,7 @@ namespace BlImplementation
         /// the function  returns all orders
         /// </summary>
         /// <returns></returns>
-        public IEnumerable<BO.OrderForList> Get()
+        public IEnumerable<BO.OrderForList> GetAll()
         {
             IEnumerable<DO.Order> orders = Dal.Order.Get();
             IEnumerable<BO.OrderForList> ordersForList = new List<BO.OrderForList>(orders.Count());
