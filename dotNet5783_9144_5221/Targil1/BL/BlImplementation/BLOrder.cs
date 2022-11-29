@@ -13,7 +13,7 @@ namespace BlImplementation
         public IEnumerable<BO.OrderForList> GetAll()
         {
             IEnumerable<DO.Order> orders = Dal.Order.Get();
-            IEnumerable<BO.OrderForList> ordersForList = new List<BO.OrderForList>(orders.Count());
+            List<BO.OrderForList> ordersForList = new List<BO.OrderForList>(orders.Count());
             foreach (DO.Order item in orders)
             {
                 BO.Order a = Get(item.Id);
@@ -23,7 +23,7 @@ namespace BlImplementation
                 b.OrderStatus = a.OrderStatus;
                 b.AmountProduct = a.OrderItem.Count();
                 b.TotalPrice = a.TotalPrice;
-                ordersForList.Append(b);
+                ordersForList.Add(b);
             }
             return ordersForList;
         }
@@ -47,7 +47,7 @@ namespace BlImplementation
             bOrder.OrderDate = dOrder.OrderDate;
             bOrder.OrderStatus = status(dOrder.DeliveryDate, DateTime.MinValue, dOrder.ShipDate);
             bOrder.ShipDate = dOrder.ShipDate;
-            IEnumerable<BO.OrderItem> orderItem = new List<BO.OrderItem>(DataSource.ProductList.Count());
+            List<BO.OrderItem> orderItem = new List<BO.OrderItem>(DataSource.ProductList.Count());
             double sum = 0;
             IEnumerable<DO.OrderItem> dOrderItem = (IEnumerable<DO.OrderItem>)Dal.OrderItem.ReadOrderId(bOrder.Id);
             foreach (DO.OrderItem item in dOrderItem)
@@ -58,7 +58,7 @@ namespace BlImplementation
                 bOrderItem.Price = item.Price;
                 bOrderItem.ProductID = item.ProductID;
                 bOrderItem.TotalPrice = (item.Price) * (item.Amount);
-                orderItem.Append(bOrderItem);
+                orderItem.Add(bOrderItem);
                 sum = sum + bOrderItem.TotalPrice;
             }
             bOrder.OrderItem = orderItem;

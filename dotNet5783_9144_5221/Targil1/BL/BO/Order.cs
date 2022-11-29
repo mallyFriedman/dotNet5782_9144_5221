@@ -18,8 +18,8 @@
         Order CustomerName={CustomerName}, 
     	CustomerEmail: {CustomerEmail},
     	CustomerAdress: {CustomerAdress},
-        ShipDate: {ShipDate},
         OrderDate: {OrderDate},
+        ShipDate: {ShipDate},
         DeliveryDate: {DeliveryDate}";
 
         

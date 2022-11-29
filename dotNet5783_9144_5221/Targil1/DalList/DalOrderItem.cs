@@ -30,16 +30,17 @@ public class DalOrderItem : IOrderItem
     public IEnumerable<OrderItem> ReadOrderId(int id)
     {
         int num = 0;
-        for (int i = 0; i < (DataSource.Config._indexArrOrderItem); i++)
+        for (int i = 0; i < (DataSource.OrderItems.Count()); i++)
         {
             if (id == DataSource.OrderItems[i].OrderID)
             {
+
                 num++;
             }
         }
         OrderItem[] arr = new OrderItem[num];
         num = 0;
-        for (int i = 0; i < (DataSource.Config._indexArrOrderItem); i++)
+        for (int i = 0; i < (DataSource.OrderItems.Count()); i++)
         {
             if (id == DataSource.OrderItems[i].OrderID)
             {
@@ -50,7 +51,6 @@ public class DalOrderItem : IOrderItem
 
         if (num != 0) return arr;
         throw new EntityNotFoundException("no items in this order...");
-
     }
 
     public IEnumerable<OrderItem> Get()

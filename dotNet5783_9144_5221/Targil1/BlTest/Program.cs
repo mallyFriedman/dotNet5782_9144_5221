@@ -152,9 +152,10 @@ public static class Program1
             {
                 Console.WriteLine(ex);
             }
+            productOptions();
             Console.Write("Enter your product choice: ");
             choice = Convert.ToInt32(Console.ReadLine());
-            productOptions();
+           
         }
     }
     public static void SwitchOrder()
@@ -198,6 +199,7 @@ public static class Program1
             {
                 Console.WriteLine(ex);
             }
+            orderOptions();
             Console.Write("Enter your choice: ");
             choice = Convert.ToInt32(Console.ReadLine());
         }
@@ -261,6 +263,7 @@ public static class Program1
             {
                 Console.WriteLine(ex);
             }
+            cartOptions();
             Console.Write("Enter your choice: ");
             choice = Convert.ToInt32(Console.ReadLine());
         }

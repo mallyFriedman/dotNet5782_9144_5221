@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿
 
 namespace BO
 {
@@ -13,6 +9,12 @@ namespace BO
         public eOrderStatus OrderStatus { get; set; }///enum
         public int AmountProduct { get; set; }
         public double TotalPrice { get; set; }
+        public override string ToString() => $@"
+        ID={Id}, 
+        CustomerName={CustomerName}, 
+    	OrderStatus: {OrderStatus},
+    	AmountProduct: {AmountProduct},
+        TotalPrice: {TotalPrice}";
 
     }
 }

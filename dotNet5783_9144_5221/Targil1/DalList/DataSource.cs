@@ -95,7 +95,7 @@ public static class DataSource ///internal ???????????
             for (int j = 0; j < min; j++)
             {
                 int id = Config.OrderItemId;
-                int numberPoduct = (int)rand.NextInt64(0, Config._indexArrProduct);
+                int numberPoduct = (int)rand.NextInt64(0, ProductList.Count());
                 int amount = (int)rand.NextInt64(0,ProductList[numberPoduct].InStock);
                 orderItemi.Id = id;
                 orderItemi.OrderID = orderId;
