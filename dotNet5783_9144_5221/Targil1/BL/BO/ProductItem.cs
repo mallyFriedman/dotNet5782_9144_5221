@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿
 namespace BO
 {
     public class ProductItem
@@ -19,9 +14,9 @@ namespace BO
         Product ID={Id}, 
         Product ProductName={ProductName}, 
     	Price: {Price}
-        category - {Category}
-        Amount in stock: {InStock}
-        Amount in cart: {InStock}";
+        Category - {Category}
+        In stock? {InStock}
+        Amount in cart= {AmountInCart}";
         
     }
 }

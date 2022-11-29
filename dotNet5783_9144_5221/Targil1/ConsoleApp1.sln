@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.32014.148
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsoleApp1", "ConsoleApp1\ConsoleApp1.csproj", "{1B692511-14E4-4627-9066-FE2DA63274FB}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DalFacade", "DalFacade\DalFacade.csproj", "{2E78367A-2327-460E-B306-F1E51999143C}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DalList", "DalList\DalList.csproj", "{B7E3BA2B-FE85-4F41-BAD4-88468D4003C2}"
@@ -15,9 +13,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DalTest", "DalTest\DalTest.
 		{2E78367A-2327-460E-B306-F1E51999143C} = {2E78367A-2327-460E-B306-F1E51999143C}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BL", "BL\BL.csproj", "{279E59B9-59E3-439B-A07B-E649E9B8CB9F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BL", "BL\BL.csproj", "{279E59B9-59E3-439B-A07B-E649E9B8CB9F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlTest", "BlTest\BlTest.csproj", "{B4674386-CB44-4DA4-A8FD-6D41E59A4EE2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlTest", "BlTest\BlTest.csproj", "{B4674386-CB44-4DA4-A8FD-6D41E59A4EE2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -25,10 +23,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{1B692511-14E4-4627-9066-FE2DA63274FB}.Debug|Any CPU.ActiveCfg = Release|Any CPU
-		{1B692511-14E4-4627-9066-FE2DA63274FB}.Debug|Any CPU.Build.0 = Release|Any CPU
-		{1B692511-14E4-4627-9066-FE2DA63274FB}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1B692511-14E4-4627-9066-FE2DA63274FB}.Release|Any CPU.Build.0 = Release|Any CPU
 		{2E78367A-2327-460E-B306-F1E51999143C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{2E78367A-2327-460E-B306-F1E51999143C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2E78367A-2327-460E-B306-F1E51999143C}.Release|Any CPU.ActiveCfg = Release|Any CPU

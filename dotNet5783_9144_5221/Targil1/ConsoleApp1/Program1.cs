@@ -17,7 +17,7 @@ public static class Program1
             "1 for product, " +
             "2 for order, " +
             "3 for cart. ");
-        Console.Write("Enter your choice: ");
+        Console.Write("Enter your choice:");
         int choice = Convert.ToInt32(Console.ReadLine());
         while (choice != 0)
         {
@@ -71,7 +71,7 @@ public static class Program1
                             "1 for  Necklaces" +
                             "2 for Bracelets" +
                             "3 for Earrings" +
-                            "4 for Rings: ");
+                            "4 for Rings");
                         obj.Category = (BO.Category)Convert.ToInt32(Console.ReadLine());
                         obj.Id = 0;
                         iBl.Product.Add(obj);
@@ -152,9 +152,8 @@ public static class Program1
             {
                 Console.WriteLine(ex);
             }
-            Console.Write("Enter your product choice: ");
+            Console.Write("Enter your choice: ");
             choice = Convert.ToInt32(Console.ReadLine());
-            productOptions();
         }
     }
     public static void SwitchOrder()
@@ -277,13 +276,13 @@ public static class Program1
     public static void productOptions()
     {
         Console.Write("enter 0 for EXIT " +
-                          "1 for Add , "+
-                          "2 for GetAllForCustomer, " +
-                          "3 for GetAllForManager, " +
-                          "4 for GetCustomer, " +
-                          "5 for GetManager, " +
-                          "6 for update, " +
-                          "7 for Delete: " 
+                          "1 for GetAllForCustomer, " +
+                          "2 for GetAllForManager, " +
+                          "3 for GetCustomer, " +
+                          "4 for GetManager, " +
+                          "5 for update, " +
+                          "5 for Delete, " +
+                          "6 for Add : "
                           );
     }
 

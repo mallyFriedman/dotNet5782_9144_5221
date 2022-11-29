@@ -9,7 +9,6 @@ namespace BlApi
         public IEnumerable<BO.ProductItem> GetAllForManager();
         //get one product:
         public Product GetManager(int id);
-
         public Product GetCustomer(int id);
         public void Add(Product product);
         public void Delete(int id);
