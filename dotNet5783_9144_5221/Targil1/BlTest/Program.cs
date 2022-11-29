@@ -6,6 +6,7 @@ using BlApi;
 public static class Program1
 {
     static IBl iBl = new Bl();
+    static BO.Cart cart=new BO.Cart();
     enum Options { exit, product, order, cart };
     enum ProductOptions { EXIT, Add, GetAllForCustomer, GetAllForManager, GetCustomer, GetManager, update, Delete };
     enum OrderOptions { EXIT, GetAll, Get, UpdateSupply, UpdateShipping };
@@ -210,52 +211,38 @@ public static class Program1
         cartOptions();
         int choice = Convert.ToInt32(Console.ReadLine());
         int id;
-        BO.Cart cart;
         while (choice != 0)
         {
             try
             {
                 switch ((CartOptions)choice)
                 {
-                    // public List<OrderItem> Items { get; set; }
-                    // public double TotalPrice { get; set; }
                     case CartOptions.Add:
-                        cart = new BO.Cart();
                         Console.Write("Enter the product id: ");
                         int idProduct = Convert.ToInt32(Console.ReadLine());
-                        Console.Write("Enter the CustomerName: ");
-                        cart.CustomerName = Console.ReadLine();
-                        Console.Write("Enter the CustomerEmail: ");
-                        cart.CustomerEmail = Console.ReadLine();
-                        Console.Write("Enter the CustomerAdress: ");
-                        cart.CustomerAdress = Console.ReadLine();
-                        //////
                         iBl.Cart.Add(cart, idProduct);
+
+                        Console.WriteLine(cart);
                         break;
                     case CartOptions.Update:
-                        cart = new BO.Cart();
-                        Console.Write("Enter the product id: ");
+                        Console.Write("Enter the product id to update: ");
                         int idProd = Convert.ToInt32(Console.ReadLine());
-                        Console.Write("Enter the new amount: ");
+                        Console.Write("Enter the new amount for update: ");
                         int amount = Convert.ToInt32(Console.ReadLine());
-                        Console.Write("Enter the CustomerName: ");
-                        cart.CustomerName = Console.ReadLine();
-                        Console.Write("Enter the CustomerEmail: ");
-                        cart.CustomerEmail = Console.ReadLine();
-                        Console.Write("Enter the CustomerAdress: ");
-                        cart.CustomerAdress = Console.ReadLine();
                         iBl.Cart.Update(cart, idProd, amount);
+
+                        Console.WriteLine(cart);
                         break;
                     case CartOptions.Confirm:
-                        cart = new BO.Cart();
                         Console.Write("Enter the CustomerName: ");
-                        cart.CustomerName = Console.ReadLine();
+                        string CustomerName = Console.ReadLine();
                         Console.Write("Enter the CustomerEmail: ");
-                        cart.CustomerEmail = Console.ReadLine();
+                        string CustomerEmail = Console.ReadLine();
                         Console.Write("Enter the CustomerAdress: ");
-                        cart.CustomerAdress = Console.ReadLine();
+                        string CustomerAdress = Console.ReadLine();
 
-                        iBl.Cart.Confirm(cart, cart.CustomerName, cart.CustomerEmail, cart.CustomerAdress);
+                        iBl.Cart.Confirm(cart, CustomerName, CustomerEmail, CustomerAdress);
+                        Console.WriteLine(cart);
                         break;
                 }
             }

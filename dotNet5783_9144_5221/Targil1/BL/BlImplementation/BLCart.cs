@@ -1,5 +1,4 @@
 ﻿using BO;
-//using Dal;
 using DalApi;
 using System.Text.RegularExpressions;
 
@@ -17,7 +16,7 @@ namespace BlImplementation
         public Cart Add(BO.Cart cart, int id)
         {
             DO.Product product = Dal.Product.Get(id);
-            if (product.Equals(default(DO.OrderItem)))
+            if (product.Equals(default(DO.Product)))
             {
                 // throw ();
             }
@@ -25,8 +24,21 @@ namespace BlImplementation
             {
                 // throw ();
             }
-            BO.OrderItem item = cart.Items.Find(o => o.ProductID == id);
-            if (item == null)
+            BO.OrderItem item;
+            if (cart.Items != null)
+            {
+             item = cart.Items.Find(o => o.ProductID == id);
+                if (item == null){
+                    item = new BO.OrderItem();
+                }
+            }
+            else
+            {
+                item = new BO.OrderItem();
+                cart.Items = new List<OrderItem>();
+            }
+
+            if (item.ProductID==0)
             {
                 DO.Product dProduct = Dal.Product.Get(id);
                 BO.OrderItem dItem = new();
@@ -36,14 +48,14 @@ namespace BlImplementation
                 dItem.Price = dProduct.Price;
                 dItem.Amount = 1;
                 dItem.TotalPrice = dProduct.Price;
-                cart.Items.Append(dItem);
+                cart.Items.Add(dItem);
             }
             else
             {
                 item.Amount += 1;
                 item.TotalPrice = item.TotalPrice + item.Price;
                 cart.Items.Remove(item);
-                cart.Items.Append(item);
+                cart.Items.Add(item);
             }
             cart.TotalPrice += product.Price;
             return cart;
@@ -57,7 +69,10 @@ namespace BlImplementation
         /// <returns>the updated cart</returns>
         public Cart Update(Cart cart, int id, int newAmount)
         {
-
+            if (cart.Items == null)
+            {
+                //throw ("badd");
+            }
             BO.OrderItem item = cart.Items.Find(o => o.ProductID == id);
 
             if (item == null)
@@ -78,10 +93,10 @@ namespace BlImplementation
                 {
                     // throw ();
                 }
-                item.Amount += newAmount;
+                item.Amount = newAmount;
                 item.TotalPrice = item.Price * newAmount;
                 cart.Items.Remove(item);
-                cart.Items.Append(item);
+                cart.Items.Add(item);
                 cart.TotalPrice = cart.TotalPrice + amount * item.Price;
             }
             if (item.Amount > newAmount)
@@ -90,7 +105,7 @@ namespace BlImplementation
                 item.Amount = newAmount;
                 item.TotalPrice = item.Price * newAmount;
                 cart.Items.Remove(item);
-                cart.Items.Append(item);
+                cart.Items.Add(item);
                 cart.TotalPrice = cart.TotalPrice - amount * item.Price;
             }
             if (item.Amount == 0)
@@ -106,11 +121,12 @@ namespace BlImplementation
             var v = Regex.Match(CustomerEmail, @"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$");
             if (CustomerName == null || CustomerAdress == null || (CustomerEmail != "" && v.Index == -1))
             {
-                //throw();
+                int x=0;
+               // throw();
             }
             cart.Items.ForEach(item =>
             {
-                DO.Product product = Dal.Product.Get(item.Id);
+                DO.Product product = Dal.Product.Get(item.ProductID);
                 if (product.Equals(default(DO.OrderItem)))
                 {
                     // throw ();
@@ -136,7 +152,7 @@ namespace BlImplementation
             order.Id = orderId;
             cart.Items.ForEach(item =>
             {
-                DO.Product product = Dal.Product.Get(item.Id);
+                DO.Product product = Dal.Product.Get(item.ProductID);
                 product.InStock-=item.Amount;
                 Dal.Product.Update(product);
             });
@@ -154,8 +170,6 @@ namespace BlImplementation
                 orderItem.Id = orderItemId;
             });
 
-            // public IEnumerable<OrderItem> OrderItem { get; set; }
-            //  public double TotalPrice { get; set; }
         }
 
 
