@@ -20,7 +20,7 @@ public class DalProduct:IProduct
         Product p = DataSource.ProductList.Find(o => o.Id == id);
         if (p.Id == 0)/////////////
         {
-            throw new EntityNotFoundException("baddddddd");
+            throw new EntityNotFoundException("no product whis this id");
         }
         return p;
     }

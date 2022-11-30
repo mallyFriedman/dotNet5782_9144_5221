@@ -61,91 +61,25 @@ public static class Program1
                 switch ((ProductOptions)choice)
                 {
                     case ProductOptions.Add:
-                        obj = new BO.Product();
-                        Console.Write("Enter the product name: ");
-                        obj.ProductName = Console.ReadLine();
-                        Console.Write("Enter the product price: ");
-                        obj.Price = Convert.ToInt32(Console.ReadLine());
-                        Console.Write("Enter the products number in stock: ");
-                        obj.InStock = Convert.ToInt32(Console.ReadLine());
-                        Console.Write("Enter the products category:" +
-                            "1 for  Necklaces" +
-                            "2 for Bracelets" +
-                            "3 for Earrings" +
-                            "4 for Rings: ");
-                        obj.Category = (BO.Category)Convert.ToInt32(Console.ReadLine());
-                        obj.Id = 0;
-                        iBl.Product.Add(obj);
+                        ProductAdd();                       
                         break;
                     case ProductOptions.GetAllForCustomer:
-                        IEnumerable<BO.ProductForList> products = iBl.Product.GetAllForCustomer();
-                        foreach (BO.ProductForList item in products)
-                        {
-                            Console.WriteLine(item);
-                        }
+                        ProductGetAllForCustomer();                        
                         break;
                     case ProductOptions.GetAllForManager:
-                        IEnumerable<BO.ProductItem> items = iBl.Product.GetAllForManager();
-                        foreach (BO.ProductItem item in items)
-                        {
-                            Console.WriteLine(item);
-                        }
+                        ProductGetAllForManager();                       
                         break;
                     case ProductOptions.GetCustomer:
-                        Console.Write("Enter the id: ");
-                        id = Convert.ToInt32(Console.ReadLine());
-                        Console.WriteLine(iBl.Product.GetCustomer(id));
+                        ProductGetCustomer();                        
                         break;
                     case ProductOptions.GetManager:
-                        Console.Write("Enter the id: ");
-                        id = Convert.ToInt32(Console.ReadLine());
-                        Console.WriteLine(iBl.Product.GetManager(id));
+                        ProductGetManager();                       
                         break;
                     case ProductOptions.update:
-                        Console.Write("Enter id: ");
-                        id = Convert.ToInt32(Console.ReadLine());
-                        BO.Product a = iBl.Product.GetManager(id);
-                        if (a.ProductName == null) throw new Exception("no product found");
-                        Console.WriteLine(a);
-                        obj = new BO.Product();
-                        Console.Write("Enter the product name: ");
-                        string mishtane = Console.ReadLine();
-                        if (string.IsNullOrEmpty(mishtane))
-                        {
-                            obj.ProductName = a.ProductName;
-                        }
-                        else
-                        {
-                            obj.ProductName = mishtane;
-                        }
-                        Console.Write("Enter the product price: ");
-                        mishtane = Console.ReadLine();
-                        if (string.IsNullOrEmpty(mishtane))
-                        {
-                            obj.Price = a.Price;
-                        }
-                        else
-                        {
-                            obj.Price = Convert.ToInt32(mishtane);
-                        }
-                        Console.Write("Enter the products number in stock: ");
-                        mishtane = Console.ReadLine();
-                        if (string.IsNullOrEmpty(mishtane))
-                        {
-                            obj.InStock = a.InStock;
-                        }
-                        else
-                        {
-                            obj.InStock = Convert.ToInt32(mishtane);
-                        }
-                        obj.Id = id;
-                        iBl.Product.Update(obj);
+                        ProductUpdate();                       
                         break;
                     case ProductOptions.Delete:
-                        Console.Write("Enter id: ");
-                        id = Convert.ToInt32(Console.ReadLine());
-                        if (iBl.Product.GetManager(id).ProductName == null) throw new Exception("no product found");
-                        iBl.Product.Delete(id);
+                        ProductDelete();                        
                         break;
                 }
             }
@@ -165,6 +99,7 @@ public static class Program1
         int choice = Convert.ToInt32(Console.ReadLine());
         int id;
         BO.Order ord;
+
         while (choice != 0)
         {
             try
@@ -172,27 +107,16 @@ public static class Program1
                 switch ((OrderOptions)choice)
                 {
                     case OrderOptions.GetAll:
-                        IEnumerable<BO.OrderForList> orders = iBl.Order.GetAll();
-                        foreach (BO.OrderForList item in orders)
-                        {
-                            Console.WriteLine(item);
-                        }
+                        OrderGetAll();                      
                         break;
                     case OrderOptions.Get:
-                        Console.Write("Enter the id: ");
-                        id = Convert.ToInt32(Console.ReadLine());
-                        Console.WriteLine(iBl.Order.Get(id));
+                        OrderGet();                       
                         break;
-
                     case OrderOptions.UpdateSupply:
-                        Console.Write("Enter id: ");
-                        id = Convert.ToInt32(Console.ReadLine());
-                        iBl.Order.UpdateSupply(id);
+                        OrderUpdateSupply();                       
                         break;
                     case OrderOptions.UpdateShipping:
-                        Console.Write("Enter id: ");
-                        id = Convert.ToInt32(Console.ReadLine());
-                        iBl.Order.UpdateShipping(id);
+                        OrderUpdateShipping();
                         break;
                 }
             }
@@ -218,31 +142,13 @@ public static class Program1
                 switch ((CartOptions)choice)
                 {
                     case CartOptions.Add:
-                        Console.Write("Enter the product id: ");
-                        int idProduct = Convert.ToInt32(Console.ReadLine());
-                        iBl.Cart.Add(cart, idProduct);
-
-                        Console.WriteLine(cart);
+                        CartAdd();
                         break;
                     case CartOptions.Update:
-                        Console.Write("Enter the product id to update: ");
-                        int idProd = Convert.ToInt32(Console.ReadLine());
-                        Console.Write("Enter the new amount for update: ");
-                        int amount = Convert.ToInt32(Console.ReadLine());
-                        iBl.Cart.Update(cart, idProd, amount);
-
-                        Console.WriteLine(cart);
+                        CartUpdate();                       
                         break;
                     case CartOptions.Confirm:
-                        Console.Write("Enter the CustomerName: ");
-                        string CustomerName = Console.ReadLine();
-                        Console.Write("Enter the CustomerEmail: ");
-                        string CustomerEmail = Console.ReadLine();
-                        Console.Write("Enter the CustomerAdress: ");
-                        string CustomerAdress = Console.ReadLine();
-
-                        iBl.Cart.Confirm(cart, CustomerName, CustomerEmail, CustomerAdress);
-                        Console.WriteLine(cart);
+                        CartConfirm();                      
                         break;
                 }
             }
@@ -255,6 +161,11 @@ public static class Program1
             choice = Convert.ToInt32(Console.ReadLine());
         }
     }
+
+
+    //=======================
+    //       FUNCTIONS
+    //=======================
 
     public static void options()
     {
@@ -295,17 +206,306 @@ public static class Program1
                           );
     }
 
-   // public static void AddProduct()
-   // {
-   // }
-   // public static void AddProduct()
-   // {
-   // }
-   // public static void AddProduct()
-   // {
-   // }
-   // public static void AddProduct()
-   // {
-   // }
+
+    //====================
+    // product functions
+    //====================
+
+     public static void ProductAdd()
+     {
+        try
+        {
+            BO.Product obj;
+            obj = new BO.Product();
+            Console.Write("Enter the product name: ");
+            obj.ProductName = Console.ReadLine();
+            Console.Write("Enter the product price: ");
+            obj.Price = Convert.ToInt32(Console.ReadLine());
+            Console.Write("Enter the products number in stock: ");
+            obj.InStock = Convert.ToInt32(Console.ReadLine());
+            Console.Write("Enter the products category:" +
+                "1 for  Necklaces" +
+                "2 for Bracelets" +
+                "3 for Earrings" +
+                "4 for Rings: ");
+            obj.Category = (BO.Category)Convert.ToInt32(Console.ReadLine());
+            obj.Id = 0;
+            iBl.Product.Add(obj);
+        }
+        catch (BlObjectNotValidException ex)
+        {
+            Console.WriteLine(ex.Message);
+        }
+    }
+     public static void ProductGetAllForCustomer()
+     {
+        IEnumerable<BO.ProductForList> products = iBl.Product.GetAllForCustomer();
+        foreach (BO.ProductForList item in products)
+        {
+            Console.WriteLine(item);
+        }
+    }
+     public static void ProductGetAllForManager()
+     {
+        IEnumerable<BO.ProductItem> items = iBl.Product.GetAllForManager();
+        foreach (BO.ProductItem item in items)
+        {
+            Console.WriteLine(item);
+        }
+    }
+     public static void ProductGetCustomer()
+     {
+        try
+        {
+            int id;
+            Console.Write("Enter the id: ");
+            id = Convert.ToInt32(Console.ReadLine());
+            Console.WriteLine(iBl.Product.GetCustomer(id));
+        }
+        catch (BlIdNotValidException ex)
+        {
+            Console.WriteLine(ex.Message);
+        }
+        catch (BlObjectNotFoundException ex)
+        {
+            Console.WriteLine(ex.Message);
+        }
+    }
+    public static void ProductGetManager()
+    {
+        try
+        {
+            int id;
+            Console.Write("Enter the id: ");
+            id = Convert.ToInt32(Console.ReadLine());
+            Console.WriteLine(iBl.Product.GetManager(id));
+        }
+        catch (BlIdNotValidException ex)
+        {
+            Console.WriteLine(ex.Message);
+        }
+        catch (BlObjectNotFoundException ex)
+        {
+            Console.WriteLine(ex.Message);
+        }
+    }
+    public static void ProductUpdate()
+    {
+        try
+        {
+            int id;
+            BO.Product obj;
+            Console.Write("Enter id: ");
+            id = Convert.ToInt32(Console.ReadLine());
+            BO.Product a = iBl.Product.GetManager(id);
+            if (a.ProductName == null) throw new Exception("no product found");
+            Console.WriteLine(a);
+            obj = new BO.Product();
+            Console.Write("Enter the product name: ");
+            string mishtane = Console.ReadLine();
+            if (string.IsNullOrEmpty(mishtane))
+            {
+                obj.ProductName = a.ProductName;
+            }
+            else
+            {
+                obj.ProductName = mishtane;
+            }
+            Console.Write("Enter the product price: ");
+            mishtane = Console.ReadLine();
+            if (string.IsNullOrEmpty(mishtane))
+            {
+                obj.Price = a.Price;
+            }
+            else
+            {
+                obj.Price = Convert.ToInt32(mishtane);
+            }
+            Console.Write("Enter the products number in stock: ");
+            mishtane = Console.ReadLine();
+            if (string.IsNullOrEmpty(mishtane))
+            {
+                obj.InStock = a.InStock;
+            }
+            else
+            {
+                obj.InStock = Convert.ToInt32(mishtane);
+            }
+            obj.Id = id;
+            iBl.Product.Update(obj);
+        }
+        catch (BlObjectNotValidException ex)
+        {
+            Console.WriteLine(ex.Message);
+        }
+    }
+
+    public static void ProductDelete()
+    {
+        try
+        {
+            int id;
+            Console.Write("Enter id: ");
+            id = Convert.ToInt32(Console.ReadLine());
+            if (iBl.Product.GetManager(id).ProductName == null) throw new Exception("no product found");
+            iBl.Product.Delete(id);
+        }
+        catch (BlIdNotValidException ex)
+        {
+            Console.WriteLine(ex.Message);
+        }
+        catch (BlObjectNotFoundException ex)
+        {
+            Console.WriteLine(ex.Message);
+        }
+    }
+
+
+
+    //====================
+    // order functions
+    //====================
+    public static void OrderGetAll()
+    {
+        IEnumerable<BO.OrderForList> orders = iBl.Order.GetAll();
+        foreach (BO.OrderForList item in orders)
+        {
+            Console.WriteLine(item);
+        }
+    }
+
+    public static void OrderGet()
+    {
+        try
+        {
+            int id;
+            Console.Write("Enter the id: ");
+            id = Convert.ToInt32(Console.ReadLine());
+            Console.WriteLine(iBl.Order.Get(id));
+        }
+        catch (BlIdNotValidException ex)
+        {
+            Console.WriteLine(ex.Message);
+        }
+        catch (BlObjectNotFoundException ex)
+        {
+            Console.WriteLine(ex.Message);
+        }
+
+    }
+    public static void OrderUpdateSupply()
+    {
+        try
+        {
+            int id;
+            Console.Write("Enter id: ");
+            id = Convert.ToInt32(Console.ReadLine());
+            iBl.Order.UpdateSupply(id);
+        }
+        catch (BlCannotChangeTheStatusException ex)
+        {
+            Console.WriteLine(ex.Message);
+        }
+        catch (BlObjectNotFoundException ex)
+        {
+            Console.WriteLine(ex.Message);
+        }
+    }
+
+    public static void OrderUpdateShipping()
+    {
+        try {
+            int id;
+            Console.Write("Enter id: ");
+            id = Convert.ToInt32(Console.ReadLine());
+            iBl.Order.UpdateShipping(id);
+        }
+        catch (BlCannotChangeTheStatusException ex)
+        {
+            Console.WriteLine(ex.Message);
+        }
+        catch (BlObjectNotFoundException ex)
+        {
+            Console.WriteLine(ex.Message);
+        }
+    }
+
+
+
+    //====================
+    // order functions
+    //====================
+
+    public static void CartAdd()
+    {
+        try
+        {
+            Console.Write("Enter the product id: ");
+            int idProduct = Convert.ToInt32(Console.ReadLine());
+            iBl.Cart.Add(cart, idProduct);
+            Console.WriteLine(cart);
+        }
+        catch (BlObjectNotFoundException ex)
+        {
+            Console.WriteLine(ex.Message);
+        }
+        catch (BlOutOfStockException ex)
+        {
+            Console.WriteLine(ex.Message);
+        }
+
+    }
+
+    public static void CartUpdate()
+    {
+        try
+        {
+            Console.Write("Enter the product id to update: ");
+            int idProd = Convert.ToInt32(Console.ReadLine());
+            Console.Write("Enter the new amount for update: ");
+            int amount = Convert.ToInt32(Console.ReadLine());
+            iBl.Cart.Update(cart, idProd, amount);
+            Console.WriteLine(cart);
+        }
+        catch (BlObjectNotFoundException ex)
+        {
+            Console.WriteLine(ex.Message);
+        }
+        catch (BlOutOfStockException ex)
+        {
+            Console.WriteLine(ex.Message);
+        }
+        catch (BlCartIsEmptyException ex)
+        {
+            Console.WriteLine(ex.Message);
+        }
+    }
+
+    public static void CartConfirm()
+    {
+        try
+        {
+            Console.Write("Enter the CustomerName: ");
+            string CustomerName = Console.ReadLine();
+            Console.Write("Enter the CustomerEmail: ");
+            string CustomerEmail = Console.ReadLine();
+            Console.Write("Enter the CustomerAdress: ");
+            string CustomerAdress = Console.ReadLine();
+            iBl.Cart.Confirm(cart, CustomerName, CustomerEmail, CustomerAdress);
+            Console.WriteLine(cart);
+        }
+        catch (BlObjectNotFoundException ex)
+        {
+            Console.WriteLine(ex.Message);
+        }
+        catch (BlOutOfStockException ex)
+        {
+            Console.WriteLine(ex.Message);
+        }
+        catch (BlDetailsNotValidException ex)
+        {
+            Console.WriteLine(ex.Message);
+        }
+    }
 
 }

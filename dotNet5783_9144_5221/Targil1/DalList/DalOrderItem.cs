@@ -30,7 +30,7 @@ public class DalOrderItem : IOrderItem
         OrderItem p = DataSource.OrderItems.Find(o => o.Id == id);
         if (p.Id == 0)/////////////
         {
-            throw new Exception("no object whis this id");
+            throw new EntityNotFoundException("no object whis this id");
         }
         return p;
 
@@ -76,7 +76,7 @@ public class DalOrderItem : IOrderItem
         }
         int i = DataSource.OrderItems.FindIndex(o => o.Id == obj.Id);
         if (i == -1)
-            throw new EntityNotFoundException("no items in this order...");
+            throw new EntityNotFoundException("no items in this order");
         DataSource.OrderItems[i] = obj;
     }
 }

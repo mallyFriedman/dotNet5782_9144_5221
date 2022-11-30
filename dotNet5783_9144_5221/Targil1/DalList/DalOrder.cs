@@ -6,7 +6,7 @@ namespace Dal;
 public class DalOrder : IOrder
 {
     public int Add(Order obj)
-    {
+    {//////////
         obj.Id = DataSource.Config.OrderId;
         DataSource.OrderArr.Add(obj);
         return obj.Id;
