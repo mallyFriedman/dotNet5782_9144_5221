@@ -1,9 +1,9 @@
 ﻿using Dal;
 using DalApi;
+using BlApi;
 using BO;
 namespace BlImplementation
 {
-
     internal class BLProduct : BlApi.IProduct
     {
         IDal Dal = new DalList();
@@ -11,11 +11,9 @@ namespace BlImplementation
         /// returns all the products
         /// in a way that the customer can see
         /// </summary>
-        /// <returns></returns>
         public IEnumerable<BO.ProductForList> GetAllForCustomer()
         {
             IEnumerable<DO.Product> a = Dal.Product.Get();
-
             List<BO.ProductForList> ForList = new List<BO.ProductForList>(a.Count());
             foreach (DO.Product item in a)
             {
@@ -32,7 +30,6 @@ namespace BlImplementation
         /// returns all the products
         /// in a way that the manager can see
         /// </summary>
-        /// <returns></returns>
         public IEnumerable<BO.ProductItem> GetAllForManager()
         {
             Random rand= new Random();
@@ -47,7 +44,7 @@ namespace BlImplementation
                 b.Category = (Category)item.Category;
                 if (item.InStock>0  ) { b.InStock =true; }
                 else  { b.InStock = false;}
-                b.AmountInCart = (int)rand.NextInt64(0, 9);
+                b.AmountInCart = 0;
                 Prod.Add(b);
             }
             return Prod;
@@ -56,19 +53,19 @@ namespace BlImplementation
         /// the function returns the specific product
         /// that the manager wanted
         /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
         public Product GetManager(int id)
         {
+
             BO.Product bProduct = new BO.Product();
-            if (id < 0)
+            if (id < 100000)
             {
-                //  throw Exception("dd");
+                throw new BlIdNotValidException();
             }
             DO.Product dProduct = Dal.Product.Get(id);
-            /////////// if (dProduct.Id<0 )
-            /////////// {    //  throw Exception("dd");
-            /////////// }
+             if (dProduct.Equals(default(DO.Product)))
+             {
+                throw new BlObjectNotFoundException();
+            }
             bProduct.Category = (Category)dProduct.Category;
             bProduct.Id = dProduct.Id;
             bProduct.InStock = dProduct.InStock;
@@ -80,19 +77,18 @@ namespace BlImplementation
         /// the function returns the specific product
         /// that the customer wanted
         /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
         public Product GetCustomer(int id)
         {
             BO.Product bProduct = new BO.Product();
-            if (id < 0)
+            if (id < 100000)
             {
-                //  throw Exception("dd");
+                throw new BlIdNotValidException();
             }
             DO.Product dProduct = Dal.Product.Get(id);
-            /////////// if (dProduct.Id<0 )
-            /////////// {    //  throw Exception("dd");
-            /////////// }
+            if (dProduct.Equals(default(DO.Product))) 
+            {
+                throw new BlObjectNotFoundException();
+            }
             bProduct.Category = (Category)dProduct.Category;
             bProduct.Id = dProduct.Id;
             bProduct.InStock = dProduct.InStock;
@@ -104,12 +100,11 @@ namespace BlImplementation
         /// the function adds a product 
         /// to the list of products
         /// </summary>
-        /// <param name="product"></param>
         public void Add(Product product)
         {
-            if (product.Id < 0 || product.Price < 0 || product.ProductName == null || product.InStock < 0)
+            if ( product.Price < 0 || product.ProductName == null || product.InStock < 0)
             {
-             //   throw Exception("bad")
+                throw new BlObjectNotValidException();
             }
             DO.Product dProduct = new DO.Product();
             dProduct.Id = product.Id;
@@ -122,26 +117,28 @@ namespace BlImplementation
         /// <summary>
         /// the function deletes the product with the id it got
         /// </summary>
-        /// <param name="id"></param>
         public void Delete(int id)
         {
-            DO.OrderItem orderItem = DataSource.OrderItems.Find(o => o.Id == id);
-            if (orderItem.Equals(default(DO.OrderItem)))//////////
+            if (id < 100000)
             {
-                /////
-                /////
+                throw new BlIdNotValidException();
+
+            }
+            DO.OrderItem orderItem = DataSource.OrderItems.Find(o => o.Id == id);
+            if (orderItem.Equals(default(DO.OrderItem)))
+            {
+                throw new BlObjectNotFoundException();
             }
             Dal.Product.Delete(id);
         }
         /// <summary>
         /// the function updates the product with the id it got
         /// </summary>
-        /// <param name="product"></param>
         public void Update(Product product)
         {
-            if (product.Id < 0 || product.Price < 0 || product.ProductName == null || product.InStock < 0)
+            if (product.Id < 100000 || product.Price < 0 || product.ProductName == null || product.InStock < 0)
             {
-                //   throw Exception("bad")
+                throw new BlObjectNotValidException();
             }
             DO.Product dProduct = new DO.Product();
             dProduct.Id = product.Id;

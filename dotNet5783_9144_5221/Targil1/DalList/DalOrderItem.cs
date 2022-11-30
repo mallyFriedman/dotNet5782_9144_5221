@@ -14,15 +14,23 @@ public class DalOrderItem : IOrderItem
     }
     public void Delete(int id)
     {
+        if (id < 100000)
+        {
+            throw new IdNotValidException();
+        }
         DataSource.OrderItems.Remove(DataSource.OrderItems.Find(o => o.Id == id));
     }
   
     public OrderItem Get(int id)
     {
+        if (id < 100000)
+        {
+            throw new IdNotValidException();
+        }
         OrderItem p = DataSource.OrderItems.Find(o => o.Id == id);
         if (p.Id == 0)/////////////
         {
-            throw new Exception("baddddddd");
+            throw new Exception("no object whis this id");
         }
         return p;
 

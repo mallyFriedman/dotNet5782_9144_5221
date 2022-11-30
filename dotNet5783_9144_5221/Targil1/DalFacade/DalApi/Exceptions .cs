@@ -2,19 +2,23 @@
 {
     public class EntityNotFoundException : Exception
     {
-        public EntityNotFoundException(string message) :
-                                        base(message)
-        {
+        public EntityNotFoundException(string ex = "another") { cusmessage = ex; }
 
-        }
+        public string cusmessage;
+        public override string Message =>
+                        cusmessage;
+
     }
     public class EntityDuplicateException : Exception
     {
-        public EntityDuplicateException(string message) :
-                                        base(message)
-        {
+        public override string Message =>
+                    "Entity Duplicate";
 
-        }
+    }
+    public class IdNotValidException : Exception
+    {
+        public override string Message =>
+                       "id not valid";
 
     }
 }

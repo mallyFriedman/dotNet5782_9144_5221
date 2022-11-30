@@ -14,14 +14,23 @@ public class DalOrder : IOrder
 
     public void Delete(int id)
     {
+        if (id < 100000)
+        {
+            throw new IdNotValidException();
+        }
         DataSource.OrderArr.Remove(DataSource.OrderArr.Find(o => o.Id == id));
+        
     }
     public Order Get(int id)
     {
-        Order p = DataSource.OrderArr.Find(o => o.Id == id);
-        if (p.Id == 0)/////////////
+        if (id < 100000)
         {
-            throw new EntryPointNotFoundException("baddddddd");
+            throw new IdNotValidException();
+        }
+        Order p = DataSource.OrderArr.Find(o => o.Id == id);
+        if (p.Id == 0)
+        {
+            throw new EntityNotFoundException("order does not exist");
         }
         return p;
     }

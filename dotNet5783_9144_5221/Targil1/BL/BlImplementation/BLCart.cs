@@ -1,5 +1,6 @@
 ﻿using BO;
 using DalApi;
+using BlApi;
 using System.Text.RegularExpressions;
 
 namespace BlImplementation
@@ -8,27 +9,25 @@ namespace BlImplementation
     {
         IDal Dal = new Dal.DalList();
         /// <summary>
-        /// the function adds an item to the cart
+        /// the function adds an item to the cart and returens the updated cart
         /// </summary>
-        /// <param name="cart"></param>
-        /// <param name="id"></param>
-        /// <returns>the updated cart</returns>
         public Cart Add(BO.Cart cart, int id)
         {
             DO.Product product = Dal.Product.Get(id);
             if (product.Equals(default(DO.Product)))
             {
-                // throw ();
+                throw new BlObjectNotFoundException();
             }
             if (product.InStock == 0)
             {
-                // throw ();
+                throw new BlOutOfStockException();
             }
-            BO.OrderItem item;
+            var item=new BO.OrderItem();///
             if (cart.Items != null)
             {
-             item = cart.Items.Find(o => o.ProductID == id);
-                if (item == null){
+                item = cart.Items.Find(o => o.ProductID == id);
+                if (item == null)
+                {
                     item = new BO.OrderItem();
                 }
             }
@@ -38,7 +37,7 @@ namespace BlImplementation
                 cart.Items = new List<OrderItem>();
             }
 
-            if (item.ProductID==0)
+            if (item.ProductID == 0)
             {
                 DO.Product dProduct = Dal.Product.Get(id);
                 BO.OrderItem dItem = new();
@@ -61,23 +60,19 @@ namespace BlImplementation
             return cart;
         }
         /// <summary>
-        /// the function updates the amount of the specific item
+        /// the function updates the amount of the specific item and returns the updated cart
         /// </summary>
-        /// <param name="cart"></param>
-        /// <param name="id"></param>
-        /// <param name="newAmount"></param>
-        /// <returns>the updated cart</returns>
         public Cart Update(Cart cart, int id, int newAmount)
         {
             if (cart.Items == null)
             {
-                //throw ("badd");
+                throw new BlCartIsEmptyException();
             }
             BO.OrderItem item = cart.Items.Find(o => o.ProductID == id);
 
             if (item == null)
             {
-                //throw()
+                throw new BlObjectNotFoundException();
             }
             double lastPrice = item.TotalPrice;
 
@@ -87,11 +82,11 @@ namespace BlImplementation
                 DO.Product product = Dal.Product.Get(id);
                 if (product.Equals(default(DO.OrderItem)))
                 {
-                    // throw ();
+                    throw new BlObjectNotFoundException();
                 }
                 if ((product.InStock - amount) == 0 || (product.InStock - amount) < 0)
                 {
-                    // throw ();
+                    throw new BlOutOfStockException();
                 }
                 item.Amount = newAmount;
                 item.TotalPrice = item.Price * newAmount;
@@ -116,28 +111,26 @@ namespace BlImplementation
             return cart;
 
         }
+        /// <summary>
+        /// the function confirms the order
+        /// </summary>
         public void Confirm(Cart cart, string CustomerName, string CustomerEmail, string CustomerAdress)
         {
             var v = Regex.Match(CustomerEmail, @"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$");
             if (CustomerName == null || CustomerAdress == null || (CustomerEmail != "" && v.Index == -1))
             {
-                int x=0;
-               // throw();
+                throw new BlDetailsNotValidException();
             }
             cart.Items.ForEach(item =>
             {
                 DO.Product product = Dal.Product.Get(item.ProductID);
                 if (product.Equals(default(DO.OrderItem)))
                 {
-                    // throw ();
+                    throw new BlObjectNotFoundException();
                 }
-                if (product.InStock < 0)
+                if (product.InStock < 0 || product.InStock - item.Amount == 0 || product.InStock - item.Amount < 0)
                 {
-                    // throw ();
-                }
-                if (product.InStock - item.Amount == 0 || product.InStock - item.Amount < 0)
-                {
-                    // throw ();
+                    throw new BlOutOfStockException();
                 }
             });
             DO.Order order = new DO.Order();
@@ -148,12 +141,12 @@ namespace BlImplementation
             order.OrderDate = DateTime.Now;
             order.ShipDate = DateTime.MinValue;
             order.DeliveryDate = DateTime.MinValue;
-            int orderId= Dal.Order.Add(order);
+            int orderId = Dal.Order.Add(order);
             order.Id = orderId;
             cart.Items.ForEach(item =>
             {
                 DO.Product product = Dal.Product.Get(item.ProductID);
-                product.InStock-=item.Amount;
+                product.InStock -= item.Amount;
                 Dal.Product.Update(product);
             });
 
@@ -162,21 +155,13 @@ namespace BlImplementation
                 DO.Product product = Dal.Product.Get(item.ProductID);
                 DO.OrderItem orderItem = new();
                 orderItem.Id = 0;
-                orderItem.ProductID= item.ProductID;
-                orderItem.OrderID=order.Id;
+                orderItem.ProductID = item.ProductID;
+                orderItem.OrderID = order.Id;
                 orderItem.Price = product.Price;
                 orderItem.Amount = item.Amount;
-                int orderItemId=Dal.OrderItem.Add(orderItem);
+                int orderItemId = Dal.OrderItem.Add(orderItem);
                 orderItem.Id = orderItemId;
             });
-
         }
-
-
-        public double Price { get; set; }
-        //  public IEnumerable<ProductForList> Get();
-        //  public IEnumerable<ProductItem> Read();
-        //  public Product GetManager(int id);
-        //  public void Delete(int id);
     }
 }

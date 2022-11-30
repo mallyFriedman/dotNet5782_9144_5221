@@ -1,6 +1,7 @@
 ﻿using BO;
 using Dal;
 using DalApi;
+using BlApi;
 namespace BlImplementation
 {
     internal class BLOrder : BlApi.IOrder
@@ -9,7 +10,6 @@ namespace BlImplementation
         /// <summary>
         /// the function  returns all orders
         /// </summary>
-        /// <returns></returns>
         public IEnumerable<BO.OrderForList> GetAll()
         {
             IEnumerable<DO.Order> orders = Dal.Order.Get();
@@ -30,13 +30,16 @@ namespace BlImplementation
         /// <summary>
         /// the function returnes the specific order by id
         /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
         public Order Get(int id)
         {
+            if (id < 100000)
+            {
+                throw new BlIdNotValidException();
+            }
             DO.Order dOrder = Dal.Order.Get(id);
             if (dOrder.Equals(default(DO.OrderItem)))
-            {///
+            {
+                throw new BlObjectNotFoundException();
             }
             BO.Order bOrder = new BO.Order();
             bOrder.Id = dOrder.Id;
@@ -68,52 +71,48 @@ namespace BlImplementation
         /// <summary>
         /// updates the ship date to DateTime.Now
         /// </summary>
-        /// <param name="id"></param>
-        /// <returns>the BO updated object</returns>
         public Order UpdateSupply(int id)
         {
             DO.Order dOrder = Dal.Order.Get(id);
-            eOrderStatus a= status(dOrder.DeliveryDate, DateTime.MinValue, dOrder.ShipDate);
-
-            if (dOrder.Equals(default(DO.OrderItem))||a!= eOrderStatus.Ordered)
+            if (dOrder.Equals(default(DO.OrderItem)))
             {
-                //////
+                throw new BlObjectNotFoundException();
+            }
+            eOrderStatus a = status(dOrder.DeliveryDate, DateTime.MinValue, dOrder.ShipDate);
+            if (a != eOrderStatus.Ordered)
+            {
+                throw new BlCannotChangeTheStatusException();
             }
             dOrder.ShipDate = DateTime.Now;
             Dal.Order.Update(dOrder);
-            BO.Order bOrder = Get(id); 
+            BO.Order bOrder = Get(id);
             return bOrder;
         }
         /// <summary>
         /// updates the delivery date to DateTime.Now
         /// </summary>
-        /// <param name="id"></param>
-        /// <returns>the BO updated object</returns>
         public Order UpdateShipping(int id)
         {
             DO.Order dOrder = Dal.Order.Get(id);
-            eOrderStatus a = status(dOrder.DeliveryDate, DateTime.MinValue, dOrder.ShipDate);
-
-            if (dOrder.Equals(default(DO.OrderItem)) ||!( a == eOrderStatus.Shipped&& a!=eOrderStatus.Delivered))
+            if (dOrder.Equals(default(DO.OrderItem)))
             {
-                //////
+                throw new BlObjectNotFoundException();
+            }
+            eOrderStatus a = status(dOrder.DeliveryDate, DateTime.MinValue, dOrder.ShipDate);
+            if (!(a == eOrderStatus.Shipped && a != eOrderStatus.Delivered))
+            {
+                throw new BlCannotChangeTheStatusException();
+
             }
             dOrder.DeliveryDate = DateTime.Now;
             Dal.Order.Update(dOrder);
             BO.Order bOrder = Get(id);
             return bOrder;
         }
-        //public Order UpdateManager(int id)
-        //{
-        //}
 
         /// <summary>
-        /// the function returnes the status of the order.
+        /// the function returnes the status of the order and returns eOrderStatus
         /// </summary>
-        /// <param name="DeliveryDate"></param>
-        /// <param name="MinValue"></param>
-        /// <param name="ShipDate"></param>
-        /// <returns>BO.eOrderStatus</returns>
         private BO.eOrderStatus status(DateTime DeliveryDate, DateTime MinValue, DateTime ShipDate)
         {
             if (DeliveryDate > MinValue)
