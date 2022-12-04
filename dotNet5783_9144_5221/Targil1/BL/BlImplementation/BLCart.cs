@@ -34,7 +34,7 @@ namespace BlImplementation
             else
             {
                 item = new BO.OrderItem();
-                cart.Items = new List<OrderItem>();
+                cart.Items = new List<OrderItem?>();
             }
 
             if (item.ProductID == 0)

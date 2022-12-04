@@ -61,9 +61,9 @@ public class DalOrderItem : IOrderItem
         throw new EntityNotFoundException("no items in this order...");
     }
 
-    public IEnumerable<OrderItem> Get()
+    public IEnumerable<OrderItem> Get(Func<OrderItem, bool>? foo = null)
     {
-        return DataSource.OrderItems;
+        return foo == null ? DataSource.OrderItems : DataSource.OrderItems.Where(foo).ToList();
     }
 
     public void Update(OrderItem obj)

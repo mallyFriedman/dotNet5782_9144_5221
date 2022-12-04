@@ -3,7 +3,7 @@
     public struct Product
 {
     public int Id { get; set; }
-    public string ProductName { get; set; }
+    public string? ProductName { get; set; }
     public double Price { get; set; }
     public Enums.Category Category { get; set; }
     public int InStock { get; set; }

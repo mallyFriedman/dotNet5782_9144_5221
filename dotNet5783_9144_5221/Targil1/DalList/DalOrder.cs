@@ -35,9 +35,9 @@ public class DalOrder : IOrder
         return p;
     }
 
-    public IEnumerable<Order> Get()
+    public IEnumerable<Order> Get(Func<Order, bool>? foo = null)
     {
-        return DataSource.OrderArr;
+        return foo == null ? DataSource.OrderArr : DataSource.OrderArr.Where(foo).ToList();
     }
 
     public void Update(Order obj)

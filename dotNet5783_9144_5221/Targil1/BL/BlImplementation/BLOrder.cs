@@ -113,7 +113,7 @@ namespace BlImplementation
         /// <summary>
         /// the function returnes the status of the order and returns eOrderStatus
         /// </summary>
-        private BO.eOrderStatus status(DateTime DeliveryDate, DateTime MinValue, DateTime ShipDate)
+        private BO.eOrderStatus status(DateTime? DeliveryDate, DateTime? MinValue, DateTime? ShipDate)
         {
             if (DeliveryDate > MinValue)
                 return (BO.eOrderStatus)2;

@@ -26,9 +26,9 @@ public class DalProduct:IProduct
     }
 
     
-    public IEnumerable<Product> Get()
+    public IEnumerable<Product> Get(Func<Product, bool>? foo = null)
     {
-        return DataSource.ProductList;
+        return foo == null ? DataSource.ProductList : DataSource.ProductList.Where(foo).ToList();
     }
 
     public void Update(Product obj)
