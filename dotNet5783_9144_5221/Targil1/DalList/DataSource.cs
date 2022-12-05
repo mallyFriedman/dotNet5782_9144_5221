@@ -18,9 +18,9 @@ public static class DataSource ///internal ???????????
         private static int _orderId = 100000;
         private static int _orderItemId = 100000;
 
-        public static int ProductId { get { return ++_productId;  }  }
+        public static int ProductId { get { return ++_productId; } }
         public static int OrderId { get { return ++_orderId; } }
-        public static int OrderItemId { get { return ++_orderItemId; }  }
+        public static int OrderItemId { get { return ++_orderItemId; } }
 
         public static int IndexArrProduct { get { return ++_indexArrProduct; } set { _indexArrProduct = ++_indexArrProduct; } }
         public static int IndexArrOrder { get { return ++_indexArrOrder; } set { _indexArrOrder = ++_indexArrOrder; } }
@@ -29,8 +29,8 @@ public static class DataSource ///internal ???????????
     const int NumOfProduct = 50; // אפשר לעשות מחלקה של קבועים
     const int NumOfOrder = 100;
     const int NumOfOrderItem = 200;
-   
-    public static List <Product> ProductList = new List<Product>();
+
+    public static List<Product> ProductList = new List<Product>();
     public static List<Order> OrderArr = new List<Order>();
     public static List<OrderItem> OrderItems = new List<OrderItem>();
     static readonly Random rand = new Random();              //internal ???????????
@@ -51,7 +51,7 @@ public static class DataSource ///internal ???????????
         {
             Product product = new Product();
             int number = (int)rand.NextInt64(productNames.Length);
-            int category = (int)rand.NextInt64(0,4);
+            int category = (int)rand.NextInt64(0, 4);
             int id = Config.ProductId;
             int inStock = (int)rand.NextInt64(0, 50);
             int price = (int)rand.NextInt64(1000, 9000);
@@ -80,7 +80,7 @@ public static class DataSource ///internal ???????????
             orderi.OrderDate = DateTime.MinValue;
             orderi.ShipDate = (orderi.OrderDate + t_ShipDate);
             orderi.DeliveryDate = (orderi.ShipDate + t_DeliveryDate);
-            OrderArr.Add(orderi) ;
+            OrderArr.Add(orderi);
         }
 
     }
@@ -91,12 +91,12 @@ public static class DataSource ///internal ???????????
             OrderItem orderItemi = new OrderItem();
             int orderId = OrderArr[i].Id;
             int min = (int)rand.NextInt64(1, 4);
-           
+
             for (int j = 0; j < min; j++)
             {
                 int id = Config.OrderItemId;
                 int numberPoduct = (int)rand.NextInt64(0, ProductList.Count());
-                int amount = (int)rand.NextInt64(0,ProductList[numberPoduct].InStock);
+                int amount = (int)rand.NextInt64(0, ProductList[numberPoduct].InStock);
                 orderItemi.Id = id;
                 orderItemi.OrderID = orderId;
                 orderItemi.ProductID = ProductList[numberPoduct].Id;
@@ -104,13 +104,13 @@ public static class DataSource ///internal ???????????
                 orderItemi.Amount = amount;
                 Product p = ProductList[numberPoduct];
                 p.InStock = ProductList[numberPoduct].InStock - amount;
-                OrderItems.Add(orderItemi) ;
+                OrderItems.Add(orderItemi);
                 ///////////////update the source ????????????
             }
 
         }
     }
-  
+
 
 
 

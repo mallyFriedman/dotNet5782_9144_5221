@@ -20,7 +20,7 @@ public class DalOrderItem : IOrderItem
         }
         DataSource.OrderItems.Remove(DataSource.OrderItems.Find(o => o.Id == id));
     }
-  
+
     public OrderItem Get(int id)
     {
         if (id < 100000)
@@ -64,6 +64,10 @@ public class DalOrderItem : IOrderItem
     public IEnumerable<OrderItem> Get(Func<OrderItem, bool>? foo = null)
     {
         return foo == null ? DataSource.OrderItems : DataSource.OrderItems.Where(foo).ToList();
+    }
+    public OrderItem? GetSingle(Func<OrderItem, bool> foo)
+    {
+        return DataSource.OrderItems.Where(foo).ToList()[0];
     }
 
     public void Update(OrderItem obj)

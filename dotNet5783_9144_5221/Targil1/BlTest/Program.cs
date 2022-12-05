@@ -6,7 +6,7 @@ using BlApi;
 public static class Program1
 {
     static IBl iBl = new Bl();
-    static BO.Cart cart=new BO.Cart();
+    static BO.Cart cart = new BO.Cart();
     enum Options { exit, product, order, cart };
     enum ProductOptions { EXIT, Add, GetAllForCustomer, GetAllForManager, GetCustomer, GetManager, update, Delete };
     enum OrderOptions { EXIT, GetAll, Get, UpdateSupply, UpdateShipping };
@@ -61,25 +61,25 @@ public static class Program1
                 switch ((ProductOptions)choice)
                 {
                     case ProductOptions.Add:
-                        ProductAdd();                       
+                        ProductAdd();
                         break;
                     case ProductOptions.GetAllForCustomer:
-                        ProductGetAllForCustomer();                        
+                        ProductGetAllForCustomer();
                         break;
                     case ProductOptions.GetAllForManager:
-                        ProductGetAllForManager();                       
+                        ProductGetAllForManager();
                         break;
                     case ProductOptions.GetCustomer:
-                        ProductGetCustomer();                        
+                        ProductGetCustomer();
                         break;
                     case ProductOptions.GetManager:
-                        ProductGetManager();                       
+                        ProductGetManager();
                         break;
                     case ProductOptions.update:
-                        ProductUpdate();                       
+                        ProductUpdate();
                         break;
                     case ProductOptions.Delete:
-                        ProductDelete();                        
+                        ProductDelete();
                         break;
                 }
             }
@@ -90,7 +90,7 @@ public static class Program1
             productOptions();
             Console.Write("Enter your product choice: ");
             choice = Convert.ToInt32(Console.ReadLine());
-           
+
         }
     }
     public static void SwitchOrder()
@@ -107,13 +107,13 @@ public static class Program1
                 switch ((OrderOptions)choice)
                 {
                     case OrderOptions.GetAll:
-                        OrderGetAll();                      
+                        OrderGetAll();
                         break;
                     case OrderOptions.Get:
-                        OrderGet();                       
+                        OrderGet();
                         break;
                     case OrderOptions.UpdateSupply:
-                        OrderUpdateSupply();                       
+                        OrderUpdateSupply();
                         break;
                     case OrderOptions.UpdateShipping:
                         OrderUpdateShipping();
@@ -145,10 +145,10 @@ public static class Program1
                         CartAdd();
                         break;
                     case CartOptions.Update:
-                        CartUpdate();                       
+                        CartUpdate();
                         break;
                     case CartOptions.Confirm:
-                        CartConfirm();                      
+                        CartConfirm();
                         break;
                 }
             }
@@ -178,13 +178,13 @@ public static class Program1
     public static void productOptions()
     {
         Console.Write("enter 0 for EXIT " +
-                          "1 for Add , "+
+                          "1 for Add , " +
                           "2 for GetAllForCustomer, " +
                           "3 for GetAllForManager, " +
                           "4 for GetCustomer, " +
                           "5 for GetManager, " +
                           "6 for update, " +
-                          "7 for Delete: " 
+                          "7 for Delete: "
                           );
     }
 
@@ -211,8 +211,8 @@ public static class Program1
     // product functions
     //====================
 
-     public static void ProductAdd()
-     {
+    public static void ProductAdd()
+    {
         try
         {
             BO.Product obj;
@@ -237,24 +237,24 @@ public static class Program1
             Console.WriteLine(ex.Message);
         }
     }
-     public static void ProductGetAllForCustomer()
-     {
+    public static void ProductGetAllForCustomer()
+    {
         IEnumerable<BO.ProductForList> products = iBl.Product.GetAllForCustomer();
         foreach (BO.ProductForList item in products)
         {
             Console.WriteLine(item);
         }
     }
-     public static void ProductGetAllForManager()
-     {
+    public static void ProductGetAllForManager()
+    {
         IEnumerable<BO.ProductItem> items = iBl.Product.GetAllForManager();
         foreach (BO.ProductItem item in items)
         {
             Console.WriteLine(item);
         }
     }
-     public static void ProductGetCustomer()
-     {
+    public static void ProductGetCustomer()
+    {
         try
         {
             int id;
@@ -414,7 +414,8 @@ public static class Program1
 
     public static void OrderUpdateShipping()
     {
-        try {
+        try
+        {
             int id;
             Console.Write("Enter id: ");
             id = Convert.ToInt32(Console.ReadLine());

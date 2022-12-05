@@ -32,7 +32,7 @@ namespace BlImplementation
         /// </summary>
         public IEnumerable<BO.ProductItem> GetAllForManager()
         {
-            Random rand= new Random();
+            Random rand = new Random();
             IEnumerable<DO.Product> a = Dal.Product.Get();
             List<BO.ProductItem> Prod = new List<BO.ProductItem>(a.Count());
             foreach (DO.Product item in a)
@@ -42,8 +42,8 @@ namespace BlImplementation
                 b.ProductName = item.ProductName;
                 b.Price = item.Price;
                 b.Category = (Category)item.Category;
-                if (item.InStock>0  ) { b.InStock =true; }
-                else  { b.InStock = false;}
+                if (item.InStock > 0) { b.InStock = true; }
+                else { b.InStock = false; }
                 b.AmountInCart = 0;
                 Prod.Add(b);
             }
@@ -61,9 +61,9 @@ namespace BlImplementation
             {
                 throw new BlIdNotValidException();
             }
-            DO.Product dProduct = Dal.Product.Get(id);
-             if (dProduct.Equals(default(DO.Product)))
-             {
+            DO.Product dProduct = Dal.Product.GetSingle(prod=>prod.Id==id);
+            if (dProduct.Equals(default(DO.Product)))
+            {
                 throw new BlObjectNotFoundException();
             }
             bProduct.Category = (Category)dProduct.Category;
@@ -85,7 +85,7 @@ namespace BlImplementation
                 throw new BlIdNotValidException();
             }
             DO.Product dProduct = Dal.Product.Get(id);
-            if (dProduct.Equals(default(DO.Product))) 
+            if (dProduct.Equals(default(DO.Product)))
             {
                 throw new BlObjectNotFoundException();
             }
@@ -102,7 +102,7 @@ namespace BlImplementation
         /// </summary>
         public void Add(Product product)
         {
-            if ( product.Price < 0 || product.ProductName == null || product.InStock < 0)
+            if (product.Price < 0 || product.ProductName == null || product.InStock < 0)
             {
                 throw new BlObjectNotValidException();
             }
@@ -151,5 +151,5 @@ namespace BlImplementation
     }
 }
 
-   
+
 

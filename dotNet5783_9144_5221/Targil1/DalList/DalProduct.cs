@@ -2,9 +2,9 @@
 using DO;
 namespace Dal;
 
-public class DalProduct:IProduct
+public class DalProduct : IProduct
 {
-    public  int Add(Product obj)
+    public int Add(Product obj)
     {
         obj.Id = DataSource.Config.ProductId;
         DataSource.ProductList.Add(obj);
@@ -25,12 +25,16 @@ public class DalProduct:IProduct
         return p;
     }
 
-    
+
     public IEnumerable<Product> Get(Func<Product, bool>? foo = null)
     {
         return foo == null ? DataSource.ProductList : DataSource.ProductList.Where(foo).ToList();
     }
 
+    public Product? GetSingle(Func<Product, bool> foo)
+    {
+        return DataSource.ProductList.Where(foo).ToList()[0];
+    }
     public void Update(Product obj)
     {
 

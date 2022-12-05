@@ -22,7 +22,7 @@ namespace BlImplementation
             {
                 throw new BlOutOfStockException();
             }
-            var item=new BO.OrderItem();///
+            var item = new BO.OrderItem();///
             if (cart.Items != null)
             {
                 item = cart.Items.Find(o => o.ProductID == id);

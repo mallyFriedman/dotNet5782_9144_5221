@@ -10,6 +10,6 @@ namespace BO
     {
         public int Id { get; set; }
         public eOrderStatus OrderStatus { get; set; }
-       // public List<DateTime,string> StatusList { get; set; }
+        // public List<DateTime,string> StatusList { get; set; }
     }
 }

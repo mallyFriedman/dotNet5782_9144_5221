@@ -19,7 +19,7 @@ public class DalOrder : IOrder
             throw new IdNotValidException();
         }
         DataSource.OrderArr.Remove(DataSource.OrderArr.Find(o => o.Id == id));
-        
+
     }
     public Order Get(int id)
     {
@@ -38,6 +38,16 @@ public class DalOrder : IOrder
     public IEnumerable<Order> Get(Func<Order, bool>? foo = null)
     {
         return foo == null ? DataSource.OrderArr : DataSource.OrderArr.Where(foo).ToList();
+    }
+
+    public IEnumerable<Order> Get(Func<Order, bool?>? foo = null)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Order? GetSingle(Func<Order, bool> foo)
+    {
+        return DataSource.OrderArr.Where(foo).ToList()[0];
     }
 
     public void Update(Order obj)

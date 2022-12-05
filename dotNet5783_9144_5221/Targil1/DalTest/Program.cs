@@ -1,14 +1,14 @@
 ﻿using DalApi;
-    using DO;
+using DO;
 namespace Dal;
 
 public static class Program
 {
     static IDal iDal = new DalList();
     enum Options { exit, product, order, orderItem };
-    enum InnerOptions { add,  readId, read, update, delete };
+    enum InnerOptions { add, readId, read, update, delete };
     enum InnerOptionsOredrItem { add, readId, readOrderItem, read, update, delete };
-    
+
     //private Product obj=new Product();
     //Order ord=new Order();
     //OrderItem ordrI=new OrderItem();
@@ -65,9 +65,9 @@ public static class Program
                 Console.Write("Enter the products number in stock: ");
                 obj.InStock = Convert.ToInt32(Console.ReadLine());
                 Console.Write("Enter the products category:" +
-                    "1 for  Necklaces"+
-                    "2 for Bracelets"+
-                    "3 for Earrings"+
+                    "1 for  Necklaces" +
+                    "2 for Bracelets" +
+                    "3 for Earrings" +
                     "4 for Rings");
                 obj.Category = (Enums.Category)Convert.ToInt32(Console.ReadLine());
                 obj.Id = DataSource.Config.ProductId;
@@ -76,19 +76,19 @@ public static class Program
             case InnerOptions.readId:
                 Console.Write("Enter the id: ");
                 id = Convert.ToInt32(Console.ReadLine());
-                Console.WriteLine(iDal.Product.Get(id));
+                Console.WriteLine(iDal.Product.GetSingle(prod => prod.Id == id));
                 break;
             case InnerOptions.read:
-                IEnumerable <Product> orders = iDal.Product.Get();
+                IEnumerable<Product> orders = iDal.Product.Get();
                 foreach (Product item in orders)
-                    {
-                        Console.WriteLine(item);
-                    }
+                {
+                    Console.WriteLine(item);
+                }
                 break;
             case InnerOptions.update:
                 Console.Write("Enter id: ");
                 id = Convert.ToInt32(Console.ReadLine());
-                Product a = iDal.Product.Get(id);
+                Product a = iDal.Product.GetSingle(prod=>prod.Id==id);
                 if (a.ProductName == null) throw new Exception("no product found");
                 Console.WriteLine(a);
                 obj = new Product();
@@ -110,7 +110,7 @@ public static class Program
                 }
                 else
                 {
-                    obj.Price =Convert.ToInt32(mishtane);
+                    obj.Price = Convert.ToInt32(mishtane);
                 }
                 Console.Write("Enter the products number in stock: ");
                 mishtane = Console.ReadLine();
@@ -120,7 +120,7 @@ public static class Program
                 }
                 else
                 {
-                    obj.InStock =   Convert.ToInt32(mishtane);
+                    obj.InStock = Convert.ToInt32(mishtane);
                 }
                 obj.Id = id;
                 iDal.Product.Update(obj);
@@ -128,7 +128,7 @@ public static class Program
             case InnerOptions.delete:
                 Console.Write("Enter id: ");
                 id = Convert.ToInt32(Console.ReadLine());
-                if (iDal.Product.Get(id).ProductName == null) throw new Exception("no product found");
+                if (iDal.Product.GetSingle(prod => prod.Id == id).ProductName == null) throw new Exception("no product found");
                 iDal.Product.Delete(id);
                 break;
         }
@@ -158,7 +158,7 @@ public static class Program
             case InnerOptions.readId:
                 Console.Write("Enter the id: ");
                 id = Convert.ToInt32(Console.ReadLine());
-                Console.WriteLine(iDal.Order.Get(id));
+                Console.WriteLine(iDal.Order.GetSingle(prod => prod.Id == id));
                 break;
             case InnerOptions.read:
                 IEnumerable<Order> orders = iDal.Order.Get();
@@ -170,7 +170,7 @@ public static class Program
             case InnerOptions.update:
                 Console.Write("Enter id: ");
                 id = Convert.ToInt32(Console.ReadLine());
-                Order a = iDal.Order.Get(id);
+                Order a = iDal.Order.GetSingle(prod => prod.Id == id);
                 if (a.CustomerEmail == null) throw new Exception("no product found");
                 Console.WriteLine(a);
                 ord = new Order();
@@ -198,7 +198,7 @@ public static class Program
                 mishtane = Console.ReadLine();
                 if (string.IsNullOrEmpty(mishtane))
                 {
-                    ord.CustomerAdress = a.CustomerAdress ;
+                    ord.CustomerAdress = a.CustomerAdress;
                 }
                 else
                 {
@@ -244,31 +244,31 @@ public static class Program
                 id = Convert.ToInt32(Console.ReadLine());
                 IEnumerable<OrderItem> items = iDal.OrderItem.ReadOrderId(id);
                 foreach (OrderItem item in items)
-                    {
-                        Console.WriteLine(item);
-                    }
+                {
+                    Console.WriteLine(item);
+                }
                 break;
             case InnerOptionsOredrItem.readOrderItem:
                 Console.Write("Enter the order id: ");
                 id = Convert.ToInt32(Console.ReadLine());
-                Console.WriteLine(iDal.OrderItem.Get(id));
+                Console.WriteLine(iDal.OrderItem.GetSingle(prod => prod.Id == id));
                 break;
             case InnerOptionsOredrItem.read:
                 IEnumerable<OrderItem> orders = iDal.OrderItem.Get();
                 foreach (OrderItem item in orders)
-                    {
-                        Console.WriteLine(item);
-                    }
+                {
+                    Console.WriteLine(item);
+                }
                 break;
             case InnerOptionsOredrItem.update:
                 ordrI = new OrderItem();
                 Console.Write("Enter id: ");
                 id = Convert.ToInt32(Console.ReadLine());
                 OrderItem a = new OrderItem();
-                a= iDal.OrderItem.Get(id);
+                a = iDal.OrderItem.GetSingle(prod => prod.Id == id);
                 if (a.Id == 0) throw new Exception("no product found");
-                    Console.Write(a);
-                string mishtane = Console.ReadLine();               
+                Console.Write(a);
+                string mishtane = Console.ReadLine();
                 Console.Write("Enter the product id: ");
                 mishtane = Console.ReadLine();
 
@@ -318,8 +318,8 @@ public static class Program
                 Console.Write("Enter order id:");
                 id = Convert.ToInt32(Console.ReadLine());
                 OrderItem ab = new OrderItem();
-                ab = iDal.OrderItem.Get(id);
-                if (ab.Id==0) throw new Exception("no product found");
+                ab = iDal.OrderItem.GetSingle(prod => prod.Id == id);
+                if (ab.Id == 0) throw new Exception("no product found");
                 iDal.OrderItem.Delete(ab.Id);
                 break;
         }
@@ -342,5 +342,5 @@ public static class Program
                           "4 for update, " +
                           "5 for delete : ");
     }
-    
+
 }

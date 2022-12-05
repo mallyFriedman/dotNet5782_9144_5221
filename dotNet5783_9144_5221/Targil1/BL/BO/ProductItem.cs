@@ -17,7 +17,7 @@ namespace BO
         Category - {Category}
         In stock? {InStock}
         Amount in cart= {AmountInCart}";
-        
+
     }
 }
 

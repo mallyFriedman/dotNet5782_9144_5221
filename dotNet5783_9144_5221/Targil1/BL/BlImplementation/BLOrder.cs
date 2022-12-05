@@ -27,6 +27,7 @@ namespace BlImplementation
             }
             return ordersForList;
         }
+
         /// <summary>
         /// the function returnes the specific order by id
         /// </summary>
@@ -36,7 +37,7 @@ namespace BlImplementation
             {
                 throw new BlIdNotValidException();
             }
-            DO.Order dOrder = Dal.Order.Get(id);
+            DO.Order dOrder = Dal.Order.GetSingle(ord => ord.Id == id);
             if (dOrder.Equals(default(DO.OrderItem)))
             {
                 throw new BlObjectNotFoundException();
