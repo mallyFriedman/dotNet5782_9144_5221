@@ -7,6 +7,7 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
+        <Button Content="Click here!" HorizontalAlignment="Center" VerticalAlignment="Top" RenderTransformOrigin="0.132,0.486" Click="Button_Click" Foreground="#FFFF4242" BorderBrush="{x:Null}" Background="#FFA3EFFD" FontSize="22" Width="800" Margin="0,100,0,0"/>
 
     </Grid>
 </Window>

@@ -11,9 +11,12 @@ namespace BlImplementation
         /// returns all the products
         /// in a way that the customer can see
         /// </summary>
-        public IEnumerable<BO.ProductForList> GetAllForCustomer()
+        public IEnumerable<BO.ProductForList> GetAllForCustomer(BO.Category? category = null)
         {
-            IEnumerable<DO.Product> a = Dal.Product.Get();
+            IEnumerable<DO.Product> a;
+            if (category == null)
+                a = Dal.Product.Get();
+            else a=Dal.Product.Get(p=>(BO.Category)p.Category==category);
             List<BO.ProductForList> ForList = new List<BO.ProductForList>(a.Count());
             foreach (DO.Product item in a)
             {

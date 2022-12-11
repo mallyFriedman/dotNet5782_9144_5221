@@ -17,4 +17,9 @@ public struct Order
         ShipDate: {ShipDate},
         OrderDate: {OrderDate},
         DeliveryDate: {DeliveryDate}";
+
+    public static explicit operator Order(List<Order> v)
+    {
+        throw new NotImplementedException();
+    }
 }

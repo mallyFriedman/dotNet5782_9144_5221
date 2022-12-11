@@ -5,5 +5,4 @@ namespace DalApi
     {
         public IEnumerable<OrderItem> ReadOrderId(int id);
     }
-    }
 }

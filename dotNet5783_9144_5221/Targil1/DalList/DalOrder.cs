@@ -35,19 +35,15 @@ public class DalOrder : IOrder
         return p;
     }
 
-    public IEnumerable<Order> Get(Func<Order, bool>? foo = null)
+    public IEnumerable<Order>? Get(Func<Order, bool>? foo = null)
     {
         return foo == null ? DataSource.OrderArr : DataSource.OrderArr.Where(foo).ToList();
     }
 
-    public IEnumerable<Order> Get(Func<Order, bool?>? foo = null)
-    {
-        throw new NotImplementedException();
-    }
 
-    public Order? GetSingle(Func<Order, bool> foo)
+    public Order? GetSingle(Func<Order, bool>? foo)
     {
-        return DataSource.OrderArr.Where(foo).ToList()[0];
+        return  DataSource.OrderArr.Where(foo).ToList()[0] ;
     }
 
     public void Update(Order obj)
@@ -56,6 +52,11 @@ public class DalOrder : IOrder
         if (i == -1)
             throw new EntryPointNotFoundException("no items in this order...");
         DataSource.OrderArr[i] = obj;
+    }
+
+    Order ICrud<Order>.GetSingle(Func<Order, bool>? foo)
+    {
+        throw new NotImplementedException();
     }
 }
 

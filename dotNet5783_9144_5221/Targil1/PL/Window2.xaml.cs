@@ -19,9 +19,30 @@ namespace PL
     /// </summary>
     public partial class Window2 : Window
     {
+        private BlApi.IBl Bl { get; set; }
+
         public Window2()
         {
+            Bl = new BlImplementation.Bl();
             InitializeComponent();
+            ProductsListview.ItemsSource = Bl.Product.GetAllForCustomer();
+            CategorySelector.ItemsSource = Enum.GetValues(typeof(BO.Category));
+        }
+
+        private void AttributeSelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            ProductsListview.ItemsSource = Bl.Product.GetAllForCustomer((BO.Category)CategorySelector.SelectedItem);
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            new Window1().Show();
+            this.Hide();
+        }
+
+        private void ProductsListview_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
         }
     }
 }

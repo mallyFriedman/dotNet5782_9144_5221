@@ -43,4 +43,9 @@ public class DalProduct : IProduct
             throw new EntityNotFoundException("no items in this order...");
         DataSource.ProductList[i] = obj;
     }
+
+    Product ICrud<Product>.GetSingle(Func<Product, bool>? foo)
+    {
+        throw new NotImplementedException();
+    }
 }

@@ -6,12 +6,31 @@
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
         Title="Window2" Height="640" Width="800">
-    <Grid Name="MainGrid" RenderTransformOrigin="0.497,0.497">
+    <Grid Name="MainGrid" RenderTransformOrigin="0.497,0.497" Margin="0,5,0,-5">
         <Grid.RowDefinitions>
-            <RowDefinition Height="250*"/>
+            <RowDefinition Height="100"/>
             <RowDefinition Height="240"/>
             <RowDefinition Height="200"/>
         </Grid.RowDefinitions>
-        <Grid/>
+
+        <Grid Name="UpGrid" Height="auto" Grid.Row="0" Width="auto">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions >
+            <ComboBox Name="CategorySelector" Grid.ColumnSpan="2" Margin="390,0,10,0" SelectionChanged="AttributeSelector_SelectionChanged"/>
+
+
+        </Grid >
+        <Label Grid.Column="0" Content="Category" HorizontalAlignment="Left" Margin="163,32,0,0" VerticalAlignment="Top" Height="40" Width="204"/>
+        <ListView Grid.Row="1" x:Name="ProductsListview" d:ItemsSource="{d:SampleData ItemCount=1}" SelectionChanged="ProductsListview_SelectionChanged">
+            <ListView.View>
+                <GridView >
+                    <GridViewColumn/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <Button Content="Button" HorizontalAlignment="Left" Margin="265,80,0,0" Grid.Row="2" VerticalAlignment="Top" Click="Button_Click"/>
+
     </Grid>
 </Window >

@@ -65,7 +65,9 @@ public class DalOrderItem : IOrderItem
     {
         return foo == null ? DataSource.OrderItems : DataSource.OrderItems.Where(foo).ToList();
     }
-    public OrderItem? GetSingle(Func<OrderItem, bool> foo)
+
+
+    public OrderItem? GetSingle(Func<OrderItem, bool>? foo)
     {
         return DataSource.OrderItems.Where(foo).ToList()[0];
     }
@@ -82,6 +84,11 @@ public class DalOrderItem : IOrderItem
         if (i == -1)
             throw new EntityNotFoundException("no items in this order");
         DataSource.OrderItems[i] = obj;
+    }
+
+    OrderItem ICrud<OrderItem>.GetSingle(Func<OrderItem, bool>? foo)
+    {
+        throw new NotImplementedException();
     }
 }
 
