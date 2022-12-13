@@ -24,16 +24,16 @@ namespace PL
 
         private BlApi.IBl Bl { get; set; }
 
-        
-           
-            public Window1(ProductForList p=null)
+
+
+        public Window1(ProductForList p = null)
         {
             this.p = p;
             Bl = new BlImplementation.Bl();
             InitializeComponent();
             CategorySelector.ItemsSource = Bl.Product.GetAllForCustomer();
             CategorySelector.ItemsSource = Enum.GetValues(typeof(BO.Category));
-            if (p!=null)
+            if (p != null)
             {
                 BO.Product a = Bl.Product.GetCustomer(p.Id);
                 Id.Text = (p.Id).ToString();
@@ -54,7 +54,7 @@ namespace PL
 
         private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            
+
         }
 
         private void ProductName_TextChanged(object sender, TextChangedEventArgs e)

@@ -79,6 +79,15 @@ namespace BlApi
         public override string Message =>
                        "unknown exception";
     }
+    public class BlTryFailed : Exception
+    {
+        //public BlUnknownException(string message) :
+        //                                base(message)
+        //{
+        //}
+        public override string Message =>
+                       "try failed";
+    }
 
 }
 

@@ -6,11 +6,11 @@
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
         Title="Window2" Height="640" Width="800">
-    <Grid Name="MainGrid" RenderTransformOrigin="0.497,0.497" Margin="0,5,0,-5">
+    <Grid Name="MainGrid" RenderTransformOrigin="0.497,0.497" Margin="0,5,0,-5" Background="#FFD8D7D7">
         <Grid.RowDefinitions>
-            <RowDefinition Height="58"/>
-            <RowDefinition Height="282"/>
-            <RowDefinition Height="200"/>
+            <RowDefinition Height="52"/>
+            <RowDefinition Height="360"/>
+            <RowDefinition Height="128"/>
         </Grid.RowDefinitions>
 
         <Grid Name="UpGrid" Height="auto" Grid.Row="0" Width="auto">
@@ -18,19 +18,26 @@
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions >
-            <ComboBox Name="CategorySelector" Grid.ColumnSpan="2" Margin="390,0,10,10" SelectionChanged="AttributeSelector_SelectionChanged"/>
+            <ComboBox Name="CategorySelector" Grid.ColumnSpan="2" Margin="390,0,10,10" SelectionChanged="AttributeSelector_SelectionChanged">
+                <ComboBox.Background>
+                    <LinearGradientBrush EndPoint="0,1">
+                        <GradientStop Color="#FFF0F0F0"/>
+                        <GradientStop Color="#FFA2A2A2" Offset="1"/>
+                    </LinearGradientBrush>
+                </ComboBox.Background>
+            </ComboBox>
 
 
         </Grid >
-        <Label Grid.Column="0" Content="Category" HorizontalAlignment="Left" Margin="153,0,0,0" VerticalAlignment="Center" Height="40" Width="204" FontSize="24" FontFamily="Aharoni" FontWeight="Bold"/>
-        <ListView MouseDoubleClick="product_Click" x:Name="ProductsListview"  d:ItemsSource="{d:SampleData ItemCount=5}" SelectionChanged="ProductsListview_SelectionChanged" Margin="0,55,0,0" Grid.RowSpan="2">
+        <Label Grid.Column="0" Content="Category" HorizontalAlignment="Left" Margin="153,0,0,0" VerticalAlignment="Center" Height="58" Width="247" FontSize="48" FontFamily="Aharoni" FontWeight="Bold"/>
+        <ListView MouseDoubleClick="product_Click" x:Name="ProductsListview"  d:ItemsSource="{d:SampleData ItemCount=5}" SelectionChanged="ProductsListview_SelectionChanged" Margin="0,2,0,5" Background="#FFADADAD" Grid.Row="1">
             <ListView.View  >
                 <GridView >
                     <GridViewColumn />
                 </GridView>
             </ListView.View>
         </ListView>
-        <Button Content="Add a product" HorizontalAlignment="Left" Margin="134,33,0,0" Grid.Row="2" VerticalAlignment="Top" Click="Button_Click" Height="67" Width="539" FontSize="36" BorderBrush="White"/>
+        <Button Content="Add a product" HorizontalAlignment="Left" Margin="153,58,0,0" Grid.Row="2" VerticalAlignment="Top" Click="Button_Click" Height="68" Width="539" FontSize="36" BorderBrush="White" Background="#FFA4A4A4"/>
 
     </Grid>
 </Window >
