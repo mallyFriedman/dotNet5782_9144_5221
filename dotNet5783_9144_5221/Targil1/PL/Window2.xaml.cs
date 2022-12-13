@@ -32,6 +32,7 @@ namespace PL
         private void AttributeSelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             ProductsListview.ItemsSource = Bl.Product.GetAllForCustomer((BO.Category)CategorySelector.SelectedItem);
+            CategorySelector.SelectedItem = "jjj";
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -39,9 +40,19 @@ namespace PL
             new Window1().Show();
             this.Hide();
         }
+           
+        
 
         private void ProductsListview_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+
+        }
+
+        private void product_Click(object sender, MouseButtonEventArgs e)
+        {
+             BO.ProductForList p = (BO.ProductForList)((ListView)sender).SelectedItem;
+            new Window1(p).Show();
+            this.Hide();
 
         }
     }

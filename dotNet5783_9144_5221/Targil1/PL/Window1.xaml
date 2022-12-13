@@ -7,19 +7,20 @@
         mc:Ignorable="d"
         Title="Window1" Height="450" Width="800">
     <Grid>
-        <TextBox Name="Id" HorizontalAlignment="Left" Margin="321,100,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="120"/>
-        <TextBox Name="ProductName" HorizontalAlignment="Left" Margin="321,138,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" TextChanged="ProductName_TextChanged"/>
-        <TextBox Name="Price" HorizontalAlignment="Left" Margin="321,173,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="120"/>
-        <TextBox Name="InStock" HorizontalAlignment="Left" Margin="321,248,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="120"/>
-        <Button Content="Add" HorizontalAlignment="Left" Margin="321,288,0,0" VerticalAlignment="Top" Width="60" Click="Button_Click"/>
-        <Label Content="enter the product id" HorizontalAlignment="Left" Margin="319,79,0,0" VerticalAlignment="Top"/>
-        <Label Content="enter the product name" HorizontalAlignment="Left" Margin="317,118,0,0" VerticalAlignment="Top" Width="138"/>
-        <Label Content="enter the product price" HorizontalAlignment="Left" Margin="317,154,0,0" VerticalAlignment="Top" Width="158"/>
-        <Label Content="choose the product category" HorizontalAlignment="Left" Margin="317,189,0,0" VerticalAlignment="Top" Width="170"/>
-        <Label Content="enter the number in stock" HorizontalAlignment="Left" Margin="317,228,0,0" VerticalAlignment="Top" Width="158"/>
-        <ComboBox Name="CategorySelector" HorizontalAlignment="Left" Margin="321,208,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="ComboBox_SelectionChanged"/>
-        <Button Content="back to home" HorizontalAlignment="Left" Margin="236,357,0,0" VerticalAlignment="Top" Click="Button_Click_1"/>
-        <Button Content="update" HorizontalAlignment="Left" Margin="396,288,0,0" VerticalAlignment="Top" Width="46" Click="Button_Click_2"/>
+        <TextBox Name="Id" HorizontalAlignment="Left" Margin="321,84,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="120" Height="25"/>
+        <TextBox Name="ProductName" HorizontalAlignment="Left" Margin="321,146,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" TextChanged="ProductName_TextChanged" Height="26"/>
+        <TextBox Name="Price" HorizontalAlignment="Left" Margin="323,200,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="120" Height="27"/>
+        <TextBox Name="InStock" HorizontalAlignment="Left" Margin="323,322,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="120" Height="25"/>
+        <Button Name="add" Content="Add" HorizontalAlignment="Left" Margin="326,356,0,0" VerticalAlignment="Top" Width="120" Click="Add" Height="37" FontSize="16" FontWeight="Bold"/>
+        <Label Content="enter the product id:" HorizontalAlignment="Left" Margin="319,50,0,0" VerticalAlignment="Top" FontSize="14" FontWeight="Bold"/>
+        <Label Content="enter the product name:" HorizontalAlignment="Left" Margin="317,110,0,0" VerticalAlignment="Top" Width="266" FontSize="14" FontWeight="Bold"/>
+        <Label Content="enter the product price:" HorizontalAlignment="Left" Margin="317,169,0,0" VerticalAlignment="Top" Width="205" FontSize="14" FontWeight="Bold"/>
+        <Label Content="choose the product category:" HorizontalAlignment="Left" Margin="326,225,0,0" VerticalAlignment="Top" Width="205" FontSize="14" FontWeight="Bold"/>
+        <Label Content="enter the number in stock:" HorizontalAlignment="Left" Margin="323,288,0,0" VerticalAlignment="Top" Width="199" FontSize="14" FontWeight="Bold"/>
+        <ComboBox Name="CategorySelector" HorizontalAlignment="Left" Margin="325,259,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="ComboBox_SelectionChanged" Height="29"/>
+        <Button Content="back to home" HorizontalAlignment="Left" Margin="666,382,0,0" VerticalAlignment="Top" Click="Button_Click_1" Width="110" Height="31" FontSize="16" FontFamily="Segoe UI Semilight" FontWeight="Normal"/>
+        <Button Name="update" Content="update" HorizontalAlignment="Left" Margin="325,357,0,0" VerticalAlignment="Top" Width="56" Click="Update" Height="37" FontSize="16" FontWeight="Bold"/>
+        <Button Name="delete" Content="delete" HorizontalAlignment="Left" Margin="386,356,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.207,-0.268" Click="Delete" Width="57" Height="37" FontSize="16" FontWeight="Bold"/>
 
     </Grid>
 </Window>

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BO;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,40 +20,41 @@ namespace PL
     /// </summary>
     public partial class Window1 : Window
     {
+        private ProductForList p;
+
         private BlApi.IBl Bl { get; set; }
 
         
            
-            public Window1()
+            public Window1(ProductForList p=null)
         {
+            this.p = p;
             Bl = new BlImplementation.Bl();
             InitializeComponent();
             CategorySelector.ItemsSource = Bl.Product.GetAllForCustomer();
             CategorySelector.ItemsSource = Enum.GetValues(typeof(BO.Category));
+            if (p!=null)
+            {
+                BO.Product a = Bl.Product.GetCustomer(p.Id);
+                Id.Text = (p.Id).ToString();
+                ProductName.Text = p.ProductName;
+                Price.Text = (p.ProductPrice).ToString();
+                InStock.Text = (a.InStock).ToString();
+                CategorySelector.SelectedItem = p.Category;
+                add.Visibility = Visibility.Hidden;
+
+            }
+            else
+            {
+                update.Visibility = Visibility.Hidden;
+                delete.Visibility = Visibility.Hidden;
+            }
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                BO.Product p = new();
-                p.ProductName = ProductName.Text;
-                p.Price = float.Parse(Price.Text);
-                p.InStock = int.Parse(InStock.Text);
-                p.Id = 0;
-                p.Category = (BO.Category)CategorySelector.SelectedItem;
-                Bl.Product.Add(p);
-                MessageBox.Show("Add succesfuly!");
-            }
-            catch
-            {
-                throw new Exception();//do spesific exption!
-            }
-        }
 
         private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-
+            
         }
 
         private void ProductName_TextChanged(object sender, TextChangedEventArgs e)
@@ -66,7 +68,7 @@ namespace PL
             this.Hide();
         }
 
-        private void Button_Click_2(object sender, RoutedEventArgs e)
+        private void Update(object sender, RoutedEventArgs e)
         {
             try
             {
@@ -78,6 +80,49 @@ namespace PL
                 p.Category = (BO.Category)CategorySelector.SelectedItem;
                 Bl.Product.Update(p);
                 MessageBox.Show("updated succesfuly!");
+                new Window2().Show();
+                this.Hide();
+            }
+            catch
+            {
+                throw new Exception();//do spesific exption!
+            }
+        }
+
+
+        private void Delete(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                Bl.Product.Delete(p.Id);
+                MessageBox.Show("deleted succesfuly!");
+                new Window2().Show();
+                this.Hide();
+            }
+            catch
+            {
+                throw new Exception();//do spesific exption!
+            }
+        }
+
+        private void Add(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                BO.Product p = new();
+                p.ProductName = ProductName.Text;
+                p.Price = float.Parse(Price.Text);
+                p.InStock = int.Parse(InStock.Text);
+                p.Id = 0;
+                p.Category = (BO.Category)CategorySelector.SelectedItem;
+                Bl.Product.Add(p);
+                MessageBox.Show("Add succesfuly!");
+                Id.Text = null;
+                ProductName.Text = null;
+                Price.Text = null;
+                InStock.Text = null;
+                CategorySelector.SelectedItem = null;
+
             }
             catch
             {
