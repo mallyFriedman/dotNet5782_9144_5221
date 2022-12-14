@@ -1,12 +1,11 @@
-﻿
-using DalApi;
+﻿using DalApi;
 using BlApi;
 using BO;
 namespace BlImplementation
 {
     internal class BLProduct : BlApi.IProduct
     {
-        IDal Dal = DalApi.Factory.Get();
+        static IDal Dal = DalApi.Factory.Get();
         /// <summary>
         /// returns all the products
         /// in a way that the customer can see

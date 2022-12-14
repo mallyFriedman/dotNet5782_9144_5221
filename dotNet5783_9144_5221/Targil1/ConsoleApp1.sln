@@ -19,9 +19,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlTest", "BlTest\BlTest.csp
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PL", "PL\PL.csproj", "{62942F65-8DB0-4AD2-B4A1-252E126B5822}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "xml", "xml", "{F7386160-A65B-4FEB-9D2D-388EB23593AF}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "xml", "xml", "{604F3F25-FB95-4005-9AF8-A831B5318329}"
 	ProjectSection(SolutionItems) = preProject
-		..\..\xml\dal-config.xml = ..\..\xml\dal-config.xml
+		xml\dal-config.xml = xml\dal-config.xml
 	EndProjectSection
 EndProject
 Global

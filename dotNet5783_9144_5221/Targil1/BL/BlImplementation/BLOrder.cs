@@ -7,7 +7,7 @@ namespace BlImplementation
 {
     internal class BLOrder : BlApi.IOrder
     {
-        IDal Dal = DalApi.Factory.Get();
+        static IDal Dal = DalApi.Factory.Get();
         /// <summary>
         /// the function  returns all orders
         /// </summary>
