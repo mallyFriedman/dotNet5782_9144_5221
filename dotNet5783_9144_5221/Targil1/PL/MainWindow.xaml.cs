@@ -8,15 +8,20 @@ namespace PL
     public partial class MainWindow : Window
     {
         private BlApi.IBl Bl { get; set; }
+        /// <summary>
+        /// constructor of the page
+        /// </summary>
         public MainWindow()
         {
             InitializeComponent();
         }
-
+        /// <summary>
+        /// routs to the home page
+        /// </summary>
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-        new Window2().Show();
+            new Window2().Show();
             this.Hide();
+        }
     }
-}
 }

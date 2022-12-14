@@ -25,7 +25,9 @@ namespace PL
         private BlApi.IBl Bl { get; set; }
 
 
-
+        /// <summary>
+        /// constractor of the page
+        /// </summary>
         public Window1(ProductForList p = null)
         {
             this.p = p;
@@ -42,7 +44,6 @@ namespace PL
                 InStock.Text = (a.InStock).ToString();
                 CategorySelector.SelectedItem = p.Category;
                 add.Visibility = Visibility.Hidden;
-
             }
             else
             {
@@ -52,22 +53,10 @@ namespace PL
         }
 
 
-        private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
 
-        }
-
-        private void ProductName_TextChanged(object sender, TextChangedEventArgs e)
-        {
-
-        }
-
-        private void Button_Click_1(object sender, RoutedEventArgs e)
-        {
-            new Window2().Show();
-            this.Hide();
-        }
-
+        /// <summary>
+        /// the function updates the chosen product in the list
+        /// </summary>
         private void Update(object sender, RoutedEventArgs e)
         {
             try
@@ -89,7 +78,9 @@ namespace PL
             }
         }
 
-
+        /// <summary>
+        /// the function deletes the chosen product from the list
+        /// </summary>
         private void Delete(object sender, RoutedEventArgs e)
         {
             try
@@ -104,7 +95,9 @@ namespace PL
                 throw new Exception();//do spesific exption!
             }
         }
-
+        /// <summary>
+        /// the function adds a product to the list
+        /// </summary>
         private void Add(object sender, RoutedEventArgs e)
         {
             try
@@ -128,6 +121,15 @@ namespace PL
             {
                 throw new Exception();//do spesific exption!
             }
+        }
+        /// <summary>
+        /// button that returns to home
+        /// </summary>
+        private void BackToHome(object sender, RoutedEventArgs e)
+        {
+
+            new Window2().Show();
+            this.Hide();
         }
     }
 }

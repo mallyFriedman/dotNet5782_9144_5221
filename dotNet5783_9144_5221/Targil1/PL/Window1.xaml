@@ -25,7 +25,7 @@
         <Label Content="choose the product category:" HorizontalAlignment="Left" Margin="323,228,0,0" VerticalAlignment="Top" Width="205" FontSize="16" FontWeight="Bold" Background="#FFB7B7B7"/>
         <Label Content="enter the number in stock:" HorizontalAlignment="Left" Margin="323,289,0,0" VerticalAlignment="Top" Width="199" FontSize="16" FontWeight="Bold" Background="#FFB7B7B7"/>
         <ComboBox Name="CategorySelector" HorizontalAlignment="Left" Margin="323,259,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="ComboBox_SelectionChanged" Height="29"/>
-        <Button Content="back to home" HorizontalAlignment="Left" Margin="553,368,0,0" VerticalAlignment="Top" Click="Button_Click_1" Background="#FFB7B7B7" Width="110" Height="31" FontSize="16" FontFamily="Segoe UI Semilight" FontWeight="Bold">
+        <Button Content="back to home" HorizontalAlignment="Left" Margin="553,368,0,0" VerticalAlignment="Top" Click="BackToHome" Background="#FFB7B7B7" Width="110" Height="31" FontSize="16" FontFamily="Segoe UI Semilight" FontWeight="Bold">
             <Button.BorderBrush>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                     <GradientStop Color="Black"/>

@@ -20,7 +20,9 @@ namespace PL
     public partial class Window2 : Window
     {
         private BlApi.IBl Bl { get; set; }
-
+        /// <summary>
+        /// constructor of the page
+        /// </summary>
         public Window2()
         {
             Bl = new BlImplementation.Bl();
@@ -28,26 +30,24 @@ namespace PL
             ProductsListview.ItemsSource = Bl.Product.GetAllForCustomer();
             CategorySelector.ItemsSource = Enum.GetValues(typeof(BO.Category));
         }
-
-        private void AttributeSelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        /// <summary>
+        /// Setting the selection menu
+        /// </summary>
+        private void SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             ProductsListview.ItemsSource = Bl.Product.GetAllForCustomer((BO.Category)CategorySelector.SelectedItem);
-            CategorySelector.SelectedItem = "jjj";
         }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
+        /// <summary>
+        /// the function routs to the add page
+        /// </summary>
+        private void GoToAdd(object sender, RoutedEventArgs e)
         {
             new Window1().Show();
             this.Hide();
         }
-           
-        
-
-        private void ProductsListview_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
-        }
-
+        /// <summary>
+        /// the function routs to the update/delete page
+        /// </summary>
         private void product_Click(object sender, MouseButtonEventArgs e)
         {
              BO.ProductForList p = (BO.ProductForList)((ListView)sender).SelectedItem;
