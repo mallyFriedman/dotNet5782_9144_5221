@@ -1,4 +1,4 @@
-﻿using Dal;
+﻿
 using DalApi;
 using BlApi;
 using BO;
@@ -6,7 +6,7 @@ namespace BlImplementation
 {
     internal class BLProduct : BlApi.IProduct
     {
-        IDal Dal = new DalList();
+        IDal Dal = DalApi.Factory.Get();
         /// <summary>
         /// returns all the products
         /// in a way that the customer can see
@@ -127,7 +127,8 @@ namespace BlImplementation
                 throw new BlIdNotValidException();
 
             }
-            DO.OrderItem orderItem = DataSource.OrderItems.Find(o => o.Id == id);
+            List<DO.OrderItem> orderItem = Dal.OrderItem.Get().ToList();
+            orderItem.Find(o => o.Id == id);
             if (orderItem.Equals(default(DO.OrderItem)))
             {
                 throw new BlObjectNotFoundException();

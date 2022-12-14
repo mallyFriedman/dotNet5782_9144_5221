@@ -7,7 +7,7 @@ namespace BlImplementation
 {
     internal class BLCart : BlApi.ICart
     {
-        IDal Dal = new Dal.DalList();
+        static IDal Dal = DalApi.Factory.Get();
         /// <summary>
         /// the function adds an item to the cart and returens the updated cart
         /// </summary>

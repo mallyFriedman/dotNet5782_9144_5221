@@ -25,7 +25,7 @@ namespace PL
         /// </summary>
         public Window2()
         {
-            Bl = new BlImplementation.Bl();
+            Bl = BlApi.Factory.Get();
             InitializeComponent();
             ProductsListview.ItemsSource = Bl.Product.GetAllForCustomer();
             CategorySelector.ItemsSource = Enum.GetValues(typeof(BO.Category));
@@ -53,6 +53,11 @@ namespace PL
              BO.ProductForList p = (BO.ProductForList)((ListView)sender).SelectedItem;
             new Window1(p).Show();
             this.Hide();
+
+        }
+
+        private void ProductsListview_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
 
         }
     }

@@ -31,7 +31,7 @@ namespace PL
         public Window1(ProductForList p = null)
         {
             this.p = p;
-            Bl = new BlImplementation.Bl();
+            Bl = BlApi.Factory.Get();
             InitializeComponent();
             CategorySelector.ItemsSource = Bl.Product.GetAllForCustomer();
             CategorySelector.ItemsSource = Enum.GetValues(typeof(BO.Category));
@@ -130,6 +130,16 @@ namespace PL
 
             new Window2().Show();
             this.Hide();
+        }
+
+        private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+
+        private void ProductName_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
         }
     }
 }

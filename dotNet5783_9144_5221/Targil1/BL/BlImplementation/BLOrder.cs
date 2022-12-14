@@ -1,12 +1,13 @@
 ﻿using BO;
-using Dal;
 using DalApi;
 using BlApi;
+using Dal;
+
 namespace BlImplementation
 {
     internal class BLOrder : BlApi.IOrder
     {
-        IDal Dal = new DalList();
+        IDal Dal = DalApi.Factory.Get();
         /// <summary>
         /// the function  returns all orders
         /// </summary>
@@ -51,7 +52,7 @@ namespace BlImplementation
             bOrder.OrderDate = dOrder.OrderDate;
             bOrder.OrderStatus = status(dOrder.DeliveryDate, DateTime.MinValue, dOrder.ShipDate);
             bOrder.ShipDate = dOrder.ShipDate;
-            List<BO.OrderItem> orderItem = new List<BO.OrderItem>(DataSource.ProductList.Count());
+            List<BO.OrderItem> orderItem = new List<BO.OrderItem>(Dal.Product.Get()?.Count()??0);
             double sum = 0;
             IEnumerable<DO.OrderItem> dOrderItem = (IEnumerable<DO.OrderItem>)Dal.OrderItem.ReadOrderId(bOrder.Id);
             foreach (DO.OrderItem item in dOrderItem)
