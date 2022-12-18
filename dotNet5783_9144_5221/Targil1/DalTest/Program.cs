@@ -42,7 +42,7 @@ public static class Program
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex);
+                throw new Exception(ex.Message); ;
             }
             Console.Write("Enter your choice: ");
             choice = Convert.ToInt32(Console.ReadLine());

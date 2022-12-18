@@ -42,7 +42,7 @@ public static class Program1
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex);
+                throw new Exception(ex.Message); ;
             }
             Console.Write("Enter your choice: ");
             choice = Convert.ToInt32(Console.ReadLine());
@@ -85,7 +85,7 @@ public static class Program1
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex);
+                throw new Exception(ex.Message);
             }
             productOptions();
             Console.Write("Enter your product choice: ");
@@ -122,7 +122,7 @@ public static class Program1
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex);
+                throw new Exception(ex.Message);
             }
             orderOptions();
             Console.Write("Enter your choice: ");
@@ -154,7 +154,7 @@ public static class Program1
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex);
+                throw new Exception(ex.Message); ;
             }
             cartOptions();
             Console.Write("Enter your choice: ");
@@ -234,7 +234,7 @@ public static class Program1
         }
         catch (BlObjectNotValidException ex)
         {
-            Console.WriteLine(ex.Message);
+            throw new Exception(ex.Message); ;
         }
     }
     public static void ProductGetAllForCustomer()
@@ -264,11 +264,11 @@ public static class Program1
         }
         catch (BlIdNotValidException ex)
         {
-            Console.WriteLine(ex.Message);
+            throw new Exception(ex.Message); ;
         }
         catch (BlObjectNotFoundException ex)
         {
-            Console.WriteLine(ex.Message);
+            throw new Exception(ex.Message); ;
         }
     }
     public static void ProductGetManager()
@@ -282,11 +282,11 @@ public static class Program1
         }
         catch (BlIdNotValidException ex)
         {
-            Console.WriteLine(ex.Message);
+            throw new Exception(ex.Message); ;
         }
         catch (BlObjectNotFoundException ex)
         {
-            Console.WriteLine(ex.Message);
+            throw new Exception(ex.Message); ;
         }
     }
     public static void ProductUpdate()
@@ -336,7 +336,7 @@ public static class Program1
         }
         catch (BlObjectNotValidException ex)
         {
-            Console.WriteLine(ex.Message);
+            throw new Exception(ex.Message); ;
         }
     }
 
@@ -352,11 +352,11 @@ public static class Program1
         }
         catch (BlIdNotValidException ex)
         {
-            Console.WriteLine(ex.Message);
+            throw new Exception(ex.Message); ;
         }
         catch (BlObjectNotFoundException ex)
         {
-            Console.WriteLine(ex.Message);
+            throw new Exception(ex.Message); ;
         }
     }
 
@@ -385,11 +385,11 @@ public static class Program1
         }
         catch (BlIdNotValidException ex)
         {
-            Console.WriteLine(ex.Message);
+            throw new Exception(ex.Message); ;
         }
         catch (BlObjectNotFoundException ex)
         {
-            Console.WriteLine(ex.Message);
+            throw new Exception(ex.Message); ;
         }
 
     }
@@ -404,11 +404,11 @@ public static class Program1
         }
         catch (BlCannotChangeTheStatusException ex)
         {
-            Console.WriteLine(ex.Message);
+            throw new Exception(ex.Message); ;
         }
         catch (BlObjectNotFoundException ex)
         {
-            Console.WriteLine(ex.Message);
+            throw new Exception(ex.Message); ;
         }
     }
 
@@ -423,11 +423,11 @@ public static class Program1
         }
         catch (BlCannotChangeTheStatusException ex)
         {
-            Console.WriteLine(ex.Message);
+            throw new Exception(ex.Message); ;
         }
         catch (BlObjectNotFoundException ex)
         {
-            Console.WriteLine(ex.Message);
+            throw new Exception(ex.Message); ;
         }
     }
 
@@ -448,11 +448,11 @@ public static class Program1
         }
         catch (BlObjectNotFoundException ex)
         {
-            Console.WriteLine(ex.Message);
+            throw new Exception(ex.Message); ;
         }
         catch (BlOutOfStockException ex)
         {
-            Console.WriteLine(ex.Message);
+            throw new Exception(ex.Message); ;
         }
 
     }
@@ -470,15 +470,15 @@ public static class Program1
         }
         catch (BlObjectNotFoundException ex)
         {
-            Console.WriteLine(ex.Message);
+            throw new Exception(ex.Message); ;
         }
         catch (BlOutOfStockException ex)
         {
-            Console.WriteLine(ex.Message);
+            throw new Exception(ex.Message); ;
         }
         catch (BlCartIsEmptyException ex)
         {
-            Console.WriteLine(ex.Message);
+            throw new Exception(ex.Message); ;
         }
     }
 
@@ -497,15 +497,15 @@ public static class Program1
         }
         catch (BlObjectNotFoundException ex)
         {
-            Console.WriteLine(ex.Message);
+            throw new Exception(ex.Message); ;
         }
         catch (BlOutOfStockException ex)
         {
-            Console.WriteLine(ex.Message);
+            throw new Exception(ex.Message); ;
         }
         catch (BlDetailsNotValidException ex)
         {
-            Console.WriteLine(ex.Message);
+            throw new Exception(ex.Message); ;
         }
     }
 
