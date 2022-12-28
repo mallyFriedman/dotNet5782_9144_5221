@@ -89,6 +89,26 @@ namespace BlApi
                        "try failed";
     }
 
+    public class BlInStockMustBeANumber : Exception
+    {
+        //public BlUnknownException(string message) :
+        //                                base(message)
+        //{
+        //}
+        public override string Message =>
+                       "In stock must be a number!";
+    }
+
+    public class BlPriceMustBeANumber : Exception
+    {
+        //public BlUnknownException(string message) :
+        //                                base(message)
+        //{
+        //}
+        public override string Message =>
+                       "Price must be a number!";
+    }
+
 }
 
 

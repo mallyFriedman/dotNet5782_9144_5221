@@ -1,4 +1,5 @@
-﻿using BO;
+﻿using BlApi;
+using BO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -72,9 +73,17 @@ namespace PL
                 new Window2().Show();
                 this.Hide();
             }
-            catch
+            catch (BlObjectNotValidException ex)
             {
-                throw new Exception();//do spesific exption!
+                MessageBox.Show(ex.Message);
+            }
+            catch (BlPriceMustBeANumber ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            catch (BlInStockMustBeANumber ex)
+            {
+                MessageBox.Show(ex.Message);
             }
         }
 
@@ -90,11 +99,13 @@ namespace PL
                 new Window2().Show();
                 this.Hide();
             }
-            catch
+            
+            catch (BlIdNotValidException ex)
             {
-                throw new Exception();//do spesific exption!
+                MessageBox.Show(ex.Message);
             }
         }
+
         /// <summary>
         /// the function adds a product to the list
         /// </summary>
@@ -117,9 +128,17 @@ namespace PL
                 CategorySelector.SelectedItem = null;
 
             }
-            catch
+            catch (BlObjectNotValidException ex)
             {
-                throw new Exception();//do spesific exption!
+                MessageBox.Show(ex.Message);
+            }
+            catch (BlPriceMustBeANumber ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            catch (BlInStockMustBeANumber ex)
+            {
+                MessageBox.Show(ex.Message);
             }
         }
         /// <summary>

@@ -1,6 +1,7 @@
 ﻿using DalApi;
 using BlApi;
 using BO;
+
 namespace BlImplementation
 {
     internal class BLProduct : BlApi.IProduct
@@ -104,10 +105,11 @@ namespace BlImplementation
         /// </summary>
         public void Add(Product product)
         {
-            if (product.Price < 0 || product.ProductName == null || product.InStock < 0)
+            if (product.Price < 1 || product.ProductName == null || product.InStock < 0)
             {
                 throw new BlObjectNotValidException();
             }
+
             DO.Product dProduct = new DO.Product();
             dProduct.Id = product.Id;
             dProduct.Category = (DO.Enums.Category)product.Category;
@@ -146,7 +148,17 @@ namespace BlImplementation
             DO.Product dProduct = new DO.Product();
             dProduct.Id = product.Id;
             dProduct.Category = (DO.Enums.Category)product.Category;
+            if (!(int.TryParse(Console.ReadLine(), out dProduct.InStock)))
+            {
+                throw new BlInStockMustBeANumber();
+            }
+
             dProduct.InStock = product.InStock;
+            if (!(int.TryParse(Console.ReadLine(), out dProduct.Price)))
+            {
+                throw new BlPriceMustBeANumber();
+            }
+
             dProduct.Price = product.Price;
             dProduct.ProductName = product.ProductName;
             Dal.Product.Update(dProduct);
