@@ -1,49 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
- 
-  <PropertyGroup>
-	<TargetFramework>net6.0</TargetFramework>
-	<ImplicitUsings>enable</ImplicitUsings>
-	<Nullable>enable</Nullable>
-	<BaseOutputPath>$(SolutionDir)\bin\</BaseOutputPath>
-	<OutputPath>$(SolutionDir)\bin\</OutputPath>
-	<AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
-	<AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
-	<UseCommonOutputDirectory>true</UseCommonOutputDirectory>
-	<RootNamespace>Dal</RootNamespace>
-  </PropertyGroup>
- 
-</Project>
-  <ItemGroup>
-    <ProjectReference Include="..\DalFacade\DalFacade.csproj" />
-  </ItemGroup>
-
-
-	<PropertyGroup>
-		<TargetFramework>net6.0</TargetFramework>
-		<ImplicitUsings>enable</ImplicitUsings>
-		<Nullable>enable</Nullable>
-		<BaseOutputPath>$(SolutionDir)\bin\</BaseOutputPath>
-		<OutputPath>$(SolutionDir)\bin\</OutputPath>
-		<AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
-		<AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
-		<UseCommonOutputDirectory>true</UseCommonOutputDirectory>
-		<RootNamespace>Dal</RootNamespace>
-	</PropertyGroup>
 <Project Sdk="Microsoft.NET.Sdk">
- 
-  <PropertyGroup>
-	<TargetFramework>net6.0</TargetFramework>
-	<ImplicitUsings>enable</ImplicitUsings>
-	<Nullable>enable</Nullable>
-	<BaseOutputPath>$(SolutionDir)\bin\</BaseOutputPath>
-	<OutputPath>$(SolutionDir)\bin\</OutputPath>
-	<AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
-	<AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
-	<UseCommonOutputDirectory>true</UseCommonOutputDirectory>
-	<RootNamespace>Dal</RootNamespace>
-  </PropertyGroup>
- 
-</Project>
 
 	<PropertyGroup>
 		<TargetFramework>net6.0</TargetFramework>
@@ -55,4 +10,45 @@
 		<AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
 		<UseCommonOutputDirectory>true</UseCommonOutputDirectory>
 		<RootNamespace>Dal</RootNamespace>
+
 	</PropertyGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\DalFacade\DalFacade.csproj" />
+		<ProjectReference Include="..\DalList\DalList.csproj" />
+		<ProjectReference Include="..\Dal\DalFacade.csproj" />
+	</ItemGroup>
+
+</Project>
+
+<!--using Dal;
+using DO;
+using System.Xml.Serialization;
+a();
+b();
+c();
+void a()
+{
+    StreamWriter w = new("ProductXml.xml");
+    XmlSerializer ser = new(typeof(List<Product>));
+    ser.Serialize(w, DataSource.ProductList);
+    w.Close();
+}
+
+void b()
+{
+    StreamWriter w = new("OrderXml.xml");
+    XmlSerializer ser = new(typeof(List<Order>));
+    ser.Serialize(w, DataSource.OrderArr);
+    w.Close();
+}
+
+
+void c()
+{
+    StreamWriter w = new("OrderItemXml.xml");
+    XmlSerializer ser = new(typeof(List<OrderItem>));
+    ser.Serialize(w, DataSource.OrderItems);
+    w.Close();
+}
+-->
