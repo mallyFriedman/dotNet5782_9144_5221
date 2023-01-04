@@ -64,7 +64,7 @@ internal class OrderItem : IOrderItem
         {
             orderItem.Add(Casting(item));
         }
-        return foo == null ? orderItem : orderItem.Where(foo).ToList();
+        return foo == null ? orderItem : orderItem.Where(foo).ToList(TTT);
     }
 
     public DO.OrderItem GetSingle(Func<DO.OrderItem, bool>? foo)
