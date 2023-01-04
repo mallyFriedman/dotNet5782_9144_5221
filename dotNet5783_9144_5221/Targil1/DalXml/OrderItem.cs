@@ -1,5 +1,6 @@
 ﻿using DalApi;
 using DO;
+using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Linq;
 
@@ -64,7 +65,7 @@ internal class OrderItem : IOrderItem
         {
             orderItem.Add(Casting(item));
         }
-        return foo == null ? orderItem : orderItem.Where(foo).ToList(TTT);
+        return foo == null ? orderItem : orderItem.Where(foo).ToList();///
     }
 
     public DO.OrderItem GetSingle(Func<DO.OrderItem, bool>? foo)
@@ -82,10 +83,18 @@ internal class OrderItem : IOrderItem
     public IEnumerable<DO.OrderItem> ReadOrderId(int id)
     {
         XElement? root = XDocument.Load("OrderItemXml.xml").Root;
-        XElement? orderItem = root?.Element("ArrayOfOrderItem")?.Elements("OrderItem")?.
-                             Where(p => p.Attribute("OrderId")?.Value == id.ToString()).FirstOrDefault();
-        DO.OrderItem oi = Casting(orderItem);
-        return oi;////////////
+        IEnumerable<XElement> ListXElement = root?.Element("ArrayOfOrderItem")?.Elements("OrderItem");
+  /*???*/     List<DO.OrderItem> orderItem = new List<DO.OrderItem>();
+  /*???*/     foreach (var item in ListXElement)
+  /*???*/     {
+  /*???*/         XElement A=root?.Element("ArrayOfOrderItem")?.Elements("OrderItem").
+  /*???*/         Where(p => p.Attribute("OrderId")?.Value == id.ToString()).FirstOrDefault();
+  /*???*/         if (A != null)
+  /*???*/         {
+  /*???*/             orderItem.Add(Casting(A));
+  /*???*/         }
+        }
+        return orderItem;
     }
 
     public void Update(DO.OrderItem item)
