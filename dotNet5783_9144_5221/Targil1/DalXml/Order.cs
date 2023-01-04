@@ -70,11 +70,24 @@ internal class Order : IOrder
 
     public DO.Order GetSingle(Func<DO.Order, bool>? foo)
     {
-        throw new NotImplementedException();
+
+        XElement? root = XDocument.Load("OrderXml.xml").Root;
+        IEnumerable<XElement> ListXElement = root?.Element("ArrayOfOrder")?.Elements("Order");
+        List<DO.Order> orders = new List<DO.Order>();
+        foreach (var item in ListXElement)
+        {
+            orders.Add(Casting(item));
+        }
+        return orders.Where(foo).ToList()[0];
     }
 
     public void Update(DO.Order item)
     {
-        throw new NotImplementedException();
+        XElement? root = XDocument.Load("OrderXml.xml").Root;
+        XElement? order = root?.Element("ArrayOfOrder")?.Elements("Order")?.
+                              Where(o => o.Attribute("Id")?.Value == item.Id.ToString()).FirstOrDefault();
+        order?.Remove();
+        order?.Add(item);
+        root?.Save("..\\..\\..\\OrderXml.xml");
     }
 }
