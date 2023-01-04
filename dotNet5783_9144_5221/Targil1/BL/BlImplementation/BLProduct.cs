@@ -148,17 +148,9 @@ namespace BlImplementation
             DO.Product dProduct = new DO.Product();
             dProduct.Id = product.Id;
             dProduct.Category = (DO.Enums.Category)product.Category;
-            if (!(int.TryParse(Console.ReadLine(), out dProduct.InStock)))
-            {
-                throw new BlInStockMustBeANumber();
-            }
-
             dProduct.InStock = product.InStock;
-            if (!(int.TryParse(Console.ReadLine(), out dProduct.Price)))
-            {
-                throw new BlPriceMustBeANumber();
-            }
-
+            dProduct.Price = 5;
+            dProduct.InStock = 9;
             dProduct.Price = product.Price;
             dProduct.ProductName = product.ProductName;
             Dal.Product.Update(dProduct);
