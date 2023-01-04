@@ -41,7 +41,7 @@ internal class Product : IProduct
         XElement? product = root?.Element("ArrayOfProduct")?.Elements("Product")?.
                               Where(p => p.Attribute("Id")?.Value == id.ToString()).FirstOrDefault();
         product?.Remove();
-        root?.Save("..\\..\\..\\Product.xml");
+        root?.Save("..\\..\\..\\ProductXml.xml");
     }
 
     public DO.Product Get(int id)
@@ -56,7 +56,7 @@ internal class Product : IProduct
     public IEnumerable<DO.Product>? Get(Func<DO.Product, bool>? foo = null)
     {
         XElement? root = XDocument.Load("ProductXml.xml").Root;
-        IEnumerable<XElement> ListXElement =  root?.Element("products")?.Elements("product") ;
+        IEnumerable<XElement> ListXElement =  root?.Element("ArrayOfProduct")?.Elements("Product") ;
         List<DO.Product> products = new List<DO.Product>();
         foreach (var item in ListXElement)
         {
@@ -68,14 +68,22 @@ internal class Product : IProduct
     public DO.Product GetSingle(Func<DO.Product, bool>? foo)
     {
         XElement? root = XDocument.Load("ProductXml.xml").Root;
-        XElement? product = root?.Element("ArrayOfProduct")?.Elements("Product")?.
-                             Where(foo).FirstOrDefault();
-        DO.Product prod = Casting(product);
-        return prod;
+        IEnumerable<XElement> ListXElement = root?.Element("products")?.Elements("product");
+        List<DO.Product> products = new List<DO.Product>();
+        foreach (var item in ListXElement)
+        {
+            products.Add(Casting(item));
+        }
+        return products.Where(foo).ToList()[0];
     }
 
     public void Update(DO.Product item)
     {
-        throw new NotImplementedException();
+        XElement? root = XDocument.Load("ProductXml.xml").Root;
+        XElement? product = root?.Element("ArrayOfProduct")?.Elements("Product")?.
+                              Where(p => p.Attribute("Id")?.Value == item.Id.ToString()).FirstOrDefault();
+        product?.Remove();
+        product?.Add(item);
+        root?.Save("..\\..\\..\\ProductXml.xml");
     }
 }

@@ -18,7 +18,7 @@ public class DalProduct : IProduct
     public Product Get(int id)
     {
         Product p = DataSource.ProductList.Find(o => o.Id == id);
-        if (p.Id == 0)/////////////
+        if (p.Id == 0)
         {
             throw new EntityNotFoundException("no product whis this id");
         }
