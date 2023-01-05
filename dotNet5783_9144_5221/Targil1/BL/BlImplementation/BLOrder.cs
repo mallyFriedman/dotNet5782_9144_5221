@@ -2,6 +2,7 @@
 using DalApi;
 using BlApi;
 using Dal;
+using DO;
 
 namespace BlImplementation
 {
@@ -15,6 +16,17 @@ namespace BlImplementation
         {
             IEnumerable<DO.Order> orders = Dal.Order.Get();
             List<BO.OrderForList> ordersForList = new List<BO.OrderForList>(orders.Count());
+
+            var x = from i in orders
+                    select new BO.OrderForList
+                    {
+                        //BO.Order a = Get(item.Id);
+                        Id = i.Id,
+                        CustomerName = i.CustomerName
+                        //OrderStatus = a.OrderStatus,
+                        //AmountProduct = a.OrderItem.Count(),
+                        //TotalPrice = a.TotalPrice
+                    };
             foreach (DO.Order item in orders)
             {
                 BO.Order a = Get(item.Id);
@@ -32,7 +44,7 @@ namespace BlImplementation
         /// <summary>
         /// the function returnes the specific order by id
         /// </summary>
-        public Order Get(int id)
+        public BO.Order Get(int id)
         {
             if (id < 100000)
             {
@@ -55,6 +67,18 @@ namespace BlImplementation
             List<BO.OrderItem> orderItem = new List<BO.OrderItem>(Dal.Product.Get()?.Count()??0);
             double sum = 0;
             IEnumerable<DO.OrderItem> dOrderItem = (IEnumerable<DO.OrderItem>)Dal.OrderItem.ReadOrderId(bOrder.Id);
+       //    var x = from item in dOrderItem
+       //            select new BO.OrderItem
+       //            {
+       //               Amount = item.Amount,
+       //               Id = item.Id,
+       //               Price = item.Price,
+       //               ProductID = item.ProductID,
+       //               TotalPrice = (item.Price) * (item.Amount),
+       //               //orderItem.Add(bOrderItem),
+       //               //sum = sum + TotalPrice;
+       //};
+
             foreach (DO.OrderItem item in dOrderItem)
             {
                 BO.OrderItem bOrderItem = new BO.OrderItem();
@@ -73,7 +97,7 @@ namespace BlImplementation
         /// <summary>
         /// updates the ship date to DateTime.Now
         /// </summary>
-        public Order UpdateSupply(int id)
+        public BO.Order UpdateSupply(int id)
         {
             DO.Order dOrder = Dal.Order.Get(id);
             if (dOrder.Equals(default(DO.OrderItem)))
@@ -93,7 +117,7 @@ namespace BlImplementation
         /// <summary>
         /// updates the delivery date to DateTime.Now
         /// </summary>
-        public Order UpdateShipping(int id)
+        public BO.Order UpdateShipping(int id)
         {
             DO.Order dOrder = Dal.Order.Get(id);
             if (dOrder.Equals(default(DO.OrderItem)))

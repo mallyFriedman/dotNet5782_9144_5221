@@ -2,6 +2,7 @@
 using DalApi;
 using BlApi;
 using System.Text.RegularExpressions;
+using DO;
 
 namespace BlImplementation
 {
@@ -34,7 +35,7 @@ namespace BlImplementation
             else
             {
                 item = new BO.OrderItem();
-                cart.Items = new List<OrderItem?>();
+                cart.Items = new();
             }
 
             if (item.ProductID == 0)
@@ -133,6 +134,7 @@ namespace BlImplementation
                     throw new BlOutOfStockException();
                 }
             });
+
             DO.Order order = new DO.Order();
             order.Id = 1;
             order.CustomerAdress = CustomerAdress;
@@ -150,6 +152,8 @@ namespace BlImplementation
                 Dal.Product.Update(product);
             });
 
+
+        
             cart.Items.ForEach(item =>
             {
                 DO.Product product = Dal.Product.Get(item.ProductID);
