@@ -21,5 +21,15 @@
                        "id not valid";
 
     }
+
+
+    //Exceptions for the xml:
+
+    public class FileErrorException : Exception
+    {
+        public override string Message =>
+                       "error in file type";
+
+    }
 }
 

@@ -59,41 +59,44 @@ internal class OrderItem : IOrderItem
     public IEnumerable<DO.OrderItem>? Get(Func<DO.OrderItem, bool>? foo = null)
     {
         XElement? root = XDocument.Load("OrderItemXml.xml").Root;
-        IEnumerable<XElement> ListXElement = root?.Element("ArrayOfOrderItem")?.Elements("OrderItem");
-        List<DO.OrderItem> orderItem = new List<DO.OrderItem>();
-        foreach (var item in ListXElement)
-        {
-            orderItem.Add(Casting(item));
-        }
+        IEnumerable<XElement> ListXElement = root?.Element("ArrayOfOrderItem")?.Elements("OrderItem") ?? throw new Exception("error in file type");
+        var orderItem = from item in ListXElement
+                       select Casting(item);
         return foo == null ? orderItem : orderItem.Where(foo).ToList();///
     }
 
     public DO.OrderItem GetSingle(Func<DO.OrderItem, bool>? foo)
     {
         XElement? root = XDocument.Load("OrderItemXml.xml").Root;
-        IEnumerable<XElement> ListXElement = root?.Element("ArrayOfOrderItem")?.Elements("OrderItem");
-        List<DO.OrderItem> orderItem = new List<DO.OrderItem>();
-        foreach (var item in ListXElement)
-        {
-            orderItem.Add(Casting(item));
-        }
+        IEnumerable<XElement> ListXElement = root?.Element("ArrayOfOrderItem")?.Elements("OrderItem") ?? throw new Exception("error in file type");
+        var orderItem = from item in ListXElement
+                        select Casting(item);
         return orderItem.Where(foo).ToList()[0];
     }
 
     public IEnumerable<DO.OrderItem> ReadOrderId(int id)
     {
         XElement? root = XDocument.Load("OrderItemXml.xml").Root;
-        IEnumerable<XElement> ListXElement = root?.Element("ArrayOfOrderItem")?.Elements("OrderItem");
-  /*???*/     List<DO.OrderItem> orderItem = new List<DO.OrderItem>();
-  /*???*/     foreach (var item in ListXElement)
-  /*???*/     {
-  /*???*/         XElement A=root?.Element("ArrayOfOrderItem")?.Elements("OrderItem").
-  /*???*/         Where(p => p.Attribute("OrderId")?.Value == id.ToString()).FirstOrDefault();
-  /*???*/         if (A != null)
-  /*???*/         {
-  /*???*/             orderItem.Add(Casting(A));
-  /*???*/         }
-        }
+        IEnumerable<XElement> ListXElement = root?.Element("ArrayOfOrderItem")?.Elements("OrderItem") ?? throw new Exception("error in file type");
+        var orderItem = (from item in ListXElement
+                         where (item.Attribute("Id")?.Value == id)
+                         select Casting(item)).FirstOrDefault();
+
+      //  let mark = (from g in s.Elements("grade")
+      //              where g.Attribute("subject")?.Value == "c#"
+      //              select g).FirstOrDefault()
+      //
+
+     //  List<DO.OrderItem> orderItem = new List<DO.OrderItem>();
+     //  foreach (var item in ListXElement)
+     //  {
+     //      XElement A=root?.Element("ArrayOfOrderItem")?.Elements("OrderItem").
+     //      Where(p => p.Attribute("OrderId")?.Value == id.ToString()).FirstOrDefault();
+     //      if (A != null)
+     //      {
+     //          orderItem.Add(Casting(A));
+     //      }
+     //   }
         return orderItem;
     }
 

@@ -60,15 +60,16 @@ internal class Order : IOrder
     {
         XElement? root = XDocument.Load("OrderXml.xml").Root;
         IEnumerable<XElement> ListXElement = root?.Element("ArrayOfOrder")?.Elements("Order");
-        List<DO.Order> orders = new List<DO.Order>();
-        //     orders=from item in ListXElement
-        //from s in ListXElement
-        //select orders.Add(Casting(item));
 
-        foreach (var item in ListXElement)
-        {
-            orders.Add(Casting(item));
-        }
+        //IEnumerable<XElement> orders;
+        var orders = from item in ListXElement
+                 select new DO.Order (){ CustomerName=item.   orders.Append(Casting(item));   //serilize
+
+       //List<DO.Order> orders = new List<DO.Order>();
+       //foreach (var item in ListXElement)
+       //{
+       //    orders.Add(Casting(item));
+       //}
         return foo == null ? orders : orders.Where(foo).ToList();
     }
 
