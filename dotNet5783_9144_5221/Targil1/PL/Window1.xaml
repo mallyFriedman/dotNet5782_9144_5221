@@ -13,7 +13,7 @@
         </Grid.RowDefinitions>
         <TextBox Name="Id" HorizontalAlignment="Left" Margin="323,82,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="120" Height="25" Grid.Row="1"/>
         <TextBox Name="ProductName" HorizontalAlignment="Left" Margin="323,138,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" TextChanged="ProductName_TextChanged" Height="26" Grid.Row="1"/>
-        <TextBox Name="Price" HorizontalAlignment="Left" Margin="323,195,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="120" Height="27" Grid.Row="1"/>
+        <TextBox Name="Price" HorizontalAlignment="Left" Margin="323,195,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="120" Height="27" Grid.Row="1" TextChanged="Price_TextChanged"/>
         <TextBox Name="InStock" HorizontalAlignment="Left" Margin="323,314,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="120" Height="25" Grid.Row="1"/>
         <Button Name="add" Content="Add" Background="#FFB7B7B7" HorizontalAlignment="Left" Margin="326,340,0,0" VerticalAlignment="Top" Width="120" Click="Add" Height="37" FontSize="16" FontWeight="Bold" Grid.Row="1">
             <Button.BorderBrush>

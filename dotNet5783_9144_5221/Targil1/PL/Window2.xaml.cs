@@ -56,7 +56,22 @@ namespace PL
 
         }
 
+        private void order_Click(object sender, MouseButtonEventArgs e)
+        {
+            BO.OrderForList p = (BO.OrderForList)((ListView)sender).SelectedItem;
+            new OrderWindo(p).Show();
+            this.Hide();
+
+        }
+
+        
+
         private void ProductsListview_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+
+        private void OrdersListview_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
 
         }
