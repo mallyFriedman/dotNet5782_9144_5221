@@ -59,17 +59,9 @@ internal class Order : IOrder
     public IEnumerable<DO.Order>? Get(Func<DO.Order, bool>? foo = null)
     {
         XElement? root = XDocument.Load("OrderXml.xml").Root;
-        IEnumerable<XElement> ListXElement = root?.Element("ArrayOfOrder")?.Elements("Order");
-
-        //IEnumerable<XElement> orders;
-        var orders = from item in ListXElement
-                 select new DO.Order (){ CustomerName=item.   orders.Append(Casting(item));   //serilize
-
-       //List<DO.Order> orders = new List<DO.Order>();
-       //foreach (var item in ListXElement)
-       //{
-       //    orders.Add(Casting(item));
-       //}
+        IEnumerable<XElement> ListXElement = root?.Element("ArrayOfOrder")?.Elements("Order")??;
+        var orders = (from item in ListXElement
+                          select Casting(item));
         return foo == null ? orders : orders.Where(foo).ToList();
     }
 
@@ -78,13 +70,8 @@ internal class Order : IOrder
 
         XElement? root = XDocument.Load("OrderXml.xml").Root;
         IEnumerable<XElement> ListXElement = root?.Element("ArrayOfOrder")?.Elements("Order");
-        List<DO.Order> orders = new List<DO.Order>();
-        //from s in ListXElement
-        //select orders.Add(Casting(s));
-        foreach (var item in ListXElement)
-        {
-            orders.Add(Casting(item));
-        }
+        var orders = (from item in ListXElement
+                          select Casting(item));
         return orders.Where(foo).ToList()[0];
     }
 

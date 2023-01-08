@@ -3,6 +3,7 @@ using DalApi;
 using BlApi;
 using System.Text.RegularExpressions;
 using DO;
+using System.Diagnostics;
 
 namespace BlImplementation
 {
@@ -41,14 +42,15 @@ namespace BlImplementation
             if (item.ProductID == 0)
             {
                 DO.Product dProduct = Dal.Product.Get(id);
-                BO.OrderItem dItem = new();
-                dItem.Id = 0;
-                dItem.ProductID = id;
-                dItem.ProductName = dProduct.ProductName;
-                dItem.Price = dProduct.Price;
-                dItem.Amount = 1;
-                dItem.TotalPrice = dProduct.Price;
-                cart.Items.Add(dItem);
+                cart.Items.Add(new BO.OrderItem
+                {
+                    Id = 0,
+                    ProductID = id,
+                    ProductName = dProduct.ProductName,
+                    Price = dProduct.Price,
+                    Amount = 1,
+                    TotalPrice = dProduct.Price
+                });
             }
             else
             {
@@ -122,29 +124,30 @@ namespace BlImplementation
             {
                 throw new BlDetailsNotValidException();
             }
-            cart.Items.ForEach(item =>
+            //////////////////////
+            cart.Items?.ForEach(item =>
             {
                 DO.Product product = Dal.Product.Get(item.ProductID);
-                if (product.Equals(default(DO.OrderItem)))
-                {
-                    throw new BlObjectNotFoundException();
-                }
+                if (product.Equals(default(DO.Product))) throw new BlObjectNotFoundException();
+
                 if (product.InStock < 0 || product.InStock - item.Amount == 0 || product.InStock - item.Amount < 0)
                 {
                     throw new BlOutOfStockException();
                 }
             });
+            int orderId = Dal.Order.Add(
+                new DO.Order()
+                {
+                    Id = 1,
+                    CustomerAdress = CustomerAdress,
+                    CustomerEmail = CustomerEmail,
+                    CustomerName = CustomerName,
+                    OrderDate = DateTime.Now,
+                    ShipDate = DateTime.MinValue,
+                    DeliveryDate = DateTime.MinValue
+                });
 
-            DO.Order order = new DO.Order();
-            order.Id = 1;
-            order.CustomerAdress = CustomerAdress;
-            order.CustomerEmail = CustomerEmail;
-            order.CustomerName = CustomerName;
-            order.OrderDate = DateTime.Now;
-            order.ShipDate = DateTime.MinValue;
-            order.DeliveryDate = DateTime.MinValue;
-            int orderId = Dal.Order.Add(order);
-            order.Id = orderId;
+            ///////////////////
             cart.Items.ForEach(item =>
             {
                 DO.Product product = Dal.Product.Get(item.ProductID);
@@ -153,18 +156,18 @@ namespace BlImplementation
             });
 
 
-        
             cart.Items.ForEach(item =>
             {
                 DO.Product product = Dal.Product.Get(item.ProductID);
-                DO.OrderItem orderItem = new();
-                orderItem.Id = 0;
-                orderItem.ProductID = item.ProductID;
-                orderItem.OrderID = order.Id;
-                orderItem.Price = product.Price;
-                orderItem.Amount = item.Amount;
-                int orderItemId = Dal.OrderItem.Add(orderItem);
-                orderItem.Id = orderItemId;
+                int orderItemId = Dal.OrderItem.Add(
+                    new DO.OrderItem()
+                    {
+                        Id = 0,
+                        ProductID = item.ProductID,
+                        OrderID = orderId,
+                        Price = product.Price,
+                        Amount = item.Amount
+                    });
             });
         }
     }

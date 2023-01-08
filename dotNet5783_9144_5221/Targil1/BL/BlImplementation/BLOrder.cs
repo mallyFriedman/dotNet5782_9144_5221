@@ -3,6 +3,7 @@ using DalApi;
 using BlApi;
 using Dal;
 using DO;
+using System.Diagnostics;
 
 namespace BlImplementation
 {
@@ -15,29 +16,16 @@ namespace BlImplementation
         public IEnumerable<BO.OrderForList> GetAll()
         {
             IEnumerable<DO.Order> orders = Dal.Order.Get();
-            List<BO.OrderForList> ordersForList = new List<BO.OrderForList>(orders.Count());
-
-            var x = from i in orders
-                    select new BO.OrderForList
-                    {
-                        //BO.Order a = Get(item.Id);
-                        Id = i.Id,
-                        CustomerName = i.CustomerName
-                        //OrderStatus = a.OrderStatus,
-                        //AmountProduct = a.OrderItem.Count(),
-                        //TotalPrice = a.TotalPrice
-                    };
-            foreach (DO.Order item in orders)
-            {
-                BO.Order a = Get(item.Id);
-                BO.OrderForList b = new BO.OrderForList();
-                b.Id = item.Id;
-                b.CustomerName = item.CustomerName;
-                b.OrderStatus = a.OrderStatus;
-                b.AmountProduct = a.OrderItem.Count();
-                b.TotalPrice = a.TotalPrice;
-                ordersForList.Add(b);
-            }
+            var ordersForList = from item in orders
+                                let a = Get(item.Id)
+                                select new BO.OrderForList
+                                {
+                                    Id = item.Id,
+                                    CustomerName = item.CustomerName,
+                                    OrderStatus = a.OrderStatus,
+                                    AmountProduct = a.OrderItem?.Count() ?? 0,
+                                    TotalPrice = a.TotalPrice
+                                };
             return ordersForList;
         }
 
@@ -55,41 +43,43 @@ namespace BlImplementation
             {
                 throw new BlObjectNotFoundException();
             }
-            BO.Order bOrder = new BO.Order();
-            bOrder.Id = dOrder.Id;
-            bOrder.CustomerAdress = dOrder.CustomerAdress;
-            bOrder.CustomerEmail = dOrder.CustomerEmail;
-            bOrder.CustomerName = dOrder.CustomerName;
-            bOrder.DeliveryDate = dOrder.DeliveryDate;
-            bOrder.OrderDate = dOrder.OrderDate;
-            bOrder.OrderStatus = status(dOrder.DeliveryDate, DateTime.MinValue, dOrder.ShipDate);
-            bOrder.ShipDate = dOrder.ShipDate;
-            List<BO.OrderItem> orderItem = new List<BO.OrderItem>(Dal.Product.Get()?.Count()??0);
-            double sum = 0;
-            IEnumerable<DO.OrderItem> dOrderItem = (IEnumerable<DO.OrderItem>)Dal.OrderItem.ReadOrderId(bOrder.Id);
-       //    var x = from item in dOrderItem
-       //            select new BO.OrderItem
-       //            {
-       //               Amount = item.Amount,
-       //               Id = item.Id,
-       //               Price = item.Price,
-       //               ProductID = item.ProductID,
-       //               TotalPrice = (item.Price) * (item.Amount),
-       //               //orderItem.Add(bOrderItem),
-       //               //sum = sum + TotalPrice;
-       //};
-
-            foreach (DO.OrderItem item in dOrderItem)
+            BO.Order bOrder = new BO.Order
             {
-                BO.OrderItem bOrderItem = new BO.OrderItem();
-                bOrderItem.Amount = item.Amount;
-                bOrderItem.Id = item.Id;
-                bOrderItem.Price = item.Price;
-                bOrderItem.ProductID = item.ProductID;
-                bOrderItem.TotalPrice = (item.Price) * (item.Amount);
-                orderItem.Add(bOrderItem);
-                sum = sum + bOrderItem.TotalPrice;
-            }
+                Id = dOrder.Id,
+                CustomerAdress = dOrder.CustomerAdress,
+                CustomerEmail = dOrder.CustomerEmail,
+                CustomerName = dOrder.CustomerName,
+                DeliveryDate = dOrder.DeliveryDate,
+                OrderDate = dOrder.OrderDate,
+                OrderStatus = status(dOrder.DeliveryDate, DateTime.MinValue, dOrder.ShipDate),
+                ShipDate = dOrder.ShipDate
+            };
+            List<BO.OrderItem> orderItem = new List<BO.OrderItem>(Dal.Product.Get()?.Count() ?? 0);
+            IEnumerable<DO.OrderItem> dOrderItem = (IEnumerable<DO.OrderItem>)Dal.OrderItem.ReadOrderId(bOrder.Id);
+            double sum = 0;
+            var ordersForList = from item in dOrderItem
+                                select new BO.OrderItem
+                                {
+                                    Amount = item.Amount,
+                                    Id = item.Id,
+                                    Price = item.Price,
+                                    ProductID = item.ProductID,
+                                    TotalPrice = ((item.Price) * (item.Amount))
+                                    //sum = sum + item.TotalPrice
+                                };
+
+
+         // foreach (DO.OrderItem item in dOrderItem)
+         // {
+         //     BO.OrderItem bOrderItem = new BO.OrderItem();
+         //     bOrderItem.Amount = item.Amount;
+         //     bOrderItem.Id = item.Id;
+         //     bOrderItem.Price = item.Price;
+         //     bOrderItem.ProductID = item.ProductID;
+         //     bOrderItem.TotalPrice = (item.Price) * (item.Amount);
+         //     orderItem.Add(bOrderItem);
+         //     sum = sum + bOrderItem.TotalPrice;
+         // }
             bOrder.OrderItem = orderItem;
             bOrder.TotalPrice = sum;
             return bOrder;

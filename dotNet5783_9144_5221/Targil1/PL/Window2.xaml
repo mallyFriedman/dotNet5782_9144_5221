@@ -30,14 +30,23 @@
 
         </Grid >
         <Label Grid.Column="0" Content="Category" HorizontalAlignment="Left" Margin="153,0,0,0" VerticalAlignment="Center" Height="58" Width="247" FontSize="48" FontFamily="Aharoni" FontWeight="Bold"/>
-        <ListView MouseDoubleClick="product_Click" x:Name="ProductsListview"  d:ItemsSource="{d:SampleData ItemCount=9}" SelectionChanged="ProductsListview_SelectionChanged" Margin="0,2,0,5" Background="#FFADADAD" Grid.Row="1">
+        <ListView MouseDoubleClick="product_Click" x:Name="ProductsListview"  d:ItemsSource="{d:SampleData ItemCount=9}" SelectionChanged="ProductsListview_SelectionChanged" Margin="0,2,412,5" Background="#FFADADAD" Grid.Row="1">
             <ListView.View  >
                 <GridView >
                     <GridViewColumn />
                 </GridView>
             </ListView.View>
         </ListView>
-        <Button Content="Add a product" HorizontalAlignment="Left" Margin="153,58,0,0" Grid.Row="2" VerticalAlignment="Top" Click="GoToAdd" Height="68" Width="539" FontSize="36" BorderBrush="White" Background="#FFA4A4A4"/>
+
+        <Button Content="Add a product" HorizontalAlignment="Left" Margin="3,58,0,0" Grid.Row="2" VerticalAlignment="Top" Click="GoToAdd" Height="68" Width="386" FontSize="36" BorderBrush="White" Background="#FFA4A4A4"/>
+        <ListView MouseDoubleClick="order_Click"  x:Name="OrdersListview"  d:ItemsSource="{d:SampleData ItemCount=9}" SelectionChanged="OrdersListview_SelectionChanged" Margin="404,6,0,0" Grid.Row="1" Background="#FF9E9E9E">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <Button Content="add an order" HorizontalAlignment="Left" Margin="400,62,0,0" Grid.Row="2" VerticalAlignment="Top" Height="60" Width="387" Background="#FFABABAB" FontSize="36"/>
 
     </Grid>
 </Window >

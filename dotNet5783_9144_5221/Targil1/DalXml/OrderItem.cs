@@ -21,11 +21,7 @@ internal class OrderItem : IOrderItem
         root?.Save("..\\..\\..\\OrderItemXml.xml");
         return item.Id;
     }
-    //public int Id { get; set; }
-    //public int ProductID { get; set; }
-    //public int OrderID { get; set; }
-    //public double Price { get; set; }
-    //public int Amount { get; set; }
+
     private DO.OrderItem Casting(XElement item)
     {
         DO.OrderItem oi = new();
@@ -78,26 +74,10 @@ internal class OrderItem : IOrderItem
     {
         XElement? root = XDocument.Load("OrderItemXml.xml").Root;
         IEnumerable<XElement> ListXElement = root?.Element("ArrayOfOrderItem")?.Elements("OrderItem") ?? throw new Exception("error in file type");
-        var orderItem = (from item in ListXElement
-                         where (item.Attribute("Id")?.Value == id)
-                         select Casting(item)).FirstOrDefault();
-
-      //  let mark = (from g in s.Elements("grade")
-      //              where g.Attribute("subject")?.Value == "c#"
-      //              select g).FirstOrDefault()
-      //
-
-     //  List<DO.OrderItem> orderItem = new List<DO.OrderItem>();
-     //  foreach (var item in ListXElement)
-     //  {
-     //      XElement A=root?.Element("ArrayOfOrderItem")?.Elements("OrderItem").
-     //      Where(p => p.Attribute("OrderId")?.Value == id.ToString()).FirstOrDefault();
-     //      if (A != null)
-     //      {
-     //          orderItem.Add(Casting(A));
-     //      }
-     //   }
-        return orderItem;
+        var orderItems = (from item in ListXElement
+                         where (int.Parse(item.Attribute("Id")?.Value??"0") == id)
+                         select Casting(item));
+        return orderItems;
     }
 
     public void Update(DO.OrderItem item)
