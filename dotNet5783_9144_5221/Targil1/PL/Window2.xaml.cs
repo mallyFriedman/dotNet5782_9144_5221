@@ -29,6 +29,7 @@ namespace PL
             InitializeComponent();
             ProductsListview.ItemsSource = Bl.Product.GetAllForCustomer();
             CategorySelector.ItemsSource = Enum.GetValues(typeof(BO.Category));
+            OrdersListview.ItemsSource = Bl.Order.GetAll();
         }
         /// <summary>
         /// Setting the selection menu
@@ -37,6 +38,7 @@ namespace PL
         {
             ProductsListview.ItemsSource = Bl.Product.GetAllForCustomer((BO.Category)CategorySelector.SelectedItem);
         }
+
         /// <summary>
         /// the function routs to the add page
         /// </summary>

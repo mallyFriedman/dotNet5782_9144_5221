@@ -46,6 +46,7 @@ public class DalProduct : IProduct
 
     Product ICrud<Product>.GetSingle(Func<Product, bool>? foo)
     {
-        throw new NotImplementedException();
+
+        return  DataSource.ProductList.Where(foo).FirstOrDefault();
     }
 }

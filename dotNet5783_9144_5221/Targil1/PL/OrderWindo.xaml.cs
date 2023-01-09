@@ -60,8 +60,7 @@ namespace PL
         {
            // try
             //{
-                BO.OrderForList p = new();
-                Bl.Order.UpdateSupply(p.Id);
+                Bl.Order.UpdateSupply(this.p.Id);
                 MessageBox.Show("updated succesfuly!");
                 new Window2().Show();
                 this.Hide();
@@ -86,8 +85,7 @@ namespace PL
             //UpdateSupply
             //try
             //{
-                BO.OrderForList p = new();
-                Bl.Order.UpdateSupply(p.Id);
+                Bl.Order.UpdateSupply(this.p.Id);
                 MessageBox.Show("updated succesfuly!");
                 new Window2().Show();
                 this.Hide();

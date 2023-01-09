@@ -88,7 +88,7 @@ public class DalOrderItem : IOrderItem
 
     OrderItem ICrud<OrderItem>.GetSingle(Func<OrderItem, bool>? foo)
     {
-        throw new NotImplementedException();
+        return DataSource.OrderItems.Where(foo).FirstOrDefault();
     }
 }
 

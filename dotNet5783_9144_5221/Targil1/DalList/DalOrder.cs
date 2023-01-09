@@ -56,7 +56,7 @@ public class DalOrder : IOrder
 
     Order ICrud<Order>.GetSingle(Func<Order, bool>? foo)
     {
-        throw new NotImplementedException();
+        return DataSource.OrderArr.Where(foo).FirstOrDefault();
     }
 }
 

@@ -11,11 +11,10 @@
             <RowDefinition Height="5*"/>
             <RowDefinition Height="429*"/>
         </Grid.RowDefinitions>
-        
+
         <TextBox Name="OrderId" HorizontalAlignment="Left" Margin="9,34,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="120" Height="25" Grid.Row="1"/>
-        <TextBox Name="CostumerName" HorizontalAlignment="Left" Margin="17,104,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" TextChanged="OrderName_TextChanged" Height="26" Grid.Row="1"/>
-        <TextBox Name="CostumerEmail" HorizontalAlignment="Left" Margin="22,175,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="120" Height="27" Grid.Row="1" TextChanged="Price_TextChanged"/>
-        <TextBox Name="CostumerAdress" HorizontalAlignment="Left" Margin="28,321,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="120" Height="25" Grid.Row="1"/>
+        <TextBox Name="CostumerEmail" HorizontalAlignment="Left" Margin="11,175,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="120" Height="27" Grid.Row="1" TextChanged="Price_TextChanged"/>
+        <TextBox Name="CostumerAdress" HorizontalAlignment="Left" Margin="18,321,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="120" Height="25" Grid.Row="1"/>
         <Button Name="UpdateSupply" Content="UpdateSupply" Background="#FFB7B7B7" HorizontalAlignment="Left" Margin="300,365,0,0" VerticalAlignment="Top" Width="137" Click="UpdateSupply1" Height="37" FontSize="16" FontWeight="Bold" Grid.Row="1">
             <Button.BorderBrush>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
@@ -26,16 +25,16 @@
         </Button>
 
         <Label Content="enter the Order id:" HorizontalAlignment="Left" Margin="6,0,0,0" VerticalAlignment="Top" FontSize="16" FontWeight="Bold" Background="#FFB7B7B7" FontStyle="Normal" Grid.Row="1"/>
-        <Label Content="enter the CustomerName:" HorizontalAlignment="Left" Margin="12,63,0,0" VerticalAlignment="Top" Width="266" FontSize="16" FontWeight="Bold" Background="#FFB7B7B7" Grid.Row="1"/>
-        <Label Content="enter the CustomerEmail:" HorizontalAlignment="Left" Margin="17,138,0,0" VerticalAlignment="Top" Width="266" FontSize="16" FontWeight="Bold" Background="#FFB7B7B7" Grid.Row="1"/>
-        <Label Content="enter the CustomerAdress:" HorizontalAlignment="Left" Margin="12,209,0,0" VerticalAlignment="Top" Width="266" FontSize="16" FontWeight="Bold" Background="#FFB7B7B7" Grid.Row="1"/>
-        <Label Content="enter the OrderStatus:" HorizontalAlignment="Left" Margin="23,280,0,0" VerticalAlignment="Top" Width="266" FontSize="16" FontWeight="Bold" Background="#FFB7B7B7" Grid.Row="1"/>
+        <Label Content="enter the CustomerName:" HorizontalAlignment="Left" Margin="8,63,0,0" VerticalAlignment="Top" Width="266" FontSize="16" FontWeight="Bold" Background="#FFB7B7B7" Grid.Row="1"/>
+        <Label Content="enter the CustomerEmail:" HorizontalAlignment="Left" Margin="9,138,0,0" VerticalAlignment="Top" Width="266" FontSize="16" FontWeight="Bold" Background="#FFB7B7B7" Grid.Row="1"/>
+        <Label Content="enter the CustomerAdress:" HorizontalAlignment="Left" Margin="8,209,0,0" VerticalAlignment="Top" Width="266" FontSize="16" FontWeight="Bold" Background="#FFB7B7B7" Grid.Row="1"/>
+        <Label Content="enter the OrderStatus:" HorizontalAlignment="Left" Margin="12,280,0,0" VerticalAlignment="Top" Width="266" FontSize="16" FontWeight="Bold" Background="#FFB7B7B7" Grid.Row="1"/>
         <Label Content="enter the ShipDate:" HorizontalAlignment="Left" Margin="340,159,0,0" VerticalAlignment="Top" Width="266" FontSize="16" FontWeight="Bold" Background="#FFB7B7B7" Grid.Row="1"/>
         <Label Content="enter the OrderDate:" HorizontalAlignment="Left" Margin="328,99,0,0" VerticalAlignment="Top" Width="266" FontSize="16" FontWeight="Bold" Background="#FFB7B7B7" Grid.Row="1"/>
         <Label Content="enter the DeliveryDate:" HorizontalAlignment="Left" Margin="324,28,0,0" VerticalAlignment="Top" Width="266" FontSize="16" FontWeight="Bold" Background="#FFB7B7B7" Grid.Row="1"/>
         <Label Content="enter the TotalPrice:" HorizontalAlignment="Left" Margin="331,225,0,0" VerticalAlignment="Top" Width="266" FontSize="16" FontWeight="Bold" Background="#FFB7B7B7" Grid.Row="1"/>
 
-        <ComboBox Name="CategorySelector" HorizontalAlignment="Left" Margin="22,244,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="ComboBox_SelectionChanged" Height="29" Grid.Row="1"/>
+        <ComboBox Name="CategorySelector" HorizontalAlignment="Left" Margin="11,244,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="ComboBox_SelectionChanged" Height="29" Grid.Row="1"/>
         <Button Content="back to home" HorizontalAlignment="Left" Margin="670,370,0,0" VerticalAlignment="Top" Click="BackToHome" Background="#FFB7B7B7" Width="110" Height="31" FontSize="16" FontFamily="Segoe UI Semilight" FontWeight="Bold" Grid.Row="1">
             <Button.BorderBrush>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
@@ -45,7 +44,7 @@
             </Button.BorderBrush>
         </Button>
         <Button Name="UpdateShipping" Content="UpdateShipping" HorizontalAlignment="Left" Margin="72,365,0,0" VerticalAlignment="Top" Width="132" Background="#FFB7B7B7" Click="UpdateShipping1" Height="37" FontSize="16" FontWeight="Bold" Grid.Row="1">
-            
+
             <Button.BorderBrush>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                     <GradientStop Color="Black"/>
