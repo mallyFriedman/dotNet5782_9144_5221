@@ -59,7 +59,7 @@ internal class Order : IOrder
     public IEnumerable<DO.Order>? Get(Func<DO.Order, bool>? foo = null)
     {
         XElement? root = XDocument.Load("OrderXml.xml").Root;
-        IEnumerable<XElement> ListXElement = root?.Element("ArrayOfOrder")?.Elements("Order")??;
+        IEnumerable<XElement> ListXElement = root?.Element("ArrayOfOrder")?.Elements("Order")??null;/////
         var orders = (from item in ListXElement
                           select Casting(item));
         return foo == null ? orders : orders.Where(foo).ToList();

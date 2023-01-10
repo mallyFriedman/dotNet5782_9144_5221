@@ -6,7 +6,7 @@ namespace BlApi
 
         //get arr:
         public IEnumerable<BO.ProductForList> GetAllForCustomer(BO.Category? category = null);
-        public IEnumerable<BO.ProductItem> GetAllForManager();
+        public IEnumerable<BO.ProductItem> GetAllForManager(BO.Category? category = null);
         //get one product:
         public Product GetManager(int id);
         public Product GetCustomer(int id);

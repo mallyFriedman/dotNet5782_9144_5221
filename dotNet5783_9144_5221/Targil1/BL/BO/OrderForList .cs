@@ -1,6 +1,4 @@
-﻿
-
-namespace BO
+﻿namespace BO
 {
     public class OrderForList
     {
@@ -15,6 +13,5 @@ namespace BO
     	OrderStatus: {OrderStatus},
     	AmountProduct: {AmountProduct},
         TotalPrice: {TotalPrice}";
-
     }
 }

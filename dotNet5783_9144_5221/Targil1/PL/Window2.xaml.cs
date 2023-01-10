@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BlImplementation;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,13 +20,13 @@ namespace PL
     /// </summary>
     public partial class Window2 : Window
     {
-        private BlApi.IBl Bl { get; set; }
+        private BlApi.IBl Bl;
         /// <summary>
         /// constructor of the page
         /// </summary>
-        public Window2()
+        public Window2(BlApi.IBl bl)
         {
-            Bl = BlApi.Factory.Get();
+            this.Bl = bl;
             InitializeComponent();
             ProductsListview.ItemsSource = Bl.Product.GetAllForCustomer();
             CategorySelector.ItemsSource = Enum.GetValues(typeof(BO.Category));
@@ -44,7 +45,7 @@ namespace PL
         /// </summary>
         private void GoToAdd(object sender, RoutedEventArgs e)
         {
-            new Window1().Show();
+            new Window1(Bl).Show();
             this.Hide();
         }
         /// <summary>
@@ -53,7 +54,7 @@ namespace PL
         private void product_Click(object sender, MouseButtonEventArgs e)
         {
              BO.ProductForList p = (BO.ProductForList)((ListView)sender).SelectedItem;
-            new Window1(p).Show();
+            new Window1(Bl,p).Show();
             this.Hide();
 
         }
@@ -61,7 +62,7 @@ namespace PL
         private void order_Click(object sender, MouseButtonEventArgs e)
         {
             BO.OrderForList p = (BO.OrderForList)((ListView)sender).SelectedItem;
-            new OrderWindo(p).Show();
+            new OrderWindo(Bl,p.Id,true).Show();     /////////
             this.Hide();
 
         }
@@ -76,6 +77,12 @@ namespace PL
         private void OrdersListview_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
 
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            new MainWindow().Show();
+            this.Hide();
         }
     }
 }

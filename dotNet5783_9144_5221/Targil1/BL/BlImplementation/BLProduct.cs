@@ -34,10 +34,14 @@ namespace BlImplementation
         /// returns all the products
         /// in a way that the manager can see
         /// </summary>
-        public IEnumerable<BO.ProductItem> GetAllForManager()
+        public IEnumerable<BO.ProductItem> GetAllForManager(BO.Category? category = null)
         {
             Random rand = new Random();
-            IEnumerable<DO.Product> a = Dal.Product.Get();
+            IEnumerable<DO.Product> a;
+
+            if (category == null)
+                a = Dal.Product.Get();
+            else a = Dal.Product.Get(p => (BO.Category)p.Category == category);
             var Prod = from item in a
                           select new BO.ProductItem
                           {

@@ -14,7 +14,7 @@ public class DalOrder : IOrder
 
     public void Delete(int id)
     {
-        if (id < 100000)
+        if (id < 500000)
         {
             throw new IdNotValidException();
         }
@@ -23,7 +23,7 @@ public class DalOrder : IOrder
     }
     public Order Get(int id)
     {
-        if (id < 100000)
+        if (id < 500000)
         {
             throw new IdNotValidException();
         }

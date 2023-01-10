@@ -32,9 +32,9 @@ namespace BlImplementation
         /// <summary>
         /// the function returnes the specific order by id
         /// </summary>
-        public BO.Order Get(int id)
+        public BO.Order Get(int id=0)
         {
-            if (id < 100000)
+            if (id < 500000)
             {
                 throw new BlIdNotValidException();
             }
@@ -57,7 +57,7 @@ namespace BlImplementation
             List<BO.OrderItem> orderItem = new List<BO.OrderItem>(Dal.Product.Get()?.Count() ?? 0);
             IEnumerable<DO.OrderItem> dOrderItem = (IEnumerable<DO.OrderItem>)Dal.OrderItem.ReadOrderId(bOrder.Id);
             double sum = 0;
-            var ordersForList = from item in dOrderItem
+            bOrder.OrderItem = from item in dOrderItem
                                 select new BO.OrderItem
                                 {
                                     Amount = item.Amount,
@@ -80,7 +80,6 @@ namespace BlImplementation
          //     orderItem.Add(bOrderItem);
          //     sum = sum + bOrderItem.TotalPrice;
          // }
-            bOrder.OrderItem = orderItem;
             bOrder.TotalPrice = sum;
             return bOrder;
         }
@@ -95,11 +94,11 @@ namespace BlImplementation
                 throw new BlObjectNotFoundException();
             }
             eOrderStatus a = status(dOrder.DeliveryDate, DateTime.MinValue, dOrder.ShipDate);
-            if (a != eOrderStatus.Ordered)
+            if (a != eOrderStatus.Shipped)
             {
                 throw new BlCannotChangeTheStatusException();
             }
-            dOrder.ShipDate = DateTime.Now;
+            dOrder.DeliveryDate = DateTime.Now;
             Dal.Order.Update(dOrder);
             BO.Order bOrder = Get(id);
             return bOrder;
@@ -115,12 +114,12 @@ namespace BlImplementation
                 throw new BlObjectNotFoundException();
             }
             eOrderStatus a = status(dOrder.DeliveryDate, DateTime.MinValue, dOrder.ShipDate);
-            if (!(a == eOrderStatus.Shipped && a != eOrderStatus.Delivered))
+            if (!(a == eOrderStatus.Ordered && a != eOrderStatus.Shipped))
             {
                 throw new BlCannotChangeTheStatusException();
 
             }
-            dOrder.DeliveryDate = DateTime.Now;
+            dOrder.ShipDate = DateTime.Now;
             Dal.Order.Update(dOrder);
             BO.Order bOrder = Get(id);
             return bOrder;
@@ -137,6 +136,14 @@ namespace BlImplementation
                 return (BO.eOrderStatus)1;
             else
                 return (BO.eOrderStatus)0;
+
+         //  if (DeliveryDate > DateTime.MinValue)
+         //      return (BO.eOrderStatus)3;
+         //  else if (ShipDate > DateTime.MinValue)
+         //      return (BO.eOrderStatus)2;
+         //  else
+         //      return (BO.eOrderStatus)1;
+
         }
     }
 }

@@ -15,7 +15,7 @@ public static class DataSource ///internal ???????????
         internal static int _indexArrOrderItem = 0;
 
         private static int _productId = 100000;
-        private static int _orderId = 100000;
+        private static int _orderId = 500000;        //100000
         private static int _orderItemId = 100000;
 
         public static int ProductId { get { return ++_productId; } }
@@ -65,8 +65,8 @@ public static class DataSource ///internal ???????????
     }
     static public void CreateOrderList()
     {
-        TimeSpan t_ShipDate = TimeSpan.FromDays(10);
-        TimeSpan t_DeliveryDate = TimeSpan.FromDays(30);
+        TimeSpan t_ShipDate = TimeSpan.FromDays((int)rand.NextInt64(0, 10));
+        TimeSpan t_DeliveryDate = TimeSpan.FromDays((int)rand.NextInt64(10, 25));
         for (int i = 0; i < 20; i++)
         {
             Order orderi = new Order();
@@ -77,13 +77,36 @@ public static class DataSource ///internal ???????????
             orderi.Id = id;
             orderi.CustomerEmail = customerName[number] + "@gmail.com";
             orderi.CustomerAdress = customerName[number] + "Street";
-            orderi.OrderDate = DateTime.MinValue;
-            orderi.ShipDate = (orderi.OrderDate + t_ShipDate);
-            orderi.DeliveryDate = (orderi.ShipDate + t_DeliveryDate);
+            //orderi.OrderDate = DateTime.Today;
+            //orderi.ShipDate =  (orderi.OrderDate + t_ShipDate);
+            //orderi.DeliveryDate =  (orderi.ShipDate + t_DeliveryDate);
+           
+
+
+
+            orderi.OrderDate = DateTime.Now;
+            if (i % 10 < 8)  // 80% have ship date
+                orderi.ShipDate = orderi.OrderDate + t_ShipDate;
+            else
+                orderi.ShipDate = DateTime.MinValue;
+            if (i % 10 < 6)
+            { // 60% from them have delivery date
+                if (orderi.ShipDate == DateTime.MinValue)
+                    orderi.ShipDate = orderi.OrderDate + t_ShipDate;
+                orderi.DeliveryDate = orderi.ShipDate + t_DeliveryDate;
+            }   
+            else
+                orderi.DeliveryDate = DateTime.MinValue;
+
             OrderArr.Add(orderi);
         }
-
     }
+
+
+
+   
+
+
     static public void PushOrderItem()
     {
         for (int i = 0; i < 20; i++)

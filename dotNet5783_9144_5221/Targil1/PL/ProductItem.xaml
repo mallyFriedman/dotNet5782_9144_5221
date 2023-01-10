@@ -1,0 +1,33 @@
+﻿<Window x:Class="PL.productItem"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PL"
+        mc:Ignorable="d"
+        Title="productItem" Height="450" Width="800">
+    <Grid>
+        <ListView x:Name="ProductsListview" MouseDoubleClick="product_Click"  d:ItemsSource="{d:SampleData ItemCount=9}" SelectionChanged="ProductsListview_SelectionChanged" Margin="18,50,17,16" Grid.Row="1">
+            <ListView.View>
+                <GridView >
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=Id}" Header="Id" Width="100"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=ProductName}" Header="ProductName" Width="100"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=Price}" Header="ProductPrice" Width="100"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=Category}" Header="Category" Width="100"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=InStock}" Header="InStock" Width="100"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=AmountInCart}" Header="AmountInCart" Width="100"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+
+        <ComboBox  Name="CategorySelector" SelectionChanged="SelectionChanged" HorizontalAlignment="Left" Margin="28,13,0,392" Width="137">
+            <ComboBox.Background>
+                <LinearGradientBrush EndPoint="0,1">
+                    <GradientStop Color="#FFF0F0F0"/>
+                    <GradientStop Color="#FFA2A2A2" Offset="1"/>
+                </LinearGradientBrush>
+            </ComboBox.Background>
+        </ComboBox>
+
+    </Grid>
+</Window>

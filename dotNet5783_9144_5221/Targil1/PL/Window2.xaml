@@ -33,20 +33,28 @@
         <ListView MouseDoubleClick="product_Click" x:Name="ProductsListview"  d:ItemsSource="{d:SampleData ItemCount=9}" SelectionChanged="ProductsListview_SelectionChanged" Margin="0,2,412,5" Background="#FFADADAD" Grid.Row="1">
             <ListView.View  >
                 <GridView >
-                    <GridViewColumn />
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=Id}" Header="Id" Width="100"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=ProductName}" Header="ProductName" Width="100"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=ProductPrice}" Header="ProductPrice" Width="100"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=Category}" Header="Category" Width="100"/>
                 </GridView>
             </ListView.View>
         </ListView>
 
-        <Button Content="Add a product" HorizontalAlignment="Left" Margin="3,58,0,0" Grid.Row="2" VerticalAlignment="Top" Click="GoToAdd" Height="68" Width="386" FontSize="36" BorderBrush="White" Background="#FFA4A4A4"/>
+        <Button Content="Add a product" HorizontalAlignment="Left" Margin="30,14,0,0" Grid.Row="2" VerticalAlignment="Top" Click="GoToAdd" Height="56" Width="747" FontSize="36" BorderBrush="White" Background="#FFA4A4A4"/>
         <ListView MouseDoubleClick="order_Click"  x:Name="OrdersListview"  d:ItemsSource="{d:SampleData ItemCount=9}" SelectionChanged="OrdersListview_SelectionChanged" Margin="404,6,0,0" Grid.Row="1" Background="#FF9E9E9E">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn/>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=Id}" Header="Id" Width="100"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=CustomerName}" Header="CustomerName" Width="100"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=OrderStatus}" Header="OrderStatus" Width="100"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=AmountProduct}" Header="AmountProduct" Width="100"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=TotalPrice}" Header="TotalPrice" Width="100"/>
+
                 </GridView>
             </ListView.View>
         </ListView>
-        <Button Content="add an order" HorizontalAlignment="Left" Margin="400,62,0,0" Grid.Row="2" VerticalAlignment="Top" Height="60" Width="387" Background="#FFABABAB" FontSize="36"/>
+        <Button Content="Back to home" HorizontalAlignment="Left" Margin="548,79,0,0" Grid.Row="2" VerticalAlignment="Top" Height="48" Width="248" Background="#FFABABAB" FontSize="36" Click="Button_Click"/>
 
     </Grid>
 </Window >

@@ -7,9 +7,10 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid Background="#FFC8C8C8">
-        <Button Content="admin" HorizontalAlignment="Left" VerticalAlignment="Top" RenderTransformOrigin="0.132,0.486" Click="Button_Click" Foreground="Black" BorderBrush="{x:Null}" Background="#FFB1AFAF" FontSize="22" Width="134" Height="63" FontFamily="Adobe Ming Std L" FontWeight="Bold" Margin="529,245,0,0"/>
-        <Button Content="new order" HorizontalAlignment="Left" Margin="324,243,0,0" VerticalAlignment="Top" Height="62" Width="137" Background="#FFA5A5A5" FontSize="22" BorderBrush="#FFA2A2A2"/>
-        <Button Content="track order" HorizontalAlignment="Left" Margin="113,242,0,0" VerticalAlignment="Top" Height="68" Width="139" Background="#FF9A9797" FontSize="22" BorderBrush="#FFA5A5A5"/>
+        <Button Content="admin" HorizontalAlignment="Left" VerticalAlignment="Top" RenderTransformOrigin="0.132,0.486" Click="Button_Click" Foreground="Black" BorderBrush="{x:Null}" Background="#FFB1AFAF" FontSize="24" Width="210" Height="240" FontFamily="Adobe Ming Std L" FontWeight="Bold" Margin="524,88,0,0"/>
+        <Button Content="new order" HorizontalAlignment="Center" Margin="0,91,0,0" VerticalAlignment="Top" Height="236" Width="208" Background="#FFA5A5A5" FontSize="24" BorderBrush="#FFA2A2A2" Click="Button_Click_1"/>
+        <Button Content="track order" HorizontalAlignment="Left" Margin="67,92,0,0" VerticalAlignment="Top" Height="185" Width="209" Background="#FF9A9797" FontSize="24" BorderBrush="#FFA5A5A5" Click="Button_Click_2"/>
+        <TextBox Name="track"  HorizontalAlignment="Left" Margin="71,287,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="205" Height="39" FontSize="24" TextChanged="track_TextChanged"/>
 
     </Grid>
 </Window>
