@@ -24,11 +24,21 @@ namespace PL
 
         private BlApi.IBl Bl;
         private BO.Cart cart = new();
-        public Cart(BlApi.IBl bl,ProductItem a)
+        public Cart(BlApi.IBl bl, BO.Cart cart)
         {
-            this.Bl = bl;
             InitializeComponent();
-            //Dal.Cart.Add(cart, a.Id);
+            this.cart = cart;
+            DataContext = this.cart;
+        //   cartListview.ItemsSource = cart.Items;
+        }
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            Bl.Cart.Confirm(cart,CustomerName.Text,CustomerEmail.Text,CustomerAdress.Text);
+        }
+
+        private void ProductsListview_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
         }
     }
 }

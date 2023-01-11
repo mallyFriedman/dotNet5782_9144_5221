@@ -45,7 +45,7 @@
         <ListView MouseDoubleClick="order_Click"  x:Name="OrdersListview"  d:ItemsSource="{d:SampleData ItemCount=9}" SelectionChanged="OrdersListview_SelectionChanged" Margin="404,6,0,0" Grid.Row="1" Background="#FF9E9E9E">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn DisplayMemberBinding="{Binding Path=Id}" Header="Id" Width="100"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=Id}" Header="Id" Width="100" />
                     <GridViewColumn DisplayMemberBinding="{Binding Path=CustomerName}" Header="CustomerName" Width="100"/>
                     <GridViewColumn DisplayMemberBinding="{Binding Path=OrderStatus}" Header="OrderStatus" Width="100"/>
                     <GridViewColumn DisplayMemberBinding="{Binding Path=AmountProduct}" Header="AmountProduct" Width="100"/>

@@ -10,12 +10,12 @@ namespace BO
     {
         public int Id { get; set; }
         public string? ProductName { get; set; }
-        public double ProductPrice { get; set; }
+        public double Price { get; set; }
         public Category Category { get; set; }
         public override string ToString() => $@"
         Product ID={Id}, 
         Product ProductName={ProductName}, 
-    	Price: {ProductPrice},
+    	Price: {Price},
         category - {Category}";
     }
 }

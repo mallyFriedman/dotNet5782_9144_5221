@@ -5,8 +5,25 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
-        Title="Cart" Height="450" Width="800">
+        Title="Cart_" Height="450" Width="800">
     <Grid>
-        
+        <ListView   ItemsSource="{Binding Items}"   x:Name="cartListview"  Margin="35,194,150,10" SelectionChanged="ProductsListview_SelectionChanged">
+            <ListView.View>
+                <GridView >
+                    <GridViewColumn DisplayMemberBinding="{Binding Id}" Header="Id" Width="100"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding ProductName}" Header="ProductName" Width="100"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding Price}" Header="ProductPrice" Width="100"/>
+                    <!-- <GridViewColumn DisplayMemberBinding="{Binding Path=Category}" Header="Category" Width="100"/>-->
+                    <!--  <GridViewColumn DisplayMemberBinding="{Binding Path=InStock}" Header="InStock" Width="100"/>-->
+                    <GridViewColumn DisplayMemberBinding="{Binding Amount}" Header="AmountInCart" Width="100"/>
+                    <!-- <GridViewColumn DisplayMemberBinding="{Binding Path=AmountInCart}" Header="AmountInCart" Width="100"/>-->
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <Button Content="confirm" HorizontalAlignment="Left" Margin="101,20,0,0" VerticalAlignment="Top" Width="120" Height="31" Click="Button_Click"/>
+        <TextBox Name="CustomerName"  HorizontalAlignment="Left" Margin="101,56,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120"/>
+        <TextBox Name="CustomerEmail" HorizontalAlignment="Left" Margin="101,79,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120"/>
+        <TextBox Name="CustomerAdress" HorizontalAlignment="Left" Margin="101,102,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120"/>
+
     </Grid>
 </Window>

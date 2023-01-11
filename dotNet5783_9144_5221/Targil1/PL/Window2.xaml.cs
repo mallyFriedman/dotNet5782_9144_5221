@@ -1,4 +1,6 @@
-﻿using BlImplementation;
+﻿using BlApi;
+using BlImplementation;
+using BO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,16 +23,25 @@ namespace PL
     public partial class Window2 : Window
     {
         private BlApi.IBl Bl;
+        private BO.Cart cart = new();
         /// <summary>
         /// constructor of the page
         /// </summary>
-        public Window2(BlApi.IBl bl)
+        public Window2(BlApi.IBl bl, BO.Cart cart)
         {
-            this.Bl = bl;
-            InitializeComponent();
-            ProductsListview.ItemsSource = Bl.Product.GetAllForCustomer();
-            CategorySelector.ItemsSource = Enum.GetValues(typeof(BO.Category));
-            OrdersListview.ItemsSource = Bl.Order.GetAll();
+            try
+            {
+                this.Bl = bl;
+                this.cart = cart;
+                InitializeComponent();
+                ProductsListview.ItemsSource = Bl.Product.GetAllForCustomer();
+                CategorySelector.ItemsSource = Enum.GetValues(typeof(BO.Category));
+                OrdersListview.ItemsSource = Bl.Order.GetAll();
+            }
+            catch (BlIdNotValidException ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
         /// <summary>
         /// Setting the selection menu
@@ -45,7 +56,7 @@ namespace PL
         /// </summary>
         private void GoToAdd(object sender, RoutedEventArgs e)
         {
-            new Window1(Bl).Show();
+            new Window1(Bl, cart).Show();
             this.Hide();
         }
         /// <summary>
@@ -53,8 +64,8 @@ namespace PL
         /// </summary>
         private void product_Click(object sender, MouseButtonEventArgs e)
         {
-             BO.ProductForList p = (BO.ProductForList)((ListView)sender).SelectedItem;
-            new Window1(Bl,p).Show();
+            BO.ProductForList p = (BO.ProductForList)((ListView)sender).SelectedItem;
+            new Window1(Bl, cart, p).Show();
             this.Hide();
 
         }
@@ -62,12 +73,12 @@ namespace PL
         private void order_Click(object sender, MouseButtonEventArgs e)
         {
             BO.OrderForList p = (BO.OrderForList)((ListView)sender).SelectedItem;
-            new OrderWindo(Bl,p.Id,true).Show();     /////////
+            new OrderWindo(Bl, cart, p.Id, true).Show();     /////////
             this.Hide();
 
         }
 
-        
+
 
         private void ProductsListview_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {

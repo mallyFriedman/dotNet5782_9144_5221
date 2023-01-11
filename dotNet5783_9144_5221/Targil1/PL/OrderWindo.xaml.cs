@@ -27,21 +27,20 @@ namespace PL
     public partial class OrderWindo : Window
     {
         private int id;
-
-        private BlApi.IBl Bl { get; set; }
+        private BO.Cart cart ;
+        private BlApi.IBl Bl;
 
 
         /// <summary>
         /// constractor of the page
         /// </summary>
-        public OrderWindo(BlApi.IBl bl, int id = 0, bool admin = false)
+        public OrderWindo(BlApi.IBl bl,BO.Cart cart, int id = 0, bool admin = false)
         {
             try
             {
-
-
+                this.cart = cart;
                 this.id = id;
-                this.Bl = BlApi.Factory.Get();
+                this.Bl = bl ;
                 InitializeComponent();
                 BO.Order order;
                 if (!admin)
@@ -75,7 +74,7 @@ namespace PL
             {
                 Bl.Order.UpdateSupply(id);
                 MessageBox.Show("updated succesfuly!");
-                new Window2(Bl).Show();
+                new Window2(Bl, cart).Show();
                 this.Hide();
             }
             catch (BlCannotChangeTheStatusException ex)
@@ -90,7 +89,7 @@ namespace PL
             {
                 Bl.Order.UpdateShipping(id);
                 MessageBox.Show("updated succesfuly!");
-                new Window2(Bl).Show();
+                new Window2(Bl, cart).Show();
                 this.Hide();
             }
             catch (BlCannotChangeTheStatusException ex)
@@ -108,7 +107,7 @@ namespace PL
         private void BackToHome(object sender, RoutedEventArgs e)
         {
 
-            new Window2(Bl).Show();
+            new Window2(Bl, cart).Show();
             this.Hide();
         }
 

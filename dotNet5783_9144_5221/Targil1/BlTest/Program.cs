@@ -260,7 +260,7 @@ public static class Program1
             int id;
             Console.Write("Enter the id: ");
             id = Convert.ToInt32(Console.ReadLine());
-            Console.WriteLine(iBl.Product.GetCustomer(id));
+         //   Console.WriteLine(iBl.Product.GetCustomer(id));
         }
         catch (BlIdNotValidException ex)
         {

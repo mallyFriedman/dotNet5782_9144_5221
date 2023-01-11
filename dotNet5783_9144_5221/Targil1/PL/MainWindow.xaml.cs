@@ -10,6 +10,7 @@ namespace PL
     /// </summary>
     public partial class MainWindow : Window
     {
+        public BO.Cart cart = new();
         private BlApi.IBl Bl { get; set; }
         /// <summary>
         /// constructor of the page
@@ -24,13 +25,13 @@ namespace PL
         /// </summary>
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            new Window2(Bl).Show();
+            new Window2(Bl, cart).Show();
             this.Hide();
         }
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
-            new productItem(Bl).Show();
+            new productItem(Bl, cart).Show();
             this.Hide();
         }
 
@@ -44,7 +45,7 @@ namespace PL
             {
                // int? i = ;
                 Bl.Order.Get(int.Parse(track.Text ==""? "0": track.Text));
-                new OrderWindo(Bl, int.Parse(track.Text), false).Show();
+                new OrderWindo(Bl, cart, int.Parse(track.Text), false).Show();
                 this.Hide();
             }
             catch (BlIdNotValidException ex)

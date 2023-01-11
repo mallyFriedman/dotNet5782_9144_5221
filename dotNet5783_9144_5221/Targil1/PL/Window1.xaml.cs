@@ -1,4 +1,5 @@
 ﻿using BlApi;
+using BlImplementation;
 using BO;
 using System;
 //using System.Collections.Generic;
@@ -7,7 +8,7 @@ using System;
 //using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using static System.Net.Mime.MediaTypeNames;
+//using static System.Net.Mime.MediaTypeNames;
 //using System.Windows.Data;
 //using System.Windows.Documents;
 //using System.Windows.Input;
@@ -24,25 +25,27 @@ namespace PL
     {
         private ProductForList p;
         private ProductItem q;
-
+        private BO.Cart cart = new();
         private BlApi.IBl Bl;
 
 
         /// <summary>
         /// constractor of the page
         /// </summary>
-        public Window1(BlApi.IBl bl, ProductForList p = null,ProductItem q=null)
+        public Window1(BlApi.IBl bl, BO.Cart cart, ProductForList p = null,ProductItem q=null)
         {
             this.Bl = bl;    
             this.p = p;
-            this.q = q; 
+            this.q = q;
+            this.cart = cart;
             InitializeComponent();
             CategorySelector.ItemsSource = Bl.Product.GetAllForCustomer();
             CategorySelector.ItemsSource = Enum.GetValues(typeof(BO.Category));
             if (p != null)
             {
-                DataContext = p;
-                BO.Product a = Bl.Product.GetCustomer(p.Id);
+                //DataContext = p;
+                BO.Product a = Bl.Product.GetManager(p.Id);
+                DataContext = a;
                 //Id.Text = (p.Id).ToString();              //binding
                 //ProductName.Text = p.ProductName;         //binding
                 //Price.Text = (p.ProductPrice).ToString(); //binding
@@ -88,7 +91,7 @@ namespace PL
                 p.Category = (BO.Category)CategorySelector.SelectedItem;
                 Bl.Product.Update(p);
                 MessageBox.Show("updated succesfuly!");
-                new Window2(Bl).Show();
+                new Window2(Bl, cart).Show();
                 this.Hide();
             }
             catch (BlObjectNotValidException ex)
@@ -114,7 +117,7 @@ namespace PL
             {
                 Bl.Product.Delete(p.Id);
                 MessageBox.Show("deleted succesfuly!");
-                new Window2(Bl).Show();
+                new Window2(Bl, cart).Show();
                 this.Hide();
             }
             
@@ -139,7 +142,7 @@ namespace PL
                 p.Category = (BO.Category)CategorySelector.SelectedItem;
                 Bl.Product.Add(p);
                 MessageBox.Show("Add succesfuly!");
-                new Window2(Bl).Show();
+                new Window2(Bl, cart).Show();
                 this.Hide();
                 Id.Text = null;
                 ProductName.Text = null;
@@ -168,7 +171,7 @@ namespace PL
         private void BackToHome(object sender, RoutedEventArgs e)
         {
 
-            new Window2(Bl).Show();
+            new Window2(Bl, cart).Show();
             this.Hide();
         }
 
@@ -194,9 +197,21 @@ namespace PL
 
         private void addToCart_Click(object sender, RoutedEventArgs e)
         {
-            BO.ProductItem p = (BO.ProductItem)((ListView)sender).SelectedItem;
-            new Cart(Bl,p).Show();
-            this.Hide();
+            try
+            {
+               this.cart= Bl.Cart.Add(cart, q.Id);
+                MessageBox.Show("add successfully");
+                new productItem(Bl, cart).Show();
+                this.Hide();
+            }
+            catch (BlOutOfStockException ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            catch (BlObjectNotFoundException ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
         private void category_TextChanged(object sender, TextChangedEventArgs e)

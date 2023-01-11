@@ -16,16 +16,16 @@ namespace BlImplementation
         /// </summary>
         public IEnumerable<BO.ProductForList> GetAllForCustomer(BO.Category? category = null)
         {
-            IEnumerable<DO.Product> a;
+            List<DO.Product> a=new();
             if (category == null)
-                a = Dal.Product.Get();
-            else a = Dal.Product.Get(p => (BO.Category)p.Category == category);
+                a = Dal.Product.Get().ToList();
+            else a = Dal.Product.Get(p => (BO.Category)p.Category == category).ToList();
             var ForList = from item in a
                           select new BO.ProductForList
                           {
                               Id = item.Id,
                               ProductName = item.ProductName,
-                              ProductPrice = item.Price,
+                              Price = item.Price,
                               Category = (Category)item.Category
                           };
             return ForList;

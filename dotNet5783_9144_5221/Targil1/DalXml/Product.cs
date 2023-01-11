@@ -1,7 +1,7 @@
-﻿using Dal;
+﻿//using Dal;
 using DalApi;
-using System;
-using System.Collections.Generic;
+//using System;
+//using System.Collections.Generic;
 using System.Xml.Serialization;
 
 namespace Dal;
@@ -13,21 +13,23 @@ internal class Product : IProduct
     static readonly Random rand = new Random();
     public XmlRootAttribute xRoot()
     {
-        XmlRootAttribute xRoot = new XmlRootAttribute();
-        xRoot.ElementName = "ArrayOfProduct";
-        xRoot.IsNullable = true;
-        return xRoot;
+        XmlRootAttribute xRootVal = new XmlRootAttribute();
+        xRootVal.ElementName = "ArrayOfProduct";
+        xRootVal.IsNullable = true;
+        return xRootVal;
     }
+
 
     public int Add(DO.Product product)
     {
+
         XmlSerializer ser = new XmlSerializer(typeof(List<DO.Product>), xRoot());
         StreamReader r = new(@"..\..\xml\ProductXml.xml");
         List<DO.Product>? lst = (List<DO.Product>?)ser.Deserialize(r);
         product.Id = lst.Last().Id + 1;
         lst?.Add(product);
         r.Close();
-        StreamWriter w = new(@"..\..\xml\Product.xml");
+        StreamWriter w = new(@"..\..\xml\ProductXml.xml");
         ser.Serialize(w, lst);
         w.Close();
         return product.Id;
@@ -39,7 +41,7 @@ internal class Product : IProduct
         List<DO.Product>? lst = (List<DO.Product>?)ser.Deserialize(r);
         lst?.Remove(lst.Where(p => p.Id == id).FirstOrDefault());
         r.Close();
-        StreamWriter w = new(@"..\..\xml\Product.xml");
+        StreamWriter w = new(@"..\..\xml\ProductXml.xml");
         ser.Serialize(w, lst);
         w.Close();
     }
@@ -64,7 +66,7 @@ internal class Product : IProduct
         r.Close();
         return prod;
     }
-
+    //  Product ICrud<Product>.GetSingle(Func<Product, bool>? foo)
     public DO.Product GetSingle(Func<DO.Product, bool>? foo)
     {
 
@@ -81,11 +83,18 @@ internal class Product : IProduct
         XmlSerializer ser = new XmlSerializer(typeof(List<DO.Product>), xRoot());
         StreamReader r = new(@"..\..\xml\ProductXml.xml");
         List<DO.Product>? lst = (List<DO.Product>?)ser.Deserialize(r);
-        lst?.Remove(lst.Where(p => p.Id == item.Id).FirstOrDefault());
-        lst?.Add(item);
+        int idx = lst.FindIndex(p => p.Id == item.Id);
+        if (idx == -1)
+            throw new Exception();
+        lst[idx]= item;
         r.Close();
-        StreamWriter w = new(@"..\..\xml\Product.xml");
+        StreamWriter w = new(@"..\..\xml\ProductXml.xml");
         ser.Serialize(w, lst);
         w.Close();
     }
+
+    /*DO.Product ICrud<DO.Product>.GetSingle(Func<DO.Product, bool>? foo)
+    {
+        throw new NotImplementedException();
+    }*/
 }

@@ -22,8 +22,10 @@ namespace PL
     public partial class trackingOrder : Window
     {
         private BlApi.IBl Bl;
-        public trackingOrder(BlApi.IBl bl,int id)
+        private BO.Cart cart = new();
+        public trackingOrder(BlApi.IBl bl, BO.Cart cart,int id)
         {
+            this.cart = cart;
             this.Bl = bl; 
             InitializeComponent();
             BO.Order order =Bl.Order.Get(id);

@@ -10,52 +10,52 @@ internal class OrderItem : IOrderItem
 {
     public int Add(DO.OrderItem item)
     {
-        XElement? root = XDocument.Load("OrderItemXml.xml").Root;
+        XElement? root = XDocument.Load("../../xml/OrderItemXml.xml").Root;
         XElement el2 = new("OrderItem",
-             new XAttribute("Id", item.Id),
-             new XAttribute("ProductID", item.ProductID),
-             new XAttribute("Price", item.Price),
-             new XAttribute("OrderID", item.OrderID),
-             new XAttribute("Amount", item.Amount));
+             new XElement("Id", item.Id),
+             new XElement("ProductID", item.ProductID),
+             new XElement("Price", item.Price),
+             new XElement("OrderID", item.OrderID),
+             new XElement("Amount", item.Amount));
         root?.Element("ArrayOfOrderItem")?.Add(el2);
-        root?.Save("..\\..\\..\\OrderItemXml.xml");
+        root?.Save("..\\..\\..\\OrderItemXml.xml");//../../xml/OrderItemXml.xml
         return item.Id;
     }
 
     private DO.OrderItem Casting(XElement item)
     {
         DO.OrderItem oi = new();
-        oi.Id = Convert.ToInt32(item.Attribute("Id"));
-        oi.Price = Convert.ToInt32(item.Attribute("Price"));
-        oi.ProductID = Convert.ToInt32(item.Attribute("ProductID"));
-        oi.OrderID = Convert.ToInt32(item.Attribute("OrderID"));
-        oi.OrderID = Convert.ToInt32(item.Attribute("OrderID"));
-        oi.Amount = Convert.ToInt32(item.Attribute("Amount"));
+        oi.Id = Convert.ToInt32(item.Element("Id").Value);
+        oi.Price = Convert.ToInt32(item.Element("Price").Value);
+        oi.ProductID = Convert.ToInt32(item.Element("ProductID").Value);
+        oi.OrderID = Convert.ToInt32(item.Element("OrderID").Value);
+        oi.OrderID = Convert.ToInt32(item.Element("OrderID").Value);
+        oi.Amount = Convert.ToInt32(item.Element("Amount").Value);
         return oi;
     }
 
     public void Delete(int id)
     {
-        XElement? root = XDocument.Load("OrderItemXml.xml").Root;
+        XElement? root = XDocument.Load("../../xml/OrderItemXml.xml").Root;
         XElement? orderItem = root?.Element("ArrayOfOrderItem")?.Elements("OrderItem")?.
-                              Where(o => o.Attribute("Id")?.Value == id.ToString()).FirstOrDefault();
+                              Where(o => o.Element("Id")?.Value == id.ToString()).FirstOrDefault();
         orderItem?.Remove();
         root?.Save("..\\..\\..\\OrderItemXml.xml");
     }
 
     public DO.OrderItem Get(int id)
     {
-        XElement? root = XDocument.Load("OrderItemXml.xml").Root;
+        XElement? root = XDocument.Load("../../xml/OrderItemXml.xml").Root;
         XElement? oi = root?.Element("ArrayOfOrderItem")?.Elements("OrderItem")?.
-                             Where(o => o.Attribute("Id")?.Value == id.ToString()).FirstOrDefault();
+                             Where(o => o.Element("Id")?.Value == id.ToString()).FirstOrDefault();
         DO.OrderItem orderItem = Casting(oi);
         return orderItem;
     }
 
     public IEnumerable<DO.OrderItem>? Get(Func<DO.OrderItem, bool>? foo = null)
     {
-        XElement? root = XDocument.Load("OrderItemXml.xml").Root;
-        IEnumerable<XElement> ListXElement = root?.Element("ArrayOfOrderItem")?.Elements("OrderItem") ?? throw new Exception("error in file type");
+        XElement? root = XDocument.Load("../../xml/OrderItemXml.xml").Root;
+        IEnumerable<XElement> ListXElement = root?.Descendants("OrderItem") ?? throw new Exception("error in file type");
         var orderItem = from item in ListXElement
                        select Casting(item);
         return foo == null ? orderItem : orderItem.Where(foo).ToList();///
@@ -63,28 +63,20 @@ internal class OrderItem : IOrderItem
 
     public DO.OrderItem GetSingle(Func<DO.OrderItem, bool>? foo)
     {
-        XElement? root = XDocument.Load("OrderItemXml.xml").Root;
-        IEnumerable<XElement> ListXElement = root?.Element("ArrayOfOrderItem")?.Elements("OrderItem") ?? throw new Exception("error in file type");
+        XElement? root = XDocument.Load("../../xml/OrderItemXml.xml").Root;
+        IEnumerable<XElement> ListXElement = root?.Descendants("OrderItem") ?? throw new Exception("error in file type");
         var orderItem = from item in ListXElement
                         select Casting(item);
         return orderItem.Where(foo).ToList()[0];
     }
 
-    public IEnumerable<DO.OrderItem> ReadOrderId(int id)
-    {
-        XElement? root = XDocument.Load("OrderItemXml.xml").Root;
-        IEnumerable<XElement> ListXElement = root?.Element("ArrayOfOrderItem")?.Elements("OrderItem") ?? throw new Exception("error in file type");
-        var orderItems = (from item in ListXElement
-                         where (int.Parse(item.Attribute("Id")?.Value??"0") == id)
-                         select Casting(item));
-        return orderItems;
-    }
+  
 
     public void Update(DO.OrderItem item)
     {
-        XElement? root = XDocument.Load("ProductXml.xml").Root;
+        XElement? root = XDocument.Load("../../xml/ProductXml.xml").Root;
         XElement? product = root?.Element("ArrayOfProduct")?.Elements("Product")?.
-                              Where(p => p.Attribute("Id")?.Value == item.Id.ToString()).FirstOrDefault();
+                              Where(p => p.Element("Id")?.Value == item.Id.ToString()).FirstOrDefault();
         product?.Remove();
         product?.Add(item);
         root?.Save("..\\..\\..\\OrderItemXml.xml");

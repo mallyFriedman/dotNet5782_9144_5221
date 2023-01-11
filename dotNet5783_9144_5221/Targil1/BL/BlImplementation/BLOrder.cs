@@ -16,23 +16,24 @@ namespace BlImplementation
         public IEnumerable<BO.OrderForList> GetAll()
         {
             IEnumerable<DO.Order> orders = Dal.Order.Get();
-            var ordersForList = from item in orders
-                                let a = Get(item.Id)
-                                select new BO.OrderForList
-                                {
-                                    Id = item.Id,
-                                    CustomerName = item.CustomerName,
-                                    OrderStatus = a.OrderStatus,
-                                    AmountProduct = a.OrderItem?.Count() ?? 0,
-                                    TotalPrice = a.TotalPrice
-                                };
+            
+                var ordersForList = from item in orders
+                                    let a = Get(item.Id)
+                                    select new BO.OrderForList
+                                    {
+                                        Id = item.Id,
+                                        CustomerName = item.CustomerName,
+                                        OrderStatus = a.OrderStatus,
+                                        AmountProduct = a.OrderItem?.Count() ?? 0,
+                                        TotalPrice = a.TotalPrice
+                                    };
             return ordersForList;
         }
 
         /// <summary>
         /// the function returnes the specific order by id
         /// </summary>
-        public BO.Order Get(int id=0)
+        public BO.Order Get(int id = 0)
         {
             if (id < 500000)
             {
@@ -55,31 +56,31 @@ namespace BlImplementation
                 ShipDate = dOrder.ShipDate
             };
             List<BO.OrderItem> orderItem = new List<BO.OrderItem>(Dal.Product.Get()?.Count() ?? 0);
-            IEnumerable<DO.OrderItem> dOrderItem = (IEnumerable<DO.OrderItem>)Dal.OrderItem.ReadOrderId(bOrder.Id);
+            IEnumerable<DO.OrderItem> dOrderItem = (IEnumerable<DO.OrderItem>)Dal.OrderItem.Get(ord => ord.OrderID == bOrder.Id);
             double sum = 0;
             bOrder.OrderItem = from item in dOrderItem
-                                select new BO.OrderItem
-                                {
-                                    Amount = item.Amount,
-                                    Id = item.Id,
-                                    Price = item.Price,
-                                    ProductID = item.ProductID,
-                                    TotalPrice = ((item.Price) * (item.Amount))
-                                    //sum = sum + item.TotalPrice
-                                };
+                               select new BO.OrderItem
+                               {
+                                   Amount = item.Amount,
+                                   Id = item.Id,
+                                   Price = item.Price,
+                                   ProductID = item.ProductID,
+                                   TotalPrice = ((item.Price) * (item.Amount))
+                                   //sum = sum + item.TotalPrice
+                               };
 
 
-         // foreach (DO.OrderItem item in dOrderItem)
-         // {
-         //     BO.OrderItem bOrderItem = new BO.OrderItem();
-         //     bOrderItem.Amount = item.Amount;
-         //     bOrderItem.Id = item.Id;
-         //     bOrderItem.Price = item.Price;
-         //     bOrderItem.ProductID = item.ProductID;
-         //     bOrderItem.TotalPrice = (item.Price) * (item.Amount);
-         //     orderItem.Add(bOrderItem);
-         //     sum = sum + bOrderItem.TotalPrice;
-         // }
+            // foreach (DO.OrderItem item in dOrderItem)
+            // {
+            //     BO.OrderItem bOrderItem = new BO.OrderItem();
+            //     bOrderItem.Amount = item.Amount;
+            //     bOrderItem.Id = item.Id;
+            //     bOrderItem.Price = item.Price;
+            //     bOrderItem.ProductID = item.ProductID;
+            //     bOrderItem.TotalPrice = (item.Price) * (item.Amount);
+            //     orderItem.Add(bOrderItem);
+            //     sum = sum + bOrderItem.TotalPrice;
+            // }
             bOrder.TotalPrice = sum;
             return bOrder;
         }
@@ -137,12 +138,12 @@ namespace BlImplementation
             else
                 return (BO.eOrderStatus)0;
 
-         //  if (DeliveryDate > DateTime.MinValue)
-         //      return (BO.eOrderStatus)3;
-         //  else if (ShipDate > DateTime.MinValue)
-         //      return (BO.eOrderStatus)2;
-         //  else
-         //      return (BO.eOrderStatus)1;
+            //  if (DeliveryDate > DateTime.MinValue)
+            //      return (BO.eOrderStatus)3;
+            //  else if (ShipDate > DateTime.MinValue)
+            //      return (BO.eOrderStatus)2;
+            //  else
+            //      return (BO.eOrderStatus)1;
 
         }
     }

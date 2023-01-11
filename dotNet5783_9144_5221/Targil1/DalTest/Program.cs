@@ -242,7 +242,7 @@ public static class Program
                 Console.Write("Enter the id: ");
 
                 id = Convert.ToInt32(Console.ReadLine());
-                IEnumerable<OrderItem> items = iDal.OrderItem.ReadOrderId(id);
+                IEnumerable<OrderItem> items = iDal.OrderItem.Get(ord=>ord.OrderID==id);
                 foreach (OrderItem item in items)
                 {
                     Console.WriteLine(item);

@@ -1,11 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ArrayOfProduct xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Product>
-    <Id>100003</Id>
-    <ProductName>RingsSilver</ProductName>
-    <Price>4203</Price>
-    <Category>Bracelets</Category>
-    <InStock>19</InStock>
+    <Id>100001</Id>
+    <ProductName>WatchSilver</ProductName>
+    <Price>4792</Price>
+    <Category>Necklaces</Category>
+    <InStock>15</InStock>
+  </Product>
+  <Product>
+    <Id>100002</Id>
+    <ProductName>RingsGold</ProductName>
+    <Price>5006</Price>
+    <Category>Earrings</Category>
+    <InStock>14</InStock>
   </Product>
   <Product>
     <Id>100004</Id>
@@ -17,9 +24,9 @@
   <Product>
     <Id>100005</Id>
     <ProductName>RingsGold</ProductName>
-    <Price>1111</Price>
+    <Price>3411</Price>
     <Category>Bracelets</Category>
-    <InStock>9</InStock>
+    <InStock>33</InStock>
   </Product>
   <Product>
     <Id>100006</Id>
@@ -43,24 +50,17 @@
     <InStock>44</InStock>
   </Product>
   <Product>
+    <Id>100009</Id>
+    <ProductName>NecklacesGold</ProductName>
+    <Price>2486</Price>
+    <Category>Necklaces</Category>
+    <InStock>27</InStock>
+  </Product>
+  <Product>
     <Id>100010</Id>
     <ProductName>WatchGold</ProductName>
     <Price>6690</Price>
     <Category>Rings</Category>
     <InStock>26</InStock>
-  </Product>
-  <Product>
-    <Id>100011</Id>
-    <ProductName>mally</ProductName>
-    <Price>2</Price>
-    <Category>Bracelets</Category>
-    <InStock>9</InStock>
-  </Product>
-  <Product>
-    <Id>100012</Id>
-    <ProductName>tehila</ProductName>
-    <Price>2</Price>
-    <Category>Bracelets</Category>
-    <InStock>9</InStock>
   </Product>
 </ArrayOfProduct>

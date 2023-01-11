@@ -23,16 +23,19 @@ namespace PL
     {
         private ProductItem q;
         private BlApi.IBl Bl;
-        public productItem(BlApi.IBl bl)
+        private BO.Cart cart = new();
+        public productItem(BlApi.IBl bl, BO.Cart cart)
         {
             this.Bl = bl;
+            this.cart = cart;
             InitializeComponent();
             ProductsListview.ItemsSource = Bl.Product.GetAllForManager();
+            CategorySelector.ItemsSource = Enum.GetValues(typeof(BO.Category));
         }
         private void product_Click(object sender, MouseButtonEventArgs e)
         {
             BO.ProductItem q = (BO.ProductItem)((ListView)sender).SelectedItem;
-            new Window1(Bl,null,q).Show();
+            new Window1(Bl, cart, null,q).Show();
             this.Hide();
         }
         private void SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -44,6 +47,12 @@ namespace PL
         private void ProductsListview_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
 
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        { 
+            new Cart(Bl, cart).Show();
+            this.Hide();
         }
     }
 }
