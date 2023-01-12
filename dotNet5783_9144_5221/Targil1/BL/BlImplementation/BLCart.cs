@@ -22,7 +22,7 @@ namespace BlImplementation
             }
             if (product.InStock == 0)
             {
-                throw new BlOutOfStockException(); 
+                throw new BlOutOfStockException();
             }
             var item = new BO.OrderItem();///
             if (cart.Items != null)
@@ -38,28 +38,37 @@ namespace BlImplementation
                 item = new BO.OrderItem();
                 cart.Items = new();
             }
-
-            if (item.ProductID == 0)
-            {
-                DO.Product dProduct = Dal.Product.Get(id);
-                cart.Items.Add(new BO.OrderItem
+                if (item.ProductID == 0)
                 {
-                    Id = 0,
-                    ProductID = id,
-                    ProductName = dProduct.ProductName,
-                    Price = dProduct.Price,
-                    Amount = 1,
-                    TotalPrice = dProduct.Price
-                });
-            }
-            else
-            {
-                item.Amount += 1;
-                item.TotalPrice = item.TotalPrice + item.Price;
-                cart.Items.Remove(item);
-                cart.Items.Add(item);
-            }
-            cart.TotalPrice += product.Price;
+                    DO.Product dProduct = Dal.Product.Get(id);
+                    cart.Items.Add(new BO.OrderItem
+                    {
+                        Id = 0,
+                        ProductID = id,
+                        ProductName = dProduct.ProductName,
+                        Price = dProduct.Price,
+                        Amount = 1,
+                        TotalPrice = dProduct.Price
+                    });
+                }
+                else
+                {
+                    item.Amount += 1;
+                    item.TotalPrice = item.TotalPrice + item.Price;
+                    cart.Items.Remove(item);
+                    cart.Items.Add(item);
+                }
+                cart.TotalPrice += product.Price;
+            //}
+            //else
+            //{
+            //    item.Amount -= 1;
+            //    item.TotalPrice = item.TotalPrice - item.Price;
+            //    cart.Items.Remove(item);
+            //    cart.Items.Add(item);
+            //    cart.TotalPrice -= product.Price;
+            //}
+
             return cart;
         }
         /// <summary>

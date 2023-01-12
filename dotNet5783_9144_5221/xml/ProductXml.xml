@@ -5,7 +5,7 @@
     <ProductName>RingsSilver</ProductName>
     <Price>4203</Price>
     <Category>Bracelets</Category>
-    <InStock>19</InStock>
+    <InStock>18</InStock>
   </Product>
   <Product>
     <Id>100004</Id>
@@ -26,7 +26,7 @@
     <ProductName>EarringsSilver</ProductName>
     <Price>4304</Price>
     <Category>Earrings</Category>
-    <InStock>22</InStock>
+    <InStock>21</InStock>
   </Product>
   <Product>
     <Id>100007</Id>
@@ -40,7 +40,7 @@
     <ProductName>NecklacesSilver</ProductName>
     <Price>4968</Price>
     <Category>Bracelets</Category>
-    <InStock>44</InStock>
+    <InStock>10</InStock>
   </Product>
   <Product>
     <Id>100010</Id>
@@ -61,6 +61,6 @@
     <ProductName>tehila</ProductName>
     <Price>2</Price>
     <Category>Bracelets</Category>
-    <InStock>1</InStock>
+    <InStock>7</InStock>
   </Product>
 </ArrayOfProduct>

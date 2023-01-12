@@ -4,7 +4,7 @@ namespace BlApi
 {
     public interface ICart
     {
-        public Cart Add(Cart cart, int id);
+        public Cart Add(Cart cart, int id/*,bool flag*/);
         public Cart Update(Cart cart, int id, int newAmount);
         public void Confirm(Cart cart, string CustomerName, string CustomerEmail, string CustomerAdress);
         //public IEnumerable<ProductForList> Get();

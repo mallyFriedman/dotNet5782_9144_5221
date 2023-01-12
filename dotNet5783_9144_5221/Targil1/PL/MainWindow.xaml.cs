@@ -10,7 +10,7 @@ namespace PL
     /// </summary>
     public partial class MainWindow : Window
     {
-        public BO.Cart cart = new();
+        private BO.Cart cart = new();
         private BlApi.IBl Bl { get; set; }
         /// <summary>
         /// constructor of the page
@@ -19,6 +19,7 @@ namespace PL
         {
             this.Bl = BlApi.Factory.Get();
             InitializeComponent();
+            //this.cart =cart??null;
         }
         /// <summary>
         /// routs to the home page

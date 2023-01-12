@@ -5,26 +5,104 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
-        Title="Cart_" Height="450" Width="800">
+        Title="Cart_" Height="450" Width="801">
     <Grid>
-        <ListView   ItemsSource="{Binding Items}"   x:Name="cartListview"  Margin="35,194,150,10" SelectionChanged="ProductsListview_SelectionChanged">
-            <ListView.View>
-                <GridView >
-                    <GridViewColumn DisplayMemberBinding="{Binding Id}" Header="Id" Width="100"/>
+        <ListView ItemsSource="{Binding Items}" x:Name="ProductsItemListview" Background="White" Foreground="#FF041F65" Margin="10,0,68,83" SelectionChanged="ProductsItemListview_SelectionChanged_1" >
+            <ListView.View >
+                <GridView AllowsColumnReorder="true" ColumnHeaderToolTip="Employee Information" >
                     <GridViewColumn DisplayMemberBinding="{Binding ProductName}" Header="ProductName" Width="100"/>
                     <GridViewColumn DisplayMemberBinding="{Binding Price}" Header="ProductPrice" Width="100"/>
-                    <!-- <GridViewColumn DisplayMemberBinding="{Binding Path=Category}" Header="Category" Width="100"/>-->
-                    <!--  <GridViewColumn DisplayMemberBinding="{Binding Path=InStock}" Header="InStock" Width="100"/>-->
                     <GridViewColumn DisplayMemberBinding="{Binding Amount}" Header="AmountInCart" Width="100"/>
-                    <!-- <GridViewColumn DisplayMemberBinding="{Binding Path=AmountInCart}" Header="AmountInCart" Width="100"/>-->
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=TotalPrice}" Header="TotalPrice" Width="100"/>
+                    <GridViewColumn Header="Update Amount" Width="100" >
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <Grid >
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition   Width="25*"/>
+                                        <ColumnDefinition   Width="27*"/>
+                                        <ColumnDefinition   Width="20"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Button Grid.Column="0" x:Name="decreaseProductBtn"  Content="-" Height="20" Width="15" Margin="10,3,0,0" Click="decreaseProductBtn_Click" />
+                                    <Button Grid.Column="2" x:Name="addProductAmountBtn" Content="+" Width="15" Margin="5,3,0,0" VerticalAlignment="Top" Click="addProductAmountBtn_Click" />
+                                </Grid>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+
+                    <GridViewColumn Header="" Width="100">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button Grid.Column="0" Content="delete" Name="updateAmountTxt" Click="deleteProduct" Height="20" Margin="0,-6,0,0"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+
                 </GridView>
             </ListView.View>
         </ListView>
-        <Button Content="confirm" HorizontalAlignment="Left" Margin="101,20,0,0" VerticalAlignment="Top" Width="120" Height="31" Click="Button_Click"/>
-        <TextBox Name="CustomerName"  HorizontalAlignment="Left" Margin="101,56,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-        <TextBox Name="CustomerEmail" HorizontalAlignment="Left" Margin="101,79,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-        <TextBox Name="CustomerAdress" HorizontalAlignment="Left" Margin="101,102,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-        <Button Content="Button" HorizontalAlignment="Left" Margin="416,50,0,0" VerticalAlignment="Top" Click="Button_Click_1"/>
+        <Button Content="confirm" HorizontalAlignment="Left" Margin="10,374,0,0" VerticalAlignment="Top" Width="120" Height="31" Click="Button_Click"/>
+        <TextBox Name="CustomerName"  HorizontalAlignment="Left" Margin="167,356,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <TextBox Name="CustomerEmail" HorizontalAlignment="Left" Margin="167,381,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <TextBox Name="CustomerAdress" HorizontalAlignment="Left" Margin="167,406,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" RenderTransformOrigin="3.69,4.561"/>
+        <Button Content="back to home" HorizontalAlignment="Left" Margin="601,365,0,0" VerticalAlignment="Top" Click="Button_Click_1" Width="131" Height="47"/>
 
     </Grid>
 </Window>
+
+
+
+
+<!--<ListView   ItemsSource="{Binding Items}"   x:Name="cartListview"  Margin="10,133,175,71" SelectionChanged="ProductsListview_SelectionChanged">
+    <ListView.View>
+        <GridView >
+            <GridViewColumn DisplayMemberBinding="{Binding ProductName}" Header="ProductName" Width="100"/>
+            <GridViewColumn DisplayMemberBinding="{Binding Price}" Header="ProductPrice" Width="100"/>
+            <GridViewColumn DisplayMemberBinding="{Binding Amount}" Header="AmountInCart" Width="100"/>
+
+        </GridView>
+    </ListView.View>
+</ListView>-->
+
+
+
+
+<!--<ListView d:ItemsSource="{d:SampleData ItemCount=5}" x:Name="ProductsItemListview" Background="White" Foreground="#FF041F65" Margin="10,0,68,83" >
+    <ListView.View >
+        <GridView AllowsColumnReorder="true" ColumnHeaderToolTip="Employee Information" >
+
+            <GridViewColumn DisplayMemberBinding="{Binding Path=ProductID, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"   Header="ID" Width="100"/>
+
+            <GridViewColumn DisplayMemberBinding="{Binding Path=Name, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" Header="Name" Width="100"/>
+
+            <GridViewColumn DisplayMemberBinding="{Binding Path=Price, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" Header="Price" Width="100"/>
+            <GridViewColumn DisplayMemberBinding="{Binding Path=Amount, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" Header="Amount" Width="100"/>
+            <GridViewColumn DisplayMemberBinding="{Binding Path=TotalPrice, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" Header="TotalPrice" Width="100"/>
+            <GridViewColumn Header="Update Amount" Width="100" >
+                <GridViewColumn.CellTemplate>
+                    <DataTemplate>
+                        <Grid >
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition   Width="*"/>
+                                <ColumnDefinition   Width="*"/>
+                                <ColumnDefinition   Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Button Grid.Column="0" x:Name="decreaseProductBtn"  Content="-" Height="20" Width="15" Margin="10,3,0,0" Click="decreaseProductBtn_Click" />
+                            <TextBox Grid.Column="1" Height="23"  TextWrapping="Wrap" Width="22" Name="updatedAmount" Margin="5,3,0,0" />
+                            <Button Grid.Column="2" x:Name="addProductAmountBtn" Content="+" Width="15" Margin="5,3,0,0" VerticalAlignment="Top" Click="addProductAmountBtn_Click" />
+                        </Grid>
+                    </DataTemplate>
+                </GridViewColumn.CellTemplate>
+            </GridViewColumn>
+
+            <GridViewColumn Header="TotalPrice" Width="100">
+                <GridViewColumn.CellTemplate>
+                    <DataTemplate>
+                        <Button Grid.Column="0" Content="update amount" Name="updateAmountTxt" Height="20" Margin="0,-6,0,0"/>
+                    </DataTemplate>
+                </GridViewColumn.CellTemplate>
+            </GridViewColumn>
+
+        </GridView>
+    </ListView.View>
+</ListView>-->
