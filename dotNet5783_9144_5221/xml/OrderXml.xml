@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <ArrayOfOrder xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Order>
     <Id>500001</Id>
@@ -178,6 +178,42 @@
     <CustomerAdress>oStreet</CustomerAdress>
     <ShipDate>0001-01-01T00:00:00</ShipDate>
     <OrderDate>2023-01-11T16:29:36.9693802+02:00</OrderDate>
+    <DeliveryDate>0001-01-01T00:00:00</DeliveryDate>
+  </Order>
+  <Order>
+    <Id>500021</Id>
+    <CustomerName>bibi</CustomerName>
+    <CustomerEmail>bibi</CustomerEmail>
+    <CustomerAdress>bibi</CustomerAdress>
+    <ShipDate>0001-01-01T00:00:00</ShipDate>
+    <OrderDate>2023-01-12T15:25:33.7112699+02:00</OrderDate>
+    <DeliveryDate>0001-01-01T00:00:00</DeliveryDate>
+  </Order>
+  <Order>
+    <Id>500022</Id>
+    <CustomerName>michaly</CustomerName>
+    <CustomerEmail>12</CustomerEmail>
+    <CustomerAdress>22</CustomerAdress>
+    <ShipDate>0001-01-01T00:00:00</ShipDate>
+    <OrderDate>2023-01-12T15:29:03.8384606+02:00</OrderDate>
+    <DeliveryDate>0001-01-01T00:00:00</DeliveryDate>
+  </Order>
+  <Order>
+    <Id>500023</Id>
+    <CustomerName>mally</CustomerName>
+    <CustomerEmail>friedman</CustomerEmail>
+    <CustomerAdress>tehila</CustomerAdress>
+    <ShipDate>0001-01-01T00:00:00</ShipDate>
+    <OrderDate>2023-01-12T15:33:07.8562295+02:00</OrderDate>
+    <DeliveryDate>0001-01-01T00:00:00</DeliveryDate>
+  </Order>
+  <Order>
+    <Id>500024</Id>
+    <CustomerName>libby</CustomerName>
+    <CustomerEmail>t</CustomerEmail>
+    <CustomerAdress>r</CustomerAdress>
+    <ShipDate>0001-01-01T00:00:00</ShipDate>
+    <OrderDate>2023-01-12T15:38:13.258107+02:00</OrderDate>
     <DeliveryDate>0001-01-01T00:00:00</DeliveryDate>
   </Order>
 </ArrayOfOrder>

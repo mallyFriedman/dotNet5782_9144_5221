@@ -20,7 +20,7 @@
             </ListView.View>
         </ListView>
 
-        <ComboBox  Name="CategorySelector" SelectionChanged="SelectionChanged" HorizontalAlignment="Left" Margin="28,13,0,392" Width="137">
+        <ComboBox  Name="CategorySelector" SelectionChanged="SelectionChanged" HorizontalAlignment="Left" Margin="18,10,0,384" Width="137">
             <ComboBox.Background>
                 <LinearGradientBrush EndPoint="0,1">
                     <GradientStop Color="#FFF0F0F0"/>

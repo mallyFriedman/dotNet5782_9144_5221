@@ -11,16 +11,22 @@ internal class OrderItem : IOrderItem
     public int Add(DO.OrderItem item)
     {
         XElement? root = XDocument.Load("../../xml/OrderItemXml.xml").Root;
+        XElement? config = XDocument.Load("../../xml/config.xml").Root;
+        item.Id = Convert.ToInt32(config?.Elements("productId")?.FirstOrDefault()?.Value);
         XElement el2 = new("OrderItem",
              new XElement("Id", item.Id),
              new XElement("ProductID", item.ProductID),
              new XElement("Price", item.Price),
              new XElement("OrderID", item.OrderID),
              new XElement("Amount", item.Amount));
-        root?.Element("ArrayOfOrderItem")?.Add(el2);
-        root?.Save("..\\..\\..\\OrderItemXml.xml");//../../xml/OrderItemXml.xml
+        root?.Add(el2);
+        root?.Save("../../xml/OrderItemXml.xml");
+        config?.Element("orderItemId")?.SetValue(Convert.ToInt32(config?.Elements("orderItemId")?.FirstOrDefault()?.Value) + 1);
+        config?.Save("../../xml/config.xml");
         return item.Id;
     }
+
+
 
     private DO.OrderItem Casting(XElement item)
     {

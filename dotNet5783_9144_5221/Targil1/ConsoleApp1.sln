@@ -22,6 +22,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "xml", "xml", "{604F3F25-FB95-4005-9AF8-A831B5318329}"
 	ProjectSection(SolutionItems) = preProject
 		..\xml\config.xml = ..\xml\config.xml
+		..\xml\dalConfig.xml = ..\xml\dalConfig.xml
 		..\xml\OrderItemXml.xml = ..\xml\OrderItemXml.xml
 		..\xml\OrderXml.xml = ..\xml\OrderXml.xml
 		..\xml\ProductXml.xml = ..\xml\ProductXml.xml
@@ -29,7 +30,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "xml", "xml", "{604F3F25-FB9
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DalXml", "DalXml\DalXml.csproj", "{3E6422CA-A732-4391-80DD-93FF73146ACE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "run", "run\run.csproj", "{056E9B2C-A598-4496-A829-BBDC13D1944E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "run", "run\run.csproj", "{056E9B2C-A598-4496-A829-BBDC13D1944E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

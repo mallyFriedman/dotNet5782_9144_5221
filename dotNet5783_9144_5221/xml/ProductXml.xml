@@ -12,21 +12,21 @@
     <ProductName>NecklacesGold</ProductName>
     <Price>1501</Price>
     <Category>Bracelets</Category>
-    <InStock>35</InStock>
+    <InStock>24</InStock>
   </Product>
   <Product>
     <Id>100005</Id>
     <ProductName>RingsGold</ProductName>
     <Price>1111</Price>
     <Category>Bracelets</Category>
-    <InStock>9</InStock>
+    <InStock>6</InStock>
   </Product>
   <Product>
     <Id>100006</Id>
     <ProductName>EarringsSilver</ProductName>
     <Price>4304</Price>
     <Category>Earrings</Category>
-    <InStock>23</InStock>
+    <InStock>22</InStock>
   </Product>
   <Product>
     <Id>100007</Id>
@@ -47,20 +47,20 @@
     <ProductName>WatchGold</ProductName>
     <Price>6690</Price>
     <Category>Rings</Category>
-    <InStock>26</InStock>
+    <InStock>20</InStock>
   </Product>
   <Product>
     <Id>100011</Id>
     <ProductName>mally</ProductName>
     <Price>2</Price>
     <Category>Bracelets</Category>
-    <InStock>9</InStock>
+    <InStock>8</InStock>
   </Product>
   <Product>
     <Id>100012</Id>
     <ProductName>tehila</ProductName>
     <Price>2</Price>
     <Category>Bracelets</Category>
-    <InStock>9</InStock>
+    <InStock>1</InStock>
   </Product>
 </ArrayOfProduct>

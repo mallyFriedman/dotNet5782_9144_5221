@@ -9,8 +9,8 @@ static class DalConfig
 
     static DalConfig()
     {
-        XElement dalConfig = XElement.Load(@"..\..\xml\config.xml")
-            ?? throw new DalConfigException("config.xml file is not found");
+        XElement dalConfig = XElement.Load(@"..\..\xml\dalConfig.xml")
+            ?? throw new DalConfigException("dalConfig.xml file is not found");
         s_dalName = dalConfig?.Element("dal")?.Value
             ?? throw new DalConfigException("<dal> element is missing");
         var packages = dalConfig?.Element("dal-packages")?.Elements()

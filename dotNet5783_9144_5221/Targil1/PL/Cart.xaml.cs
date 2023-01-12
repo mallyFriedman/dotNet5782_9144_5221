@@ -26,6 +26,7 @@ namespace PL
         private BO.Cart cart = new();
         public Cart(BlApi.IBl bl, BO.Cart cart)
         {
+            this.Bl = bl;
             InitializeComponent();
             this.cart = cart;
             DataContext = this.cart;
@@ -34,11 +35,18 @@ namespace PL
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             Bl.Cart.Confirm(cart,CustomerName.Text,CustomerEmail.Text,CustomerAdress.Text);
+            MessageBox.Show("confirmed");
         }
 
         private void ProductsListview_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
 
+        }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            new MainWindow().Show();
+            this.Hide();
         }
     }
 }

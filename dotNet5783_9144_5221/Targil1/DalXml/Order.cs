@@ -1,5 +1,6 @@
 ﻿using DalApi;
 using DO;
+using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Linq;
 
@@ -11,6 +12,8 @@ internal class Order : IOrder
     public int Add(DO.Order item)
     {
         XElement? root = XDocument.Load("../../xml/OrderXml.xml").Root;
+        XElement? config = XDocument.Load("../../xml/config.xml").Root;
+        item.Id = Convert.ToInt32(config?.Elements("orderId")?.FirstOrDefault()?.Value);
         XElement el2 = new("Order",
              new XElement("Id", item.Id),
              new XElement("CustomerName", item.CustomerName),
@@ -19,8 +22,10 @@ internal class Order : IOrder
              new XElement("ShipDate", item.ShipDate),
              new XElement("OrderDate", item.OrderDate),
              new XElement("DeliveryDate", item.DeliveryDate));
-        root?.Element("ArrayOfOrder")?.Add(el2);
-        root?.Save("..\\..\\..\\OrderXml.xml");
+        root?.Add(el2);
+        root?.Save("../../xml/OrderXml.xml");
+        config?.Element("orderId")?.SetValue(Convert.ToInt32(config?.Elements("orderId")?.FirstOrDefault()?.Value) + 1);
+        config?.Save("../../xml/config.xml");
         return item.Id;
     }
 
@@ -88,10 +93,13 @@ public DO.Order GetSingle(Func<DO.Order, bool>? foo)
 public void Update(DO.Order item)
 {
     XElement? root = XDocument.Load("../../xml/OrderXml.xml").Root;
-    XElement? order = root?.Element("ArrayOfOrder")?.Elements("Order")?.
+        List<XElement> ListXElement = root.Descendants("Order").ToList();
+        XElement? order = ListXElement?.
                           Where(o => o.Element("Id")?.Value == item.Id.ToString()).FirstOrDefault();
-    order?.Remove();
-    order?.Add(item);
+        ListXElement?.Remove(order);
+        order.Remove();
+        order?.Add(item);
+      //  ListXElement.Add(order);
     root?.Save("..\\..\\..\\OrderXml.xml");
 }
 }
