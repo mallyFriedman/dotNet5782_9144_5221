@@ -14,7 +14,7 @@
             <ColumnDefinition Width="0*"/>
             <ColumnDefinition Width="0*"/>
             <ColumnDefinition Width="0*"/>
-            <ColumnDefinition Width="577*"/>
+            <ColumnDefinition Width="577*"/><!--ii-->
         </Grid.ColumnDefinitions>
         <ListView x:Name="ProductsListview" MouseDoubleClick="product_Click"  d:ItemsSource="{d:SampleData ItemCount=9}" SelectionChanged="ProductsListview_SelectionChanged" Margin="18,50,17,16" Grid.ColumnSpan="7" Background="#FFCCCCCC">
             <ListView.View>
