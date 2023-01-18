@@ -1,0 +1,70 @@
+﻿<Window x:Class="PL.ListWindow" 
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PL"
+        mc:Ignorable="d"
+        Title="ListWindow" Height="640" Width="800">
+    <Grid Name="MainGrid" RenderTransformOrigin="0.497,0.497" Margin="0,5,0,-5" Background="#FFD8D7D7">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="52"/>
+            <RowDefinition Height="360"/>
+            <RowDefinition Height="128"/>
+        </Grid.RowDefinitions>
+
+        <Grid Name="UpGrid" Height="auto" Grid.Row="0" Width="auto">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions >
+            <ComboBox Name="CategorySelector" Margin="227,5,60,10" SelectionChanged="SelectionChanged" BorderBrush="White" FontWeight="Bold" FontSize="14">
+                <ComboBox.Background>
+                    <LinearGradientBrush EndPoint="0,1">
+                        <GradientStop Color="#FFF0F0F0"/>
+                        <GradientStop Color="#FFA2A2A2" Offset="1"/>
+                    </LinearGradientBrush>
+                </ComboBox.Background>
+            </ComboBox>
+            <Label Content="order list" HorizontalAlignment="Left" Margin="359,0,0,0" VerticalAlignment="Center" Grid.ColumnSpan="2" Width="93" Height="32" FontSize="18" FontFamily="TopType Noam" RenderTransformOrigin="0.5,0.5">
+                <Label.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform AngleY="0.774"/>
+                        <RotateTransform/>
+                        <TranslateTransform Y="0.486"/>
+                    </TransformGroup>
+                </Label.RenderTransform>
+            </Label>
+
+
+        </Grid >
+        <Label Grid.Column="0" Content="select orders by category:" HorizontalAlignment="Left" Margin="34,0,0,0" VerticalAlignment="Center" Height="32" Width="193" FontSize="16" FontFamily="TopType Noam"/>
+        <ListView MouseDoubleClick="product_Click" x:Name="ProductsListview"  d:ItemsSource="{d:SampleData ItemCount=9}" SelectionChanged="ProductsListview_SelectionChanged" Margin="35,2,459,5" Background="#FFADADAD" Grid.Row="1" Foreground="Black">
+            <ListView.View  >
+                <GridView >
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=Id}" Header="Id" Width="50"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=ProductName}" Header="ProductName" Width="70"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=ProductPrice}" Header="ProductPrice" Width="50"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=Category}" Header="Category" Width="70"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+
+        <Button Content="Add a product" HorizontalAlignment="Left" Margin="35,10,0,0" Grid.Row="2" VerticalAlignment="Top" Click="GoToAdd" Height="56" Width="306" FontSize="18" BorderBrush="White" Background="#FFA4A4A4"/>
+        <ListView MouseDoubleClick="order_Click"  x:Name="OrdersListview"  d:ItemsSource="{d:SampleData ItemCount=9}" SelectionChanged="OrdersListview_SelectionChanged" Margin="362,0,38,5" Background="#FF9E9E9E" Foreground="Black" Grid.Row="1">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=Id}" Header="Id" Width="50" />
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=CustomerName}" Header="CustomerName" Width="70"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=OrderStatus}" Header="OrderStatus" Width="70"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=AmountProduct}" Header="Amount" Width="50"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=TotalPrice}" Header="TotalPrice" Width="70"/>
+
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <Button Content="Back to home" HorizontalAlignment="Left" Margin="362,10,0,62" Grid.Row="2" Width="114" Background="#FFABABAB" FontSize="18" Click="Button_Click" BorderBrush="White"/>
+
+    </Grid>
+</Window >

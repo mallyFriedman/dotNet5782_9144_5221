@@ -3,6 +3,7 @@ using DO;
 using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Linq;
+using System.Xml.Serialization;
 
 namespace Dal;
 
@@ -43,9 +44,9 @@ internal class Order : IOrder
     private DO.Order Casting(XElement item)
     {
         DO.Order o = new();
-        o.Id = Convert.ToInt32(item.Element("Id").Value);
-        o.CustomerName = Convert.ToString(item.Element("CustomerName").Value);
-        o.CustomerEmail = Convert.ToString(item.Element("CustomerEmail").Value);
+        o.Id = Convert.ToInt32(item?.Element("Id")?.Value);
+        o.CustomerName = Convert.ToString(item?.Element("CustomerName")?.Value);
+        o.CustomerEmail = Convert.ToString(item?.Element("CustomerEmail")?.Value);
         o.CustomerAdress = Convert.ToString(item.Element("CustomerAdress").Value);
         o.ShipDate = Convert.ToDateTime(item.Element("ShipDate").Value);
         o.OrderDate = Convert.ToDateTime(item.Element("OrderDate").Value);
@@ -90,16 +91,36 @@ public DO.Order GetSingle(Func<DO.Order, bool>? foo)
     return orders.Where(foo).FirstOrDefault();
 }
 
-public void Update(DO.Order item)
+    public XmlRootAttribute xRoot()
+    {
+        XmlRootAttribute xRootVal = new XmlRootAttribute();
+        xRootVal.ElementName = "ArrayOfOrder";
+        xRootVal.IsNullable = true;
+        return xRootVal;
+    }
+    public void Update(DO.Order item)
 {
-    XElement? root = XDocument.Load("../../xml/OrderXml.xml").Root;
-        List<XElement> ListXElement = root.Descendants("Order").ToList();
-        XElement? order = ListXElement?.
-                          Where(o => o.Element("Id")?.Value == item.Id.ToString()).FirstOrDefault();
-        ListXElement?.Remove(order);
-        order.Remove();
-        order?.Add(item);
-      //  ListXElement.Add(order);
-    root?.Save("..\\..\\..\\OrderXml.xml");
-}
+    //XElement? root = XDocument.Load("../../xml/OrderXml.xml").Root;
+    //    List<XElement> ListXElement = root.Descendants("Order").ToList();
+    //    XElement? order = ListXElement?.
+    //                      Where(o => o.Element("Id")?.Value == item.Id.ToString()).FirstOrDefault();
+    //    ListXElement?.Remove(order);
+    //    order.Remove();
+    //    order?.Add(item);
+    //  //  ListXElement.Add(order);
+    //root?.Save("..\\..\\..\\OrderXml.xml");
+
+
+        XmlSerializer ser = new XmlSerializer(typeof(List<DO.Order>), xRoot());
+        StreamReader r = new(@"..\..\xml\OrderXml.xml");
+        List<DO.Order>? lst = (List<DO.Order>?)ser.Deserialize(r);
+        int idx = lst.FindIndex(p => p.Id == item.Id);
+        if (idx == -1)
+            throw new Exception();
+        lst[idx] = item;
+        r.Close();
+        StreamWriter w = new(@"..\..\xml\OrderXml.xml");
+        ser.Serialize(w, lst);
+        w.Close();
+    }
 }

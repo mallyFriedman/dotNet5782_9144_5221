@@ -7,10 +7,11 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid Background="#FFC8C8C8">
-        <Button Content="admin" HorizontalAlignment="Left" VerticalAlignment="Top" RenderTransformOrigin="0.132,0.486" Click="Button_Click" Foreground="Black" BorderBrush="{x:Null}" Background="#FFB1AFAF" FontSize="24" Width="210" Height="240" FontFamily="Adobe Ming Std L" FontWeight="Bold" Margin="524,88,0,0"/>
-        <Button Content="new order" HorizontalAlignment="Center" Margin="0,91,0,0" VerticalAlignment="Top" Height="236" Width="208" Background="#FFA5A5A5" FontSize="24" BorderBrush="#FFA2A2A2" Click="Button_Click_1"/>
-        <Button Content="track order" HorizontalAlignment="Left" Margin="67,92,0,0" VerticalAlignment="Top" Height="185" Width="209" Background="#FF9A9797" FontSize="24" BorderBrush="#FFA5A5A5" Click="Button_Click_2"/>
-        <TextBox Name="track"  HorizontalAlignment="Left" Margin="71,287,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="205" Height="39" FontSize="24" TextChanged="track_TextChanged"/>
+        <Button Content="admin" HorizontalAlignment="Left" VerticalAlignment="Top" RenderTransformOrigin="0.132,0.486" Click="Button_Click" Foreground="Black" BorderBrush="White" Background="#FFB1AFAF" FontSize="24" Width="225" Height="147" FontFamily="Adobe Ming Std L" FontWeight="Bold" Margin="534,124,0,0"/>
+        <Button Content="new order" HorizontalAlignment="Left" Margin="293,123,0,0" VerticalAlignment="Top" Height="148" Width="220" Background="#FF9C9C9C" FontSize="24" BorderBrush="White" Click="Button_Click_1"/>
+        <Button Content="track order" HorizontalAlignment="Left" Margin="45,123,0,0" VerticalAlignment="Top" Height="148" Width="224" Background="#FF7D7D7D" FontSize="24" BorderBrush="White" Click="Button_Click_2"/>
+        <TextBox Name="track"  HorizontalAlignment="Left" Margin="51,239,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="151" Height="25" FontSize="18" TextChanged="track_TextChanged" Background="#FFD4D4D4" BorderBrush="White"/>
+        <Label Content="enter id" HorizontalAlignment="Left" Margin="48,218,0,0" VerticalAlignment="Top" Width="92" Height="26" Foreground="White"/>
 
     </Grid>
 </Window>

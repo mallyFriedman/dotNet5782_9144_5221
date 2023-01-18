@@ -31,12 +31,12 @@ internal class OrderItem : IOrderItem
     private DO.OrderItem Casting(XElement item)
     {
         DO.OrderItem oi = new();
-        oi.Id = Convert.ToInt32(item.Element("Id").Value);
-        oi.Price = Convert.ToInt32(item.Element("Price").Value);
-        oi.ProductID = Convert.ToInt32(item.Element("ProductID").Value);
-        oi.OrderID = Convert.ToInt32(item.Element("OrderID").Value);
-        oi.OrderID = Convert.ToInt32(item.Element("OrderID").Value);
-        oi.Amount = Convert.ToInt32(item.Element("Amount").Value);
+        oi.Id = Convert.ToInt32(item?.Element("Id")?.Value);
+        oi.Price = Convert.ToInt32(item?.Element("Price")?.Value);
+        oi.ProductID = Convert.ToInt32(item?.Element("ProductID")?.Value);
+        oi.OrderID = Convert.ToInt32(item?.Element("OrderID")?.Value);
+        oi.OrderID = Convert.ToInt32(item?.Element("OrderID")?.Value);
+        oi.Amount = Convert.ToInt32(item?.Element("Amount")?.Value);
         return oi;
     }
 

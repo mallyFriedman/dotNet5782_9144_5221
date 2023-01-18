@@ -10,6 +10,7 @@ namespace BlImplementation
     internal class BLCart : BlApi.ICart
     {
         static IDal Dal = DalApi.Factory.Get();
+
         /// <summary>
         /// the function adds an item to the cart and returens the updated cart
         /// </summary>
@@ -22,12 +23,12 @@ namespace BlImplementation
             }
             if (product.InStock == 0)
             {
-                throw new BlOutOfStockException();
+                throw new BlOutOfStockException(); 
             }
             var item = new BO.OrderItem();///
             if (cart.Items != null)
             {
-                item = cart.Items.Find(o => o.ProductID == id);
+                item = cart.Items.Find(o => o?.ProductID == id);
                 if (item == null)
                 {
                     item = new BO.OrderItem();
@@ -38,27 +39,27 @@ namespace BlImplementation
                 item = new BO.OrderItem();
                 cart.Items = new();
             }
-                if (item.ProductID == 0)
+            if (item.ProductID == 0)
+            {
+                DO.Product dProduct = Dal.Product.Get(id);
+                cart.Items.Add(new BO.OrderItem
                 {
-                    DO.Product dProduct = Dal.Product.Get(id);
-                    cart.Items.Add(new BO.OrderItem
-                    {
-                        Id = 0,
-                        ProductID = id,
-                        ProductName = dProduct.ProductName,
-                        Price = dProduct.Price,
-                        Amount = 1,
-                        TotalPrice = dProduct.Price
-                    });
-                }
-                else
-                {
-                    item.Amount += 1;
-                    item.TotalPrice = item.TotalPrice + item.Price;
-                    cart.Items.Remove(item);
-                    cart.Items.Add(item);
-                }
-                cart.TotalPrice += product.Price;
+                    Id = 0,
+                    ProductID = id,
+                    ProductName = dProduct.ProductName,
+                    Price = dProduct.Price,
+                    Amount = 1,
+                    TotalPrice = dProduct.Price
+                });
+            }
+            else
+            {
+                item.Amount += 1;
+                item.TotalPrice = item.TotalPrice + item.Price;
+                cart.Items.Remove(item);
+                cart.Items.Add(item);
+            }
+            cart.TotalPrice += product.Price;
             //}
             //else
             //{
@@ -80,7 +81,7 @@ namespace BlImplementation
             {
                 throw new BlCartIsEmptyException();
             }
-            BO.OrderItem item = cart.Items.Find(o => o.ProductID == id);
+            BO.OrderItem? item = cart.Items.Find(o => o.ProductID == id);
 
             if (item == null)
             {
@@ -128,22 +129,23 @@ namespace BlImplementation
         /// </summary>
         public void Confirm(Cart cart, string CustomerName, string CustomerEmail, string CustomerAdress)
         {
-            var v = Regex.Match(CustomerEmail, @"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$");
+            var v = Regex.Match(CustomerEmail, @"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$");///doesn't realy work...
             if (CustomerName == null || CustomerAdress == null || (CustomerEmail != "" && v.Index == -1))
             {
                 throw new BlDetailsNotValidException();
             }
             //////////////////////
-            cart.Items?.ForEach(item =>
+            cart.Items?.Select(item =>
             {
                 DO.Product product = Dal.Product.Get(item.ProductID);
                 if (product.Equals(default(DO.Product))) throw new BlObjectNotFoundException();
 
-                if (product.InStock < 0 || product.InStock - item.Amount == 0 || product.InStock - item.Amount < 0)
+                if (product.InStock < 0  || product.InStock - item.Amount < 0)
                 {
                     throw new BlOutOfStockException();
                 }
-            });
+                return item;
+            }).ToList();
             int orderId = Dal.Order.Add(
                 new DO.Order()
                 {
@@ -156,16 +158,15 @@ namespace BlImplementation
                     DeliveryDate = DateTime.MinValue
                 });
 
-            ///////////////////
-            cart.Items.ForEach(item =>
+            cart.Items?.Select(item =>
             {
                 DO.Product product = Dal.Product.Get(item.ProductID);
                 product.InStock -= item.Amount;
                 Dal.Product.Update(product);
-            });
+                return item;
+            }).ToList();
 
-
-            cart.Items.ForEach(item =>
+            cart.Items.Select(item =>
             {
                 DO.Product product = Dal.Product.Get(item.ProductID);
                 int orderItemId = Dal.OrderItem.Add(
@@ -177,7 +178,10 @@ namespace BlImplementation
                         Price = product.Price,
                         Amount = item.Amount
                     });
-            });
+                return item;
+            }).ToList();
         }
     }
+
+
 }

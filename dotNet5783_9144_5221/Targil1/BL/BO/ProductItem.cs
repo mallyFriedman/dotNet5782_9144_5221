@@ -8,7 +8,7 @@ namespace BO
         public double Price { get; set; }
         public Category Category { get; set; }
         public bool InStock { get; set; }
-        public int AmountInCart { get; set; }
+        public int AmountInStock { get; set; }
 
         public override string ToString() => $@"
         Product ID={Id}, 
@@ -16,7 +16,7 @@ namespace BO
     	Price: {Price}
         Category - {Category}
         In stock? {InStock}
-        Amount in cart= {AmountInCart}";
+        Amount in cart= {AmountInStock}";
 
     }
 }

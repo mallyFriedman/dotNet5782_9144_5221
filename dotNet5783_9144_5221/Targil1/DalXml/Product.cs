@@ -9,8 +9,6 @@ namespace Dal;
 
 internal class Product : IProduct
 {
-    internal static List<Product> ProductList = new List<Product>();
-    static readonly Random rand = new Random();
     public XmlRootAttribute xRoot()
     {
         XmlRootAttribute xRootVal = new XmlRootAttribute();
@@ -62,7 +60,7 @@ internal class Product : IProduct
         XmlSerializer ser = new XmlSerializer(typeof(List<DO.Product>), xRoot());
         StreamReader r = new(@"..\..\xml\ProductXml.xml");
         List<DO.Product>? lst = (List<DO.Product>?)ser.Deserialize(r);
-        List<DO.Product>? prod = foo == null ? lst : lst.Where(foo).ToList();
+        List<DO.Product>? prod = foo == null ? lst : lst?.Where(foo).ToList();
         r.Close();
         return prod;
     }

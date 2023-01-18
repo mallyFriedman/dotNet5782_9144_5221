@@ -1,6 +1,7 @@
 ﻿using BlApi;
 using BlImplementation;
 using BO;
+using System.Collections.ObjectModel;
 using System.Windows;
 
 namespace PL
@@ -8,10 +9,15 @@ namespace PL
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
+    /// 
+
+
+
     public partial class MainWindow : Window
     {
         private BO.Cart cart = new();
         private BlApi.IBl Bl { get; set; }
+      
         /// <summary>
         /// constructor of the page
         /// </summary>
@@ -26,37 +32,32 @@ namespace PL
         /// </summary>
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            new Window2(Bl, cart).Show();
+            new ListWindow(Bl, cart,this).Show();
             this.Hide();
         }
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
-            new productItem(Bl, cart).Show();
+            new productItem(Bl, cart,this).Show();
             this.Hide();
         }
 
         private void Button_Click_2(object sender, RoutedEventArgs e)
         {
-            //if (track.Text== )
-            //{
-            //    throw new System.Exception("Error");
-            //}
             try
             {
-               // int? i = ;
                 Bl.Order.Get(int.Parse(track.Text ==""? "0": track.Text));
-                new OrderWindo(Bl, cart, int.Parse(track.Text), false).Show();
+                new trackingOrder(Bl,cart,this, int.Parse(track.Text)).Show();
                 this.Hide();
             }
             catch (BlIdNotValidException ex)
             {
                 MessageBox.Show(ex.Message);    
             }
-           //catch (BlIdNotValidException ex)
-           //{
-           //    MessageBox.Show(ex.Message);
-           //}
+            catch (BlObjectNotFoundException ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
     private void track_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)

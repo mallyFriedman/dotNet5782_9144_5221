@@ -37,7 +37,7 @@ namespace BlImplementation
         public IEnumerable<BO.ProductItem> GetAllForManager(BO.Category? category = null)
         {
             Random rand = new Random();
-            IEnumerable<DO.Product> a;
+            IEnumerable<DO.Product>? a;
 
             if (category == null)
                 a = Dal.Product.Get();
@@ -50,7 +50,7 @@ namespace BlImplementation
                               Price = item.Price,
                               Category = (Category)item.Category,
                               InStock = item.InStock >0 ? true : false,
-                              AmountInCart = 0
+                              AmountInStock= item.InStock
                           };          
             return Prod;
         }
@@ -130,8 +130,8 @@ namespace BlImplementation
                 throw new BlIdNotValidException();
 
             }
-            List<DO.OrderItem> orderItem = Dal.OrderItem.Get().ToList();
-            orderItem.Find(o => o.Id == id);
+            List<DO.OrderItem>? orderItem = Dal?.OrderItem?.Get()?.ToList();
+            orderItem?.Find(o => o.Id == id);
             if (orderItem.Equals(default(DO.OrderItem)))
             {
                 throw new BlObjectNotFoundException();

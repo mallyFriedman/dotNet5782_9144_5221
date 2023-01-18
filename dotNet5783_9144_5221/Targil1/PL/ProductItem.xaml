@@ -6,21 +6,30 @@
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
         Title="productItem" Height="450" Width="800">
-    <Grid>
-        <ListView x:Name="ProductsListview" MouseDoubleClick="product_Click"  d:ItemsSource="{d:SampleData ItemCount=9}" SelectionChanged="ProductsListview_SelectionChanged" Margin="18,50,17,16" Grid.Row="1">
+    <Grid Background="#FF9A9A9A">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="223*"/>
+            <ColumnDefinition Width="0*"/>
+            <ColumnDefinition Width="0*"/>
+            <ColumnDefinition Width="0*"/>
+            <ColumnDefinition Width="0*"/>
+            <ColumnDefinition Width="0*"/>
+            <ColumnDefinition Width="577*"/>
+        </Grid.ColumnDefinitions>
+        <ListView x:Name="ProductsListview" MouseDoubleClick="product_Click"  d:ItemsSource="{d:SampleData ItemCount=9}" SelectionChanged="ProductsListview_SelectionChanged" Margin="18,50,17,16" Grid.ColumnSpan="7" Background="#FFCCCCCC">
             <ListView.View>
                 <GridView >
                     <GridViewColumn DisplayMemberBinding="{Binding Path=Id}" Header="Id" Width="100"/>
-                    <GridViewColumn DisplayMemberBinding="{Binding Path=ProductName}" Header="ProductName" Width="100"/>
-                    <GridViewColumn DisplayMemberBinding="{Binding Path=Price}" Header="ProductPrice" Width="100"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=ProductName}" Header="Product Name" Width="100"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=Price}" Header="Product Price" Width="100"/>
                     <GridViewColumn DisplayMemberBinding="{Binding Path=Category}" Header="Category" Width="100"/>
                     <GridViewColumn DisplayMemberBinding="{Binding Path=InStock}" Header="InStock" Width="100"/>
-                    <GridViewColumn DisplayMemberBinding="{Binding Path=AmountInCart}" Header="AmountInCart" Width="100"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=AmountInStock}" Header="Amount In Cart" Width="100"/>
                 </GridView>
             </ListView.View>
         </ListView>
 
-        <ComboBox  Name="CategorySelector" SelectionChanged="SelectionChanged" HorizontalAlignment="Left" Margin="18,10,0,384" Width="137">
+        <ComboBox  Name="CategorySelector" SelectionChanged="SelectionChanged" HorizontalAlignment="Left" Margin="0,5,0,389" Width="137" BorderBrush="White" FontWeight="Bold" FontSize="14" Grid.Column="6" RenderTransformOrigin="0.511,0.842">
             <ComboBox.Background>
                 <LinearGradientBrush EndPoint="0,1">
                     <GradientStop Color="#FFF0F0F0"/>
@@ -28,7 +37,9 @@
                 </LinearGradientBrush>
             </ComboBox.Background>
         </ComboBox>
-        <Button Content="Your Cart" HorizontalAlignment="Left" Margin="616,14,0,0" VerticalAlignment="Top" Width="141" Click="Button_Click"/>
+        <Button Content="Your Cart" HorizontalAlignment="Left" Margin="387,8,0,0" VerticalAlignment="Top" Width="141" Click="Button_Click" BorderBrush="White" Height="34" FontWeight="Bold" FontSize="20" Grid.Column="6"/>
+        <Label Content="select by category:" HorizontalAlignment="Left" Margin="34,4,0,0" VerticalAlignment="Top" Width="189" FontWeight="Bold" FontSize="20" Height="42" Foreground="Black"/>
+        <Button Grid.Column="6" Content="back to home" HorizontalAlignment="Left" Margin="457,377,0,0" VerticalAlignment="Top" Height="29" Width="92" Click="Button_Click_1"/>
 
     </Grid>
 </Window>

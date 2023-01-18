@@ -2,79 +2,83 @@
 using BlImplementation;
 using BO;
 using System;
-//using System.Collections.Generic;
-//using System.Linq;
-//using System.Text;
-//using System.Threading.Tasks;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-//using static System.Net.Mime.MediaTypeNames;
-//using System.Windows.Data;
-//using System.Windows.Documents;
-//using System.Windows.Input;
-//using System.Windows.Media;
-//using System.Windows.Media.Imaging;
-//using System.Windows.Shapes;
+using static System.Net.Mime.MediaTypeNames;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Shapes;
 
 namespace PL
 {
     /// <summary>
     /// Interaction logic for Window1.xaml
     /// </summary>
-    public partial class Window1 : Window
+    public partial class ProductWindow : Window
     {
-        private ProductForList p;
-        private ProductItem q;
+        private ProductForList? p;
+        private ProductItem? q;
         private BO.Cart cart = new();
         private BlApi.IBl Bl;
-
+        Window lastWindow;
+        private bool libby { get; set; }
+        private bool flagProductForList { get; set; }
+        private bool flagAdd { get; set; }
 
         /// <summary>
         /// constractor of the page
         /// </summary>
-        public Window1(BlApi.IBl bl, BO.Cart cart, ProductForList p = null,ProductItem q=null)
+        public ProductWindow(BlApi.IBl bl, BO.Cart cart,Window lWindow, ProductForList? p = null, ProductItem? q = null)
         {
-            this.Bl = bl;    
+            lastWindow=lWindow;
+            libby = true;
+            this.Bl = bl;
             this.p = p;
             this.q = q;
             this.cart = cart;
             InitializeComponent();
             CategorySelector.ItemsSource = Bl.Product.GetAllForCustomer();
             CategorySelector.ItemsSource = Enum.GetValues(typeof(BO.Category));
+            //
             if (p != null)
             {
-                //DataContext = p;
                 BO.Product a = Bl.Product.GetManager(p.Id);
                 DataContext = a;
-                //Id.Text = (p.Id).ToString();              //binding
-                //ProductName.Text = p.ProductName;         //binding
-                //Price.Text = (p.ProductPrice).ToString(); //binding
-                //InStock.Text = (a.InStock).ToString();    //binding
                 CategorySelector.SelectedItem = p.Category;
-                add.Visibility = Visibility.Hidden;
-                addToCart.Visibility = Visibility.Hidden;
-                category.Visibility = Visibility.Hidden;
+                this.flagProductForList = true;
+                //add.Visibility = Visibility.Hidden;
+                //addToCart.Visibility = Visibility.Hidden;
+                //category.Visibility = Visibility.Hidden;
+                //title.Visibility= Visibility.Hidden;
 
             }
-            else if(q != null)  
+            else if (q != null)
             {
                 DataContext = q;
-                add.Visibility = Visibility.Hidden;
-                update.Visibility = Visibility.Hidden;
-                delete.Visibility = Visibility.Hidden;
-                CategorySelector.Visibility = Visibility.Hidden;
-                category.Visibility = Visibility.Visible;
+                
+               // add.Visibility = Visibility.Hidden;
+               // update.Visibility = Visibility.Hidden;
+               // delete.Visibility = Visibility.Hidden;
+               // CategorySelector.Visibility = Visibility.Hidden;
+               // category.Visibility = Visibility.Visible;
             }
             else
             {
-                update.Visibility = Visibility.Hidden;
-                delete.Visibility = Visibility.Hidden;
-                addToCart.Visibility = Visibility.Hidden;
-                category.Visibility = Visibility.Hidden;
+                this.flagAdd = true;
+                //update.Visibility = Visibility.Hidden;
+                //delete.Visibility = Visibility.Hidden;
+                //addToCart.Visibility = Visibility.Hidden;
+                //title.Visibility = Visibility.Hidden;
+                //category.Visibility = Visibility.Hidden;
             }
         }
-
-
 
         /// <summary>
         /// the function updates the chosen product in the list
@@ -91,7 +95,7 @@ namespace PL
                 p.Category = (BO.Category)CategorySelector.SelectedItem;
                 Bl.Product.Update(p);
                 MessageBox.Show("updated succesfuly!");
-                new Window2(Bl, cart).Show();
+                new ListWindow(Bl, cart, this   ).Show();
                 this.Hide();
             }
             catch (BlObjectNotValidException ex)
@@ -117,10 +121,10 @@ namespace PL
             {
                 Bl.Product.Delete(p.Id);
                 MessageBox.Show("deleted succesfuly!");
-                new Window2(Bl, cart).Show();
+                new ListWindow(Bl, cart, this).Show();
                 this.Hide();
             }
-            
+
             catch (BlIdNotValidException ex)
             {
                 MessageBox.Show(ex.Message);
@@ -142,13 +146,8 @@ namespace PL
                 p.Category = (BO.Category)CategorySelector.SelectedItem;
                 Bl.Product.Add(p);
                 MessageBox.Show("Add succesfuly!");
-                new Window2(Bl, cart).Show();
+                new ListWindow(Bl, cart, this).Show();
                 this.Hide();
-                Id.Text = null;
-                ProductName.Text = null;
-                Price.Text = null;
-                InStock.Text = null;
-                CategorySelector.SelectedItem = null;
 
             }
             catch (BlObjectNotValidException ex)
@@ -171,8 +170,38 @@ namespace PL
         private void BackToHome(object sender, RoutedEventArgs e)
         {
 
-            new Window2(Bl, cart).Show();
-            this.Hide();
+            lastWindow.Show();
+            this.Close();
+        }
+
+
+        private void addToCart_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                this.cart = Bl.Cart.Add(cart, q.Id);
+                MessageBox.Show("add successfully");
+                new productItem(Bl, cart,this).Show();
+                this.Hide();
+            }
+            catch (BlOutOfStockException ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            catch (BlObjectNotFoundException ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void category_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+        }
+
+        private void Id_TextChanged_1(object sender, TextChangedEventArgs e)
+        {
+
         }
 
         private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -195,33 +224,5 @@ namespace PL
 
         }
 
-        private void addToCart_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-               this.cart= Bl.Cart.Add(cart, q.Id);
-                MessageBox.Show("add successfully");
-                new productItem(Bl, cart).Show();
-                this.Hide();
-            }
-            catch (BlOutOfStockException ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-            catch (BlObjectNotFoundException ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-        }
-
-        private void category_TextChanged(object sender, TextChangedEventArgs e)
-        {
-
-        }
-
-        private void Id_TextChanged_1(object sender, TextChangedEventArgs e)
-        {
-
-        }
     }
 }

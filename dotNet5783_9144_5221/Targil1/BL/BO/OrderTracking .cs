@@ -10,6 +10,6 @@ namespace BO
     {
         public int Id { get; set; }
         public eOrderStatus OrderStatus { get; set; }
-        public List<(DateTime, eOrderStatus)> StatusList;
+        public List<Tuple<DateTime, eOrderStatus>>? StatusList;
     }
 }

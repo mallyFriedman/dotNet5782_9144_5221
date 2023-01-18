@@ -12,14 +12,14 @@
     <ProductName>NecklacesGold</ProductName>
     <Price>1501</Price>
     <Category>Bracelets</Category>
-    <InStock>24</InStock>
+    <InStock>23</InStock>
   </Product>
   <Product>
     <Id>100005</Id>
     <ProductName>RingsGold</ProductName>
     <Price>1111</Price>
     <Category>Bracelets</Category>
-    <InStock>6</InStock>
+    <InStock>2</InStock>
   </Product>
   <Product>
     <Id>100006</Id>
@@ -33,21 +33,21 @@
     <ProductName>NecklacesSilver</ProductName>
     <Price>6711</Price>
     <Category>Necklaces</Category>
-    <InStock>14</InStock>
+    <InStock>8</InStock>
   </Product>
   <Product>
     <Id>100008</Id>
     <ProductName>NecklacesSilver</ProductName>
     <Price>4968</Price>
     <Category>Bracelets</Category>
-    <InStock>10</InStock>
+    <InStock>9</InStock>
   </Product>
   <Product>
     <Id>100010</Id>
     <ProductName>WatchGold</ProductName>
     <Price>6690</Price>
     <Category>Rings</Category>
-    <InStock>20</InStock>
+    <InStock>14</InStock>
   </Product>
   <Product>
     <Id>100011</Id>
@@ -61,6 +61,20 @@
     <ProductName>tehila</ProductName>
     <Price>2</Price>
     <Category>Bracelets</Category>
-    <InStock>7</InStock>
+    <InStock>6</InStock>
+  </Product>
+  <Product>
+    <Id>100013</Id>
+    <ProductName>whatch</ProductName>
+    <Price>99</Price>
+    <Category>Bracelets</Category>
+    <InStock>0</InStock>
+  </Product>
+  <Product>
+    <Id>100015</Id>
+    <ProductName>goldFildNeclace</ProductName>
+    <Price>9999</Price>
+    <Category>Earrings</Category>
+    <InStock>6</InStock>
   </Product>
 </ArrayOfProduct>

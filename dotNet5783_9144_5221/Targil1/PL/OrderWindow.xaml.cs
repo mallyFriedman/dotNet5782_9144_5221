@@ -24,23 +24,24 @@ namespace PL
     /// <summary>
     /// Interaction logic for OrderWindo.xaml
     /// </summary>
-    public partial class OrderWindo : Window
+    public partial class OrderWindow : Window
     {
         private int id;
-        private BO.Cart cart ;
-        private BlApi.IBl Bl;
-
+        private BO.Cart? cart;
+        private BlApi.IBl? Bl;
+        private Window lastWindow;
 
         /// <summary>
         /// constractor of the page
         /// </summary>
-        public OrderWindo(BlApi.IBl bl,BO.Cart cart, int id = 0, bool admin = false)
+        public OrderWindow(BlApi.IBl bl, BO.Cart cart,Window window, int id = 0, bool admin = false)
         {
             try
             {
+                this.lastWindow = window;
                 this.cart = cart;
                 this.id = id;
-                this.Bl = bl ;
+                this.Bl = bl;
                 InitializeComponent();
                 BO.Order order;
                 if (!admin)
@@ -52,14 +53,14 @@ namespace PL
                 {
                     order = Bl.Order.Get(id);
                     int sum = 0;
-                    order.OrderItem.Select(ord =>
+                    order?.OrderItem?.Select(ord =>
                     {
                         sum = sum + 1;
                         return ord;
                     }).ToList();
                     amount.Content = sum;
                     DataContext = order;
-                    OrderItemsListview.ItemsSource = order.OrderItem;
+                    OrderItemsListview.ItemsSource = order?.OrderItem;
                 }
             }
             catch (BlIdNotValidException ex)
@@ -75,9 +76,9 @@ namespace PL
         {
             try
             {
-                Bl.Order.UpdateSupply(id);
+                Bl?.Order.UpdateSupply(id);
                 MessageBox.Show("updated succesfuly!");
-                new Window2(Bl, cart).Show();
+                new ListWindow(Bl, cart,this).Show();
                 this.Hide();
             }
             catch (BlCannotChangeTheStatusException ex)
@@ -90,9 +91,9 @@ namespace PL
         {
             try
             {
-                Bl.Order.UpdateShipping(id);
+                Bl?.Order.UpdateShipping(id);
                 MessageBox.Show("updated succesfuly!");
-                new Window2(Bl, cart).Show();
+                new ListWindow(Bl, cart,this).Show();
                 this.Hide();
             }
             catch (BlCannotChangeTheStatusException ex)
@@ -108,7 +109,7 @@ namespace PL
         private void BackToHome(object sender, RoutedEventArgs e)
         {
 
-            new Window2(Bl, cart).Show();
+           lastWindow.Show();
             this.Hide();
         }
 

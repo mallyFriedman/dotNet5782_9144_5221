@@ -6,8 +6,13 @@
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
         Title="Cart_" Height="450" Width="801">
-    <Grid>
-        <ListView ItemsSource="{Binding Items}" x:Name="ProductsItemListview" Background="White" Foreground="#FF041F65" Margin="10,0,68,83" SelectionChanged="ProductsItemListview_SelectionChanged_1" >
+    <Grid Background="Gainsboro">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="707*"/>
+            <ColumnDefinition Width="18*"/>
+            <ColumnDefinition Width="76*"/>
+        </Grid.ColumnDefinitions>
+        <ListView ItemsSource="{Binding}" x:Name="ProductsItemListview" Background="#FFB5B5B5" Foreground="#FF041F65" Margin="10,14,0,127" SelectionChanged="ProductsItemListview_SelectionChanged_1" Grid.ColumnSpan="2" >
             <ListView.View >
                 <GridView AllowsColumnReorder="true" ColumnHeaderToolTip="Employee Information" >
                     <GridViewColumn DisplayMemberBinding="{Binding ProductName}" Header="ProductName" Width="100"/>
@@ -41,11 +46,13 @@
                 </GridView>
             </ListView.View>
         </ListView>
-        <Button Content="confirm" HorizontalAlignment="Left" Margin="10,374,0,0" VerticalAlignment="Top" Width="120" Height="31" Click="Button_Click"/>
-        <TextBox Name="CustomerName"  HorizontalAlignment="Left" Margin="167,356,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-        <TextBox Name="CustomerEmail" HorizontalAlignment="Left" Margin="167,381,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-        <TextBox Name="CustomerAdress" HorizontalAlignment="Left" Margin="167,406,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" RenderTransformOrigin="3.69,4.561"/>
-        <Button Content="back to home" HorizontalAlignment="Left" Margin="601,365,0,0" VerticalAlignment="Top" Click="Button_Click_1" Width="131" Height="47"/>
+        <Button Content="confirm" HorizontalAlignment="Left" Margin="660,327,0,0" VerticalAlignment="Top" Width="120" Height="64" Click="Button_Click" Grid.ColumnSpan="3" Background="#FFB7B7B7"/>
+        <TextBox Name="CustomerName"  HorizontalAlignment="Left" Margin="535,327,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <TextBox Name="CustomerEmail" HorizontalAlignment="Left" Margin="535,350,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" RenderTransformOrigin="2.377,-0.901"/>
+        <TextBox Name="CustomerAdress" HorizontalAlignment="Left" Margin="535,373,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" RenderTransformOrigin="3.69,4.561"/>
+        <Button Content="back to home" HorizontalAlignment="Center" Margin="0,14,0,0" VerticalAlignment="Top" Click="Button_Click_1" Width="54" Height="126" FontSize="8" Grid.Column="2" Background="#FFAFAFAF"/>
+        <Label Content="total price" HorizontalAlignment="Left" Margin="114,336,0,0" VerticalAlignment="Top"/>
+        <Label Name="labb"  Content="{Binding Path=TotalPrice}" HorizontalAlignment="Left" Margin="214,336,0,0" VerticalAlignment="Top"/>
 
     </Grid>
 </Window>

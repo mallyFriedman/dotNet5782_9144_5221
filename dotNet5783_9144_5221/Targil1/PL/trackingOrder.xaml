@@ -6,10 +6,22 @@
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
         Title="trackingOrder" Height="450" Width="800">
-    <Grid>
-        <Label Name="Id" Content="{Binding Path=Id, Mode=TwoWay}"  HorizontalAlignment="Left" Margin="54,36,0,0" VerticalAlignment="Top" Height="26" Width="74" Background="#FFC7C7C7"/>
-        <Label Name="CustomerName" Content="{Binding Path=CustomerName, Mode=TwoWay}"  HorizontalAlignment="Left" Margin="55,74,0,0" VerticalAlignment="Top" Height="55" Width="95" Background="#FFCAC2C2"/>
-        <Label Name="CustomerEmail" Content="{Binding Path=CustomerEmail, Mode=TwoWay}"  HorizontalAlignment="Left" Margin="55,145,0,0" VerticalAlignment="Top" Height="55" Width="95" Background="#FFC1B9B9"/>
+    <Grid Background="#FFB5B5B5">
+        <Label Name="OrderStatus" Content="{Binding Path=OrderStatus, Mode=TwoWay}"  HorizontalAlignment="Left" Margin="389,86,0,0" VerticalAlignment="Top" Height="41" Width="239" Background="#FFB5B5B5" BorderBrush="White" FontSize="18" FontWeight="Bold"/>
+        <Button Content="order detailes" HorizontalAlignment="Left" Margin="612,303,0,0" VerticalAlignment="Top" Click="Button_Click" FontSize="20" FontWeight="Bold" Height="47" Width="158" BorderBrush="White"/>
+        <ListView Name="statusList" d:ItemsSource="{d:SampleData ItemCount=3}" ItemsSource="{Binding mylist}" SelectionChanged="ListView_SelectionChanged" Margin="202,153,214,125" FontSize="20" FontFamily="shirin " Background="#FFDEDEDE" BorderBrush="White">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=Item2}" Header="Status" Width="100"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=Item1}" Header="Date" Width="250"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <Label Content="your order status is:" HorizontalAlignment="Left" Margin="204,93,0,0" VerticalAlignment="Top" Width="180" FontSize="18" FontWeight="Bold"/>
+        <Label Content="Tracking page" HorizontalAlignment="Left" Margin="10,15,0,0" VerticalAlignment="Top" Height="53" Width="189" FontSize="22" FontWeight="Bold"/>
+        <Label Content="{Binding Path=Id,Mode=TwoWay}"  HorizontalAlignment="Left" Margin="389,32,0,0" VerticalAlignment="Top" Background="#FFB5B5B5" FontWeight="Bold" FontSize="20" Height="37" Width="84"/>
+        <Label Content="order number:" HorizontalAlignment="Left" Margin="224,32,0,0" VerticalAlignment="Top" FontSize="20" FontWeight="Bold"/>
+        <Button Content="back to home" HorizontalAlignment="Left" Margin="612,360,0,0" VerticalAlignment="Top" Height="44" Width="158" FontWeight="Bold" FontSize="18" BorderBrush="White" Click="Button_Click_1"/>
 
 
 

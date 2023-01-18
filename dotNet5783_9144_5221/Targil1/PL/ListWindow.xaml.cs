@@ -20,14 +20,15 @@ namespace PL
     /// <summary>
     /// Interaction logic for Window2.xaml
     /// </summary>
-    public partial class Window2 : Window
+    public partial class ListWindow : Window
     {
-        private BlApi.IBl Bl;
-        private BO.Cart cart = new();
+        private BlApi.IBl? Bl;
+        private BO.Cart? cart = new();
+        private Window lastWindow;
         /// <summary>
         /// constructor of the page
         /// </summary>
-        public Window2(BlApi.IBl bl, BO.Cart cart)
+        public ListWindow(BlApi.IBl bl, BO.Cart cart, Window lastWindow)
         {
             try
             {
@@ -42,6 +43,8 @@ namespace PL
             {
                 MessageBox.Show(ex.Message);
             }
+
+            this.lastWindow = lastWindow;   
         }
         /// <summary>
         /// Setting the selection menu
@@ -56,7 +59,7 @@ namespace PL
         /// </summary>
         private void GoToAdd(object sender, RoutedEventArgs e)
         {
-            new Window1(Bl, cart).Show();
+            new ProductWindow(Bl,cart,this).Show();
             this.Hide();
         }
         /// <summary>
@@ -65,7 +68,7 @@ namespace PL
         private void product_Click(object sender, MouseButtonEventArgs e)
         {
             BO.ProductForList p = (BO.ProductForList)((ListView)sender).SelectedItem;
-            new Window1(Bl, cart, p).Show();
+            new ProductWindow(Bl, cart, this,p).Show();
             this.Hide();
 
         }
@@ -73,7 +76,7 @@ namespace PL
         private void order_Click(object sender, MouseButtonEventArgs e)
         {
             BO.OrderForList p = (BO.OrderForList)((ListView)sender).SelectedItem;
-            new OrderWindo(Bl, cart, p.Id, true).Show();     /////////
+            new OrderWindow(Bl, cart,this, p.Id, true).Show();     /////////
             this.Hide();
 
         }
@@ -92,7 +95,7 @@ namespace PL
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            new MainWindow().Show();
+            lastWindow.Show();
             this.Hide();
         }
     }

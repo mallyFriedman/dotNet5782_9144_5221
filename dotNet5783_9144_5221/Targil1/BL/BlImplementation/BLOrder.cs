@@ -16,17 +16,17 @@ namespace BlImplementation
         public IEnumerable<BO.OrderForList> GetAll()
         {
             IEnumerable<DO.Order> orders = Dal.Order.Get();
-            
-                var ordersForList = from item in orders
-                                    let a = Get(item.Id)
-                                    select new BO.OrderForList
-                                    {
-                                        Id = item.Id,
-                                        CustomerName = item.CustomerName,
-                                        OrderStatus = a.OrderStatus,
-                                        AmountProduct = a.OrderItem?.Count() ?? 0,
-                                        TotalPrice = a.TotalPrice
-                                    };
+
+            var ordersForList = from item in orders
+                                let a = Get(item.Id)
+                                select new BO.OrderForList
+                                {
+                                    Id = item.Id,
+                                    CustomerName = item.CustomerName,
+                                    OrderStatus = a.OrderStatus,
+                                    AmountProduct = a.OrderItem?.Count() ?? 0,
+                                    TotalPrice = a.TotalPrice
+                                };
             return ordersForList;
         }
 
@@ -66,21 +66,9 @@ namespace BlImplementation
                                    Price = item.Price,
                                    ProductID = item.ProductID,
                                    TotalPrice = ((item.Price) * (item.Amount))
-                                   //sum = sum + item.TotalPrice
                                };
-
-
-            // foreach (DO.OrderItem item in dOrderItem)
-            // {
-            //     BO.OrderItem bOrderItem = new BO.OrderItem();
-            //     bOrderItem.Amount = item.Amount;
-            //     bOrderItem.Id = item.Id;
-            //     bOrderItem.Price = item.Price;
-            //     bOrderItem.ProductID = item.ProductID;
-            //     bOrderItem.TotalPrice = (item.Price) * (item.Amount);
-            //     orderItem.Add(bOrderItem);
-            //     sum = sum + bOrderItem.TotalPrice;
-            // }
+            bOrder.OrderItem.Sum(item => sum += item.TotalPrice);
+           
             bOrder.TotalPrice = sum;
             return bOrder;
         }
@@ -102,6 +90,7 @@ namespace BlImplementation
             dOrder.DeliveryDate = DateTime.Now;
             Dal.Order.Update(dOrder);
             BO.Order bOrder = Get(id);
+
             return bOrder;
         }
         /// <summary>
@@ -123,6 +112,7 @@ namespace BlImplementation
             dOrder.ShipDate = DateTime.Now;
             Dal.Order.Update(dOrder);
             BO.Order bOrder = Get(id);
+            //  UpdateTrack(1, id);
             return bOrder;
         }
 
@@ -137,14 +127,28 @@ namespace BlImplementation
                 return (BO.eOrderStatus)1;
             else
                 return (BO.eOrderStatus)0;
+        }
 
-            //  if (DeliveryDate > DateTime.MinValue)
-            //      return (BO.eOrderStatus)3;
-            //  else if (ShipDate > DateTime.MinValue)
-            //      return (BO.eOrderStatus)2;
-            //  else
-            //      return (BO.eOrderStatus)1;
-
+        public OrderTracking GetOrderTracking(int id)
+        {
+            BO.Order order = Get(id);
+            OrderTracking orderTracking = new();
+            orderTracking.OrderStatus = order.OrderStatus;
+            orderTracking.Id = id;
+            orderTracking.StatusList = new();
+            if (!((DateTime)order.OrderDate == DateTime.MinValue))
+            {
+                orderTracking?.StatusList?.Add(new Tuple<DateTime, BO.eOrderStatus>((DateTime)order.OrderDate, (BO.eOrderStatus)0));
+                if (!((DateTime)order.ShipDate == DateTime.MinValue))
+                {
+                    orderTracking?.StatusList?.Add(new Tuple<DateTime, BO.eOrderStatus>((DateTime)order.ShipDate, (BO.eOrderStatus)1));
+                    if (!((DateTime)order.DeliveryDate == DateTime.MinValue))
+                    {
+                        orderTracking?.StatusList?.Add(new Tuple<DateTime, BO.eOrderStatus>((DateTime)order.DeliveryDate, (BO.eOrderStatus)2));
+                    }
+                }
+            }
+            return orderTracking;
         }
     }
 }
