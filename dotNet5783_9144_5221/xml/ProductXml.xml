@@ -50,13 +50,6 @@
     <InStock>14</InStock>
   </Product>
   <Product>
-    <Id>100011</Id>
-    <ProductName>mally</ProductName>
-    <Price>2</Price>
-    <Category>Bracelets</Category>
-    <InStock>8</InStock>
-  </Product>
-  <Product>
     <Id>100012</Id>
     <ProductName>tehila</ProductName>
     <Price>2</Price>

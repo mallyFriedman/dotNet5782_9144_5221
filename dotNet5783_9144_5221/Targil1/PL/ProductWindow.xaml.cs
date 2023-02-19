@@ -31,6 +31,8 @@ namespace PL
         private bool libby { get; set; }
         private bool flagProductForList { get; set; }
         private bool flagAdd { get; set; }
+        Tuple<BO.Product, bool,bool,bool> dct;
+        Tuple<BO.ProductItem, bool,bool,bool> dct1;
 
         /// <summary>
         /// constractor of the page
@@ -38,7 +40,9 @@ namespace PL
         public ProductWindow(BlApi.IBl bl, BO.Cart cart,Window lWindow, ProductForList? p = null, ProductItem? q = null)
         {
             lastWindow=lWindow;
-            libby = true;
+            libby = false;
+            flagProductForList = false;
+            flagAdd = false;
             this.Bl = bl;
             this.p = p;
             this.q = q;
@@ -46,13 +50,18 @@ namespace PL
             InitializeComponent();
             CategorySelector.ItemsSource = Bl.Product.GetAllForCustomer();
             CategorySelector.ItemsSource = Enum.GetValues(typeof(BO.Category));
+
             //
             if (p != null)
             {
                 BO.Product a = Bl.Product.GetManager(p.Id);
-                DataContext = a;
-                CategorySelector.SelectedItem = p.Category;
                 this.flagProductForList = true;
+                flagAdd = false;
+                libby = false;
+                dct = new Tuple<Product, bool,bool,bool>(a, flagProductForList, flagAdd,libby);
+                DataContext = dct;
+                CategorySelector.SelectedItem = p.Category;
+                
                 //add.Visibility = Visibility.Hidden;
                 //addToCart.Visibility = Visibility.Hidden;
                 //category.Visibility = Visibility.Hidden;
@@ -61,7 +70,13 @@ namespace PL
             }
             else if (q != null)
             {
-                DataContext = q;
+
+                flagProductForList = false;
+                flagAdd = false;
+                libby = true;
+                dct1 = new Tuple<ProductItem, bool, bool, bool>(q, flagProductForList, flagAdd, libby);
+                DataContext = dct1;
+                //DataContext = q;
                 
                // add.Visibility = Visibility.Hidden;
                // update.Visibility = Visibility.Hidden;
@@ -71,7 +86,11 @@ namespace PL
             }
             else
             {
-                this.flagAdd = true;
+                this.flagProductForList = false;
+                flagAdd = true;
+                libby = false;
+                dct1 = new Tuple<ProductItem, bool, bool, bool>(q, flagProductForList, flagAdd, libby);
+
                 //update.Visibility = Visibility.Hidden;
                 //delete.Visibility = Visibility.Hidden;
                 //addToCart.Visibility = Visibility.Hidden;

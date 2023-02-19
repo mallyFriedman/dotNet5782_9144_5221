@@ -4,18 +4,21 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL"
+        
         mc:Ignorable="d"
         Title="ProductWindow" Height="450" Width="800">
+    <Window.Resources>
+    </Window.Resources>
     <Grid Background="#FFC8C8C8">
         <Grid.RowDefinitions>
             <RowDefinition Height="5*"/>
             <RowDefinition Height="429*"/>
         </Grid.RowDefinitions>
-        <TextBox Name="Id" IsReadOnly = "{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window}, Path=libby}" Text="{Binding Path=Id}" HorizontalAlignment="Left" Margin="291,82,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="152" Height="25" Grid.Row="1" TextChanged="Id_TextChanged_1"/>
-        <TextBox Name="ProductName" IsReadOnly = "{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window}, Path=libby}" Text="{Binding Path=ProductName}" HorizontalAlignment="Left" Margin="291,138,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="152" TextChanged="ProductName_TextChanged" Height="26" Grid.Row="1"/>
-        <TextBox Name="Price" IsReadOnly = "{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window}, Path=libby}" Text="{Binding Path=Price}" HorizontalAlignment="Left" Margin="291,195,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="152" Height="27" Grid.Row="1" TextChanged="Price_TextChanged"/>
-        <TextBox Name="InStock" IsReadOnly = "{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window}, Path=libby}" Text="{Binding Path=InStock}" HorizontalAlignment="Left" Margin="291,314,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="152" Height="25" Grid.Row="1"/>
-        <Button Name="add"  Content="Add" Background="#FFB7B7B7" HorizontalAlignment="Left" Margin="291,340,0,0" VerticalAlignment="Top" Width="155" Click="Add" Height="37" FontSize="16" FontWeight="Bold" Grid.Row="1">
+        <TextBox Name="Id" IsReadOnly = "{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window}, Path=libby}" Text="{Binding Path=Item1.Id}" HorizontalAlignment="Left" Margin="291,82,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="152" Height="25" Grid.Row="1" TextChanged="Id_TextChanged_1"/>
+        <TextBox Name="ProductName" IsReadOnly = "{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window}, Path=libby}" Text="{Binding Path=Item1.ProductName}" HorizontalAlignment="Left" Margin="291,138,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="152" TextChanged="ProductName_TextChanged" Height="26" Grid.Row="1"/>
+        <TextBox Name="Price" IsReadOnly = "{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window}, Path=libby}" Text="{Binding Path=Item1.Price}" HorizontalAlignment="Left" Margin="291,195,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="152" Height="27" Grid.Row="1" TextChanged="Price_TextChanged"/>
+        <TextBox Name="InStock" IsReadOnly = "{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window}, Path=libby}" Text="{Binding Path=Item1.InStock}" HorizontalAlignment="Left" Margin="291,314,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="152" Height="25" Grid.Row="1"/>
+        <Button Name="add"  Content="Add" Visibility="{Binding Path=Item3,Converter={StaticResource Converter}}" Background="#FFB7B7B7" HorizontalAlignment="Left" Margin="291,340,0,0" VerticalAlignment="Top" Width="155" Click="Add" Height="37" FontSize="16" FontWeight="Bold" Grid.Row="1">
             <Button.BorderBrush>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                     <GradientStop Color="Black"/>
@@ -38,7 +41,7 @@
                 </LinearGradientBrush>
             </Button.BorderBrush>
         </Button>
-        <Button Name="update" Visibility="{Binding Path=flagProductForList,Mode=TwoWay}" Content="update" HorizontalAlignment="Left" Margin="297,344,0,0" VerticalAlignment="Top" Width="70" Background="#FFB7B7B7" Click="Update" Height="37" FontSize="16" FontWeight="Bold" Grid.Row="1">
+        <Button Name="update" Visibility="{Binding Path=Item2,Converter={StaticResource Converter}}" Content="update" HorizontalAlignment="Left" Margin="297,344,0,0" VerticalAlignment="Top" Width="70" Background="#FFB7B7B7" Click="Update" Height="37" FontSize="16" FontWeight="Bold" Grid.Row="1">
             <Button.BorderBrush>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                     <GradientStop Color="Black"/>
@@ -46,7 +49,7 @@
                 </LinearGradientBrush>
             </Button.BorderBrush>
         </Button>
-        <Button Name="delete" Visibility="{Binding Path=flagProductForList,Mode=TwoWay}" Content="delete" HorizontalAlignment="Left" Margin="372,344,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.207,-0.268" Background="#FFB7B7B7" Click="Delete" Width="71" Height="37" FontSize="16" FontWeight="Bold" Grid.Row="1">
+        <Button Name="delete" Visibility="{Binding Path=Item2,Converter={StaticResource Converter}}" Content="delete" HorizontalAlignment="Left" Margin="372,344,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.207,-0.268" Background="#FFB7B7B7" Click="Delete" Width="71" Height="37" FontSize="16" FontWeight="Bold" Grid.Row="1">
             <Button.BorderBrush>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                     <GradientStop Color="Black"/>
@@ -54,10 +57,11 @@
                 </LinearGradientBrush>
             </Button.BorderBrush>
         </Button>
-        <Button Name="addToCart"  Visibility="{Binding Path=flagProductItem,Mode=TwoWay}" Content=" 🛒" HorizontalAlignment="Left" Margin="141,60,0,0" Grid.Row="1" VerticalAlignment="Top" Height="55" Width="79" FontSize="36" Click="addToCart_Click" BorderBrush="White" Foreground="DimGray" Background="#FFB7B7B7"/>
-        <TextBox Name="category" Text="{Binding Path=Category, Mode=TwoWay}" HorizontalAlignment="Left" Margin="291,257,0,0" Grid.Row="1" TextWrapping="Wrap"  VerticalAlignment="Top" Width="153" Height="24" TextChanged="category_TextChanged"/>
-        <Label Name="title"  Visibility="{Binding Path=flagProductForList,Mode=TwoWay}" Content="add to cart" HorizontalAlignment="Left" Margin="134,23,0,0" Grid.Row="1" VerticalAlignment="Top" Width="107" FontSize="16" FontWeight="Bold"/>
+        <Button Name="addToCart"  Visibility="{Binding Path=Item4,Converter={StaticResource Converter}}" Content=" 🛒" HorizontalAlignment="Left" Margin="141,60,0,0" Grid.Row="1" VerticalAlignment="Top" Height="55" Width="79" FontSize="36" Click="addToCart_Click" BorderBrush="White" Foreground="DimGray" Background="#FFB7B7B7"/>
+        <TextBox Name="category" Text="{Binding Path=Item1.Category}" HorizontalAlignment="Left" Margin="291,257,0,0" Grid.Row="1" TextWrapping="Wrap"  VerticalAlignment="Top" Width="153" Height="24" TextChanged="category_TextChanged"/>
+        <Label Name="title"  Visibility="{Binding Path=Item4,Converter={StaticResource Converter}}" Content="add to cart" HorizontalAlignment="Left" Margin="134,23,0,0" Grid.Row="1" VerticalAlignment="Top" Width="107" FontSize="16" FontWeight="Bold"/>
         <Label Content="back to home" HorizontalAlignment="Left" Margin="684,295,0,0" Grid.Row="1" VerticalAlignment="Top" FontWeight="Bold" FontSize="14"/>
 
     </Grid>
 </Window>
+    
