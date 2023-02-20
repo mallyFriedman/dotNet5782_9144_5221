@@ -75,8 +75,13 @@ namespace PL
 
         private void order_Click(object sender, MouseButtonEventArgs e)
         {
+            order_Click(sender, e, cart);
+        }
+
+        private void order_Click(object sender, MouseButtonEventArgs e, BO.Cart? cart)
+        {
             BO.OrderForList p = (BO.OrderForList)((ListView)sender).SelectedItem;
-            new OrderWindow(Bl, cart,this, p.Id, true).Show();     /////////
+            new OrderWindow(Bl, cart, this, p.Id, true).Show();     /////////
             this.Hide();
 
         }

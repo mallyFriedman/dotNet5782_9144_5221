@@ -90,7 +90,7 @@ namespace PL
                 flagAdd = true;
                 libby = false;
                 dct1 = new Tuple<ProductItem, bool, bool, bool>(q, flagProductForList, flagAdd, libby);
-
+                DataContext = dct1;
                 //update.Visibility = Visibility.Hidden;
                 //delete.Visibility = Visibility.Hidden;
                 //addToCart.Visibility = Visibility.Hidden;
