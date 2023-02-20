@@ -15,7 +15,7 @@
             <RowDefinition Height="5*"/>
             <RowDefinition Height="429*"/>
         </Grid.RowDefinitions>
-        <Button Name="UpdateSupply" Content="update status to deliveried" Background="#FFC8C8C8" HorizontalAlignment="Left" Margin="417,341,0,0" VerticalAlignment="Top" Width="217" Click="UpdateSupply1" Height="37" FontSize="16" FontWeight="Bold" Grid.Row="1" Grid.ColumnSpan="2">
+        <Button Name="UpdateSupply" Visibility="{Binding Path=Item2,Converter={StaticResource Converter}}" Content="update status to deliveried" Background="#FFC8C8C8" HorizontalAlignment="Left" Margin="417,341,0,0" VerticalAlignment="Top" Width="217" Click="UpdateSupply1" Height="37" FontSize="16" FontWeight="Bold" Grid.Row="1" Grid.ColumnSpan="2">
             <Button.BorderBrush>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                     <GradientStop Color="Black"/>
@@ -42,7 +42,7 @@
                 </LinearGradientBrush>
             </Button.BorderBrush>
         </Button>
-        <Button Name="UpdateShipping" Content="update status to shipped" Margin="170,342,0,0" VerticalAlignment="Top" Background="#FFC8C8C8" Click="UpdateShipping1" Height="37" FontSize="16" FontWeight="Bold" Grid.Row="1" RenderTransformOrigin="0.5,0.5" HorizontalAlignment="Left" Width="217">
+        <Button Name="UpdateShipping" Visibility="{Binding Path=Item2,Converter={StaticResource Converter}}" Content="update status to shipped" Margin="170,342,0,0" VerticalAlignment="Top" Background="#FFC8C8C8" Click="UpdateShipping1" Height="37" FontSize="16" FontWeight="Bold" Grid.Row="1" RenderTransformOrigin="0.5,0.5" HorizontalAlignment="Left" Width="217">
             <Button.RenderTransform>
                 <TransformGroup>
                     <ScaleTransform/>

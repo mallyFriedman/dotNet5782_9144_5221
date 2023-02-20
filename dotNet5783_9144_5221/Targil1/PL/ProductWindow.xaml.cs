@@ -58,15 +58,9 @@ namespace PL
                 this.flagProductForList = true;
                 flagAdd = false;
                 libby = false;
-                dct = new Tuple<Product, bool,bool,bool>(a, flagProductForList, flagAdd,libby);
+        dct = new Tuple<Product, bool,bool,bool>(a, flagProductForList, flagAdd,libby);
                 DataContext = dct;
                 CategorySelector.SelectedItem = p.Category;
-                
-                //add.Visibility = Visibility.Hidden;
-                //addToCart.Visibility = Visibility.Hidden;
-                //category.Visibility = Visibility.Hidden;
-                //title.Visibility= Visibility.Hidden;
-
             }
             else if (q != null)
             {
@@ -76,13 +70,6 @@ namespace PL
                 libby = true;
                 dct1 = new Tuple<ProductItem, bool, bool, bool>(q, flagProductForList, flagAdd, libby);
                 DataContext = dct1;
-                //DataContext = q;
-                
-               // add.Visibility = Visibility.Hidden;
-               // update.Visibility = Visibility.Hidden;
-               // delete.Visibility = Visibility.Hidden;
-               // CategorySelector.Visibility = Visibility.Hidden;
-               // category.Visibility = Visibility.Visible;
             }
             else
             {
@@ -91,11 +78,6 @@ namespace PL
                 libby = false;
                 dct1 = new Tuple<ProductItem, bool, bool, bool>(q, flagProductForList, flagAdd, libby);
                 DataContext = dct1;
-                //update.Visibility = Visibility.Hidden;
-                //delete.Visibility = Visibility.Hidden;
-                //addToCart.Visibility = Visibility.Hidden;
-                //title.Visibility = Visibility.Hidden;
-                //category.Visibility = Visibility.Hidden;
             }
         }
 
@@ -159,8 +141,15 @@ namespace PL
             {
                 BO.Product p = new();
                 p.ProductName = ProductName.Text;
-                p.Price = float.Parse(Price.Text);
-                p.InStock = int.Parse(InStock.Text);
+                if(Price.Text==""|| InStock.Text=="")
+                {
+                    throw new NullValueException();
+                }
+                else
+                {
+                    p.Price = float.Parse(Price.Text  );
+                    p.InStock = int.Parse(InStock.Text );
+                }
                 p.Id = 0;
                 p.Category = (BO.Category)CategorySelector.SelectedItem;
                 Bl.Product.Add(p);
@@ -168,6 +157,10 @@ namespace PL
                 new ListWindow(Bl, cart, this).Show();
                 this.Hide();
 
+            }
+            catch (NullValueException ex)
+            {
+                MessageBox.Show(ex.Message);
             }
             catch (BlObjectNotValidException ex)
             {
@@ -243,5 +236,9 @@ namespace PL
 
         }
 
+        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+        }
     }
 }

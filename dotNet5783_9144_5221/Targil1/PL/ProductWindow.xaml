@@ -31,7 +31,7 @@
         <Label Content="enter the product price:" HorizontalAlignment="Left" Margin="291,165,0,0" VerticalAlignment="Top" Width="281" FontSize="16" FontWeight="Bold" Background="#FFB7B7B7" Grid.Row="1"/>
         <Label Content="choose the product category:" HorizontalAlignment="Left" Margin="291,223,0,0" VerticalAlignment="Top" Width="283" FontSize="16" FontWeight="Bold" Background="#FFB7B7B7" Grid.Row="1"/>
         <Label Content="enter the number in stock:" HorizontalAlignment="Left" Margin="291,284,0,0" VerticalAlignment="Top" Width="284" FontSize="16" FontWeight="Bold" Background="#FFB7B7B7" Grid.Row="1"/>
-        <ComboBox Name="CategorySelector"  HorizontalAlignment="Left" Margin="291,254,0,0" VerticalAlignment="Top" Width="152" SelectionChanged="ComboBox_SelectionChanged" Height="29" Grid.Row="1"/>
+        <ComboBox Name="CategorySelector"  Visibility="{Binding Path=Item3,Converter={StaticResource Converter}}"  HorizontalAlignment="Left" Margin="291,254,0,0" VerticalAlignment="Top" Width="152" SelectionChanged="ComboBox_SelectionChanged" Height="29" Grid.Row="1"/>
         <Button Content="🏚" HorizontalAlignment="Left" Margin="688,324,0,0" VerticalAlignment="Top" Click="BackToHome" Background="#FFB7B7B7" Width="82" Height="56" FontSize="24" FontFamily="Segoe UI Semilight" Grid.Row="1">
             <Button.BorderBrush>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
@@ -58,9 +58,10 @@
             </Button.BorderBrush>
         </Button>
         <Button Name="addToCart"  Visibility="{Binding Path=Item4,Converter={StaticResource Converter}}" Content=" 🛒" HorizontalAlignment="Left" Margin="141,60,0,0" Grid.Row="1" VerticalAlignment="Top" Height="55" Width="79" FontSize="36" Click="addToCart_Click" BorderBrush="White" Foreground="DimGray" Background="#FFB7B7B7"/>
-        <TextBox Name="category" Text="{Binding Path=Item1.Category}" HorizontalAlignment="Left" Margin="291,257,0,0" Grid.Row="1" TextWrapping="Wrap"  VerticalAlignment="Top" Width="153" Height="24" TextChanged="category_TextChanged"/>
+        <TextBox Name="category" Text="{Binding Path=Item1.Category}"  Visibility="{Binding Path=Item2,Converter={StaticResource Converter}}" HorizontalAlignment="Left" Margin="293,254,0,0" Grid.Row="1" TextWrapping="Wrap"  VerticalAlignment="Top" Width="152" Height="24" TextChanged="category_TextChanged"/>
         <Label Name="title"  Visibility="{Binding Path=Item4,Converter={StaticResource Converter}}" Content="add to cart" HorizontalAlignment="Left" Margin="134,23,0,0" Grid.Row="1" VerticalAlignment="Top" Width="107" FontSize="16" FontWeight="Bold"/>
         <Label Content="back to home" HorizontalAlignment="Left" Margin="684,295,0,0" Grid.Row="1" VerticalAlignment="Top" FontWeight="Bold" FontSize="14"/>
+        <TextBox HorizontalAlignment="Left" Text="{Binding Path=Item1.Category}"  Visibility="{Binding Path=Item4,Converter={StaticResource Converter}}"  Margin="297,254,0,0" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Top" Width="146" Height="25" TextChanged="TextBox_TextChanged"/>
 
     </Grid>
 </Window>

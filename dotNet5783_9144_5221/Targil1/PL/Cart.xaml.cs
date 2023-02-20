@@ -48,12 +48,19 @@ namespace PL
         {
             try
             {
+                if(CustomerName.Text=="" || CustomerEmail.Text==""|| CustomerAdress.Text == "")
+                {
+                    throw new NullValueException();
+                }
                 Bl.Cart.Confirm(cart, CustomerName.Text, CustomerEmail.Text, CustomerAdress.Text);
                 MessageBox.Show("confirmed");
                 new MainWindow().Show();
                 this.Close();
             }
-
+            catch (NullValueException ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
             catch (BlOutOfStockException ex)
             {
                 MessageBox.Show(ex.Message);

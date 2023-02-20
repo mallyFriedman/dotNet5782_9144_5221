@@ -30,7 +30,7 @@ namespace PL
         private BO.Cart? cart;
         private BlApi.IBl? Bl;
         private Window lastWindow;
-
+        private bool adminFlag { get; set; }
         /// <summary>
         /// constractor of the page
         /// </summary>
@@ -42,16 +42,22 @@ namespace PL
                 this.cart = cart;
                 this.id = id;
                 this.Bl = bl;
+                adminFlag = true;
+                Tuple<BO.Order, bool> dct;
                 InitializeComponent();
-                BO.Order order;
+                BO.Order order=new Order();
+
                 if (!admin)
                 {
-                    UpdateSupply.Visibility = Visibility.Hidden;
-                    UpdateShipping.Visibility = Visibility.Hidden;
+                    adminFlag = false;
+                    dct = new Tuple<BO.Order, bool>(order, adminFlag);
+                    DataContext = dct;
                 }
                 if (id != 0)
                 {
+                    
                     order = Bl.Order.Get(id);
+                    dct = new Tuple<BO.Order, bool>(order, adminFlag);
                     int sum = 0;
                     order?.OrderItem?.Select(ord =>
                     {
@@ -59,7 +65,7 @@ namespace PL
                         return ord;
                     }).ToList();
                     amount.Content = sum;
-                    DataContext = order;
+                    DataContext = dct;
                     OrderItemsListview.ItemsSource = order?.OrderItem;
                 }
             }

@@ -14,7 +14,8 @@
             <ColumnDefinition Width="0*"/>
             <ColumnDefinition Width="0*"/>
             <ColumnDefinition Width="0*"/>
-            <ColumnDefinition Width="577*"/><!--ii-->
+            <ColumnDefinition Width="577*"/>
+            <!--ii-->
         </Grid.ColumnDefinitions>
         <ListView x:Name="ProductsListview" MouseDoubleClick="product_Click"  d:ItemsSource="{d:SampleData ItemCount=9}" SelectionChanged="ProductsListview_SelectionChanged" Margin="18,50,17,16" Grid.ColumnSpan="7" Background="#FFCCCCCC">
             <ListView.View>
@@ -24,12 +25,12 @@
                     <GridViewColumn DisplayMemberBinding="{Binding Path=Price}" Header="Product Price" Width="100"/>
                     <GridViewColumn DisplayMemberBinding="{Binding Path=Category}" Header="Category" Width="100"/>
                     <GridViewColumn DisplayMemberBinding="{Binding Path=InStock}" Header="InStock" Width="100"/>
-                    <GridViewColumn DisplayMemberBinding="{Binding Path=AmountInStock}" Header="Amount In Cart" Width="100"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=AmountInStock}" Header="Amount In Stock" Width="100"/>
                 </GridView>
             </ListView.View>
         </ListView>
 
-        <ComboBox  Name="CategorySelector" SelectionChanged="SelectionChanged" HorizontalAlignment="Left" Margin="0,5,0,389" Width="137" BorderBrush="White" FontWeight="Bold" FontSize="14" Grid.Column="6" RenderTransformOrigin="0.511,0.842">
+        <ComboBox  Name="CategorySelector" SelectionChanged="SelectionChanged" HorizontalAlignment="Left" Margin="0,3,0,391" Width="137" BorderBrush="White" FontWeight="Bold" FontSize="14" Grid.Column="6" RenderTransformOrigin="0.511,0.842">
             <ComboBox.Background>
                 <LinearGradientBrush EndPoint="0,1">
                     <GradientStop Color="#FFF0F0F0"/>
