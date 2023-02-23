@@ -17,7 +17,7 @@ namespace PL
     {
         private BO.Cart cart = new();
         private BlApi.IBl Bl { get; set; }
-      
+
         /// <summary>
         /// constructor of the page
         /// </summary>
@@ -26,19 +26,20 @@ namespace PL
             this.Bl = BlApi.Factory.Get();
             InitializeComponent();
             //this.cart =cart??null;
+
         }
         /// <summary>
         /// routs to the home page
         /// </summary>
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            new ListWindow(Bl, cart,this).Show();
+            new ListWindow(Bl, cart, this).Show();
             this.Hide();
         }
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
-            new productItem(Bl, cart,this).Show();
+            new productItem(Bl, cart, this).Show();
             this.Hide();
         }
 
@@ -46,13 +47,13 @@ namespace PL
         {
             try
             {
-                Bl.Order.Get(int.Parse(track.Text ==""? "0": track.Text));
-                new trackingOrder(Bl,cart,this, int.Parse(track.Text)).Show();
+                Bl.Order.Get(int.Parse(track.Text == "" ? "0" : track.Text));
+                new trackingOrder(Bl, cart, this, int.Parse(track.Text)).Show();
                 this.Hide();
             }
             catch (BlIdNotValidException ex)
             {
-                MessageBox.Show(ex.Message);    
+                MessageBox.Show(ex.Message);
             }
             catch (BlObjectNotFoundException ex)
             {
@@ -60,9 +61,14 @@ namespace PL
             }
         }
 
-    private void track_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
-    {
+        private void track_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
+        {
 
+        }
+
+        private void Button_Click_3(object sender, RoutedEventArgs e)
+        {
+            new SimulatorPl().Show();
+        }
     }
-}
 }

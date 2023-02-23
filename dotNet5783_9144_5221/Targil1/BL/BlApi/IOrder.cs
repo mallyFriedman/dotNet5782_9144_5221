@@ -9,5 +9,6 @@ namespace BlApi
         public Order UpdateShipping(int id);
         public OrderTracking GetOrderTracking(int id);
         // public Order UpdateManager(int id);
+        public int GetOrderToUpdate();
     }
 }

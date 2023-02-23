@@ -150,6 +150,26 @@ namespace BlImplementation
             }
             return orderTracking;
         }
+
+        public int GetOrderToUpdate()
+        {
+            IEnumerable<DO.Order>? ordered = Dal?.Order.Get(order => order.ShipDate == DateTime.MinValue);
+            IEnumerable<DO.Order>? shiped = Dal?.Order.Get(order => order.DeliveryDate == DateTime.MinValue);
+            DateTime? minOrdered = ordered?.Min(x => x.OrderDate);
+            DateTime? minShiped = shiped?.Min(x => x.ShipDate);
+            int idMinOrdered = (from order in ordered
+                                where order.OrderDate == minOrdered
+                                select order.Id).FirstOrDefault();
+            int idMinShiped = (from ship in shiped
+                               where ship.ShipDate == minShiped
+                               select ship.Id).FirstOrDefault();
+            if (minOrdered < minShiped || (minShiped == default && minOrdered != default))
+                return idMinOrdered;
+            if (minShiped < minOrdered || (minOrdered == default && minShiped != default))
+                return idMinShiped;
+            else
+                throw new BlNoOrderToUpdateException();
+        }
     }
 }
 

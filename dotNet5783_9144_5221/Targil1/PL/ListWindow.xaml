@@ -18,7 +18,7 @@
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions >
-            <ComboBox Name="CategorySelector" Margin="227,5,60,10" SelectionChanged="SelectionChanged" BorderBrush="White" FontWeight="Bold" FontSize="14">
+            <ComboBox Name="CategorySelector" Margin="227,5,60,10" SelectionChanged="SelectionChanged" BorderBrush="#FF39FFE8" FontWeight="Bold" FontSize="14">
                 <ComboBox.Background>
                     <LinearGradientBrush EndPoint="0,1">
                         <GradientStop Color="#FFF0F0F0"/>
@@ -40,7 +40,7 @@
 
         </Grid >
         <Label Grid.Column="0" Content="select orders by category:" HorizontalAlignment="Left" Margin="34,0,0,0" VerticalAlignment="Center" Height="32" Width="193" FontSize="16" FontFamily="TopType Noam"/>
-        <ListView MouseDoubleClick="product_Click" x:Name="ProductsListview"  d:ItemsSource="{d:SampleData ItemCount=9}" SelectionChanged="ProductsListview_SelectionChanged" Margin="35,2,459,5" Background="#FFADADAD" Grid.Row="1" Foreground="Black">
+        <ListView MouseDoubleClick="product_Click" x:Name="ProductsListview"  d:ItemsSource="{d:SampleData ItemCount=9}" SelectionChanged="ProductsListview_SelectionChanged" Margin="35,2,459,5" Background="#FFADADAD" Grid.Row="1" Foreground="Black" BorderBrush="#FFFE54FF">
             <ListView.View  >
                 <GridView >
                     <GridViewColumn DisplayMemberBinding="{Binding Path=Id}" Header="Id" Width="50"/>
@@ -51,8 +51,8 @@
             </ListView.View>
         </ListView>
 
-        <Button Content="Add a product" HorizontalAlignment="Left" Margin="35,10,0,0" Grid.Row="2" VerticalAlignment="Top" Click="GoToAdd" Height="56" Width="306" FontSize="18" BorderBrush="White" Background="#FFA4A4A4"/>
-        <ListView MouseDoubleClick="order_Click"  x:Name="OrdersListview"  d:ItemsSource="{d:SampleData ItemCount=9}" SelectionChanged="OrdersListview_SelectionChanged" Margin="362,0,38,5" Background="#FF9E9E9E" Foreground="Black" Grid.Row="1">
+        <Button Content="Add a product" HorizontalAlignment="Left" Margin="35,10,0,0" Grid.Row="2" VerticalAlignment="Top" Click="GoToAdd" Height="56" Width="306" FontSize="18" BorderBrush="#FF4446FF" Background="#FFA4A4A4"/>
+        <ListView MouseDoubleClick="order_Click"  x:Name="OrdersListview"  d:ItemsSource="{d:SampleData ItemCount=9}" SelectionChanged="OrdersListview_SelectionChanged" Margin="362,0,38,5" Background="#FF9E9E9E" Foreground="Black" Grid.Row="1" BorderBrush="#FF46FF21">
             <ListView.View>
                 <GridView>
                     <GridViewColumn DisplayMemberBinding="{Binding Path=Id}" Header="Id" Width="50" />
@@ -64,7 +64,7 @@
                 </GridView>
             </ListView.View>
         </ListView>
-        <Button Content="Back to home" HorizontalAlignment="Left" Margin="362,10,0,62" Grid.Row="2" Width="114" Background="#FFABABAB" FontSize="18" Click="Button_Click" BorderBrush="White"/>
+        <Button Content="Back to home" HorizontalAlignment="Left" Margin="362,10,0,62" Grid.Row="2" Width="114" Background="#FFABABAB" FontSize="18" Click="Button_Click" BorderBrush="#FF1DFAFF"/>
 
     </Grid>
 </Window >

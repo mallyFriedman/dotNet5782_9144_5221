@@ -108,7 +108,15 @@ namespace BlApi
         public override string Message =>
                        "Price must be a number!";
     }
-
+    public class BlNoOrderToUpdateException : Exception
+    {
+        //public BlUnknownException(string message) :
+        //                                base(message)
+        //{
+        //}
+        public override string Message =>
+                       "There is no order to update!";
+    }
 }
 
 
