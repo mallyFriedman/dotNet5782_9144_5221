@@ -151,7 +151,7 @@ namespace BlImplementation
             return orderTracking;
         }
 
-        public int GetOrderToUpdate()
+        public int? GetOrderToUpdate()
         {
             IEnumerable<DO.Order>? ordered = Dal?.Order.Get(order => order.ShipDate == DateTime.MinValue);
             IEnumerable<DO.Order>? shiped = Dal?.Order.Get(order => order.DeliveryDate == DateTime.MinValue);

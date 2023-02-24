@@ -44,7 +44,7 @@ namespace PL
             //simulator thred 
             Worker = new BackgroundWorker();
             Worker.DoWork += Worker_DoWork;
-            Worker.ProgressChanged += Worker_ProgressChanged;
+            // Worker.ProgressChanged += Worker_ProgressChanged;
             Worker.RunWorkerCompleted += Worker_RunWorkerCompleted;
             Worker.WorkerSupportsCancellation = true;
             Worker.WorkerReportsProgress = true;
@@ -128,9 +128,22 @@ namespace PL
             this.Close();
         }
 
+        private void Stop(object sender, EventArgs e)
+        {
+            if (!CheckAccess())
+            {
+                Dispatcher.BeginInvoke(Stop, sender, e);
+            }
+            else
+            {
+                MessageBox.Show("jj");
+                this.Close();
+            }
+        }
         private void Worker_DoWork(object? sender, DoWorkEventArgs e)
         {
             SimulatorProject.Simulator.ProgressChange += changeOrder;
+            Simulator.StopSimulator += Stop;
             try
             {
                 SimulatorProject.Simulator.startSimulator();
@@ -143,7 +156,7 @@ namespace PL
             while (Worker.WorkerSupportsCancellation)
             {
                 System.Threading.Thread.Sleep(1000);
-                Worker.ReportProgress(1);
+
             }
         }
 
@@ -195,13 +208,12 @@ namespace PL
         }
 
 
-        private void Worker_ProgressChanged(object? sender, ProgressChangedEventArgs e)
-        {
-
-        }
 
         private void Worker_RunWorkerCompleted(object? sender, RunWorkerCompletedEventArgs e)
         {
+            if (Worker.WorkerSupportsCancellation == true)
+                Worker.CancelAsync();
+            Simulator.stopSimulator();
         }
 
         private void pbStatus_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)

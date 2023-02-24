@@ -17,8 +17,15 @@ namespace SimulatorProject
             {
                 try
                 {
-                    int orderId = Bl.Order.GetOrderToUpdate();
-                    BO.Order order = Bl.Order.Get(orderId);
+                    int? orderId = Bl.Order.GetOrderToUpdate();
+                    if (orderId == null)
+                    {
+                        if (StopSimulator != null)
+                        {
+                            StopSimulator(null, EventArgs.Empty);
+                        }
+                    }
+                    BO.Order order = Bl.Order.Get((int)orderId);
                     Random rand = new Random();
                     int seconds = rand.Next(1, 4);
                     Details det = new Details(order, seconds);

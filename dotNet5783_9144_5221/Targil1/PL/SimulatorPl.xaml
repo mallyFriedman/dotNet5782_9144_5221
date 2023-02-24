@@ -19,7 +19,7 @@
         <TextBox HorizontalAlignment="Left" Margin="397,147,0,0" TextWrapping="Wrap" Text="{Binding Path=Item2, Mode=OneWay}" VerticalAlignment="Top" Width="133" Height="26" FontSize="16"/>
         <TextBox HorizontalAlignment="Left" Margin="397,181,0,0" TextWrapping="Wrap" Text="{Binding Path=Item1.OrderStatus, Mode=OneWay}" VerticalAlignment="Top" Width="133" Height="26" FontSize="16"/>
         <ProgressBar Minimum="0" Maximum="{Binding Path=Item2}" Name="pbStatus" Margin="104,341,198,54" ValueChanged="pbStatus_ValueChanged" />
-        <TextBlock Text="{Binding ElementName=pbStatus, Path=Value, StringFormat={}{0:0}%}" HorizontalAlignment="Left" VerticalAlignment="Top" RenderTransformOrigin="0.624,9.786" Margin="345,341,0,0" />
+        <TextBlock Text="{Binding  ElementName=pbStatus, Path=Value, StringFormat={}{0:0}%}" HorizontalAlignment="Left" VerticalAlignment="Top" RenderTransformOrigin="0.624,9.786" Margin="345,341,0,0" />
         <Label Content="next order status" HorizontalAlignment="Left" Margin="245,0,0,0" VerticalAlignment="Center" Width="145" FontSize="16" Foreground="#FFFD30FF"/>
         <Label Content="current order status" HorizontalAlignment="Left" Margin="245,173,0,0" VerticalAlignment="Top" Width="183" FontSize="16" Foreground="#FFC5FF0C"/>
         <TextBox HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding Item3, Mode=OneWay}" VerticalAlignment="Top" Width="133" Margin="397,212,0,0" Height="28" FontSize="16"/>
