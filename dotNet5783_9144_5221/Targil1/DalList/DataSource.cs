@@ -8,14 +8,14 @@ public static class DataSource ///internal ???????????
     {
         s_Initialize();
     }
-    public static class Config  ///internal ???????????
+    public static class Config  
     {
         internal static int _indexArrProduct = 0;
         internal static int _indexArrOrder = 0;
         internal static int _indexArrOrderItem = 0;
 
         private static int _productId = 100000;
-        private static int _orderId = 500000;        //100000
+        private static int _orderId = 500000;        
         private static int _orderItemId = 100000;
 
         public static int ProductId { get { return ++_productId; } }
@@ -33,7 +33,7 @@ public static class DataSource ///internal ???????????
     public static List<Product> ProductList = new List<Product>();
     public static List<Order> OrderArr = new List<Order>();
     public static List<OrderItem> OrderItems = new List<OrderItem>();
-    static readonly Random rand = new Random();              //internal ???????????
+    static readonly Random rand = new Random();             
     static string[] customerName = { "a","b","c","d","e","f","k","l","m","n"
                 ,"o","p","q","r","s","t","u","v","x","w"};
     static string[] productNames = { "NecklacesGold","NecklacesSilver","BraceletsGold","BraceletsSilver",
@@ -77,12 +77,6 @@ public static class DataSource ///internal ???????????
             orderi.Id = id;
             orderi.CustomerEmail = customerName[number] + "@gmail.com";
             orderi.CustomerAdress = customerName[number] + "Street";
-            //orderi.OrderDate = DateTime.Today;
-            //orderi.ShipDate =  (orderi.OrderDate + t_ShipDate);
-            //orderi.DeliveryDate =  (orderi.ShipDate + t_DeliveryDate);
-           
-
-
 
             orderi.OrderDate = DateTime.Now;
             if (i % 10 < 8)  // 80% have ship date
@@ -128,7 +122,6 @@ public static class DataSource ///internal ???????????
                 Product p = ProductList[numberPoduct];
                 p.InStock = ProductList[numberPoduct].InStock - amount;
                 OrderItems.Add(orderItemi);
-                ///////////////update the source ????????????
             }
 
         }

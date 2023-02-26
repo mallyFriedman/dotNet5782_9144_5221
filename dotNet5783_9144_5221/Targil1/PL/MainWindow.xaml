@@ -7,12 +7,12 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid Background="#FFC8C8C8">
-        <Button Content="admin" HorizontalAlignment="Left" VerticalAlignment="Top" RenderTransformOrigin="0.132,0.486" Click="Button_Click" Foreground="Black" BorderBrush="#FF00FFF9" Background="#FFB1AFAF" FontSize="24" Width="225" Height="147" FontFamily="Adobe Ming Std L" FontWeight="Bold" Margin="534,124,0,0"/>
-        <Button Content="new order" HorizontalAlignment="Left" Margin="293,123,0,0" VerticalAlignment="Top" Height="148" Width="220" Background="#FF9C9C9C" FontSize="24" BorderBrush="#FF4EFF00" Click="Button_Click_1"/>
-        <Button Content="track order" HorizontalAlignment="Left" Margin="45,123,0,0" VerticalAlignment="Top" Height="148" Width="224" Background="#FF7D7D7D" FontSize="24" BorderBrush="#FFFF0E9D" Click="Button_Click_2"/>
-        <TextBox Name="track"  HorizontalAlignment="Left" Margin="51,239,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="151" Height="25" FontSize="18" TextChanged="track_TextChanged" Background="#FFD4D4D4" BorderBrush="#FFFF24ED"/>
-        <Label Content="enter id" HorizontalAlignment="Left" Margin="48,218,0,0" VerticalAlignment="Top" Width="92" Height="26" Foreground="White"/>
-        <Button Content="simulator" HorizontalAlignment="Left" Margin="48,39,0,0" VerticalAlignment="Top" Height="51" Width="92" Click="Button_Click_3" BorderBrush="#FF1A67FF"/>
+        <Button Content="admin" HorizontalAlignment="Left" VerticalAlignment="Top" RenderTransformOrigin="0.132,0.486" Click="Button_Click" Foreground="Black" BorderBrush="#FF00FFF9" Background="#FF8C8C8C" FontSize="36" Width="225" Height="147" FontFamily="Adobe Garamond Pro" FontWeight="Bold" Margin="534,124,0,0" BorderThickness="10,10,10,10"/>
+        <Button Content="new order" HorizontalAlignment="Left" Margin="293,123,0,0" VerticalAlignment="Top" Height="148" Width="220" Background="#FF8B8B8B" FontSize="36" BorderBrush="#FF4EFF00" Click="Button_Click_1" FontFamily="Adobe Garamond Pro" FontWeight="Bold" BorderThickness="10,10,10,10"/>
+        <Button Content="track order" HorizontalAlignment="Left" Margin="45,123,0,0" VerticalAlignment="Top" Height="148" Width="224" Background="#FF7D7D7D" FontSize="36" BorderBrush="#FFFF0E9D" Click="Button_Click_2" FontWeight="Bold" FontFamily="Adobe Garamond Pro" BorderThickness="10,10,10,10"/>
+        <TextBox Name="track"  HorizontalAlignment="Left" Margin="59,231,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="151" Height="25" FontSize="18" TextChanged="track_TextChanged" Background="#FFD4D4D4" BorderBrush="#FFFF24ED"/>
+        <Label Content="enter id" HorizontalAlignment="Left" Margin="56,208,0,0" VerticalAlignment="Top" Width="92" Height="26" Foreground="White"/>
+        <Button Content="simulator" HorizontalAlignment="Left" Margin="50,39,0,0" VerticalAlignment="Top" Height="58" Width="154" Click="Button_Click_3" BorderBrush="#FFA80AFF" FontFamily="Adobe Garamond Pro" FontSize="18" FontWeight="Bold" Background="#FF434343" Foreground="White" BorderThickness="5,5,5,5"/>
 
     </Grid>
 </Window>

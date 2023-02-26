@@ -4,6 +4,7 @@ using BlApi;
 using System.Text.RegularExpressions;
 using DO;
 using System.Diagnostics;
+using System.Runtime.CompilerServices;
 
 namespace BlImplementation
 {
@@ -14,6 +15,7 @@ namespace BlImplementation
         /// <summary>
         /// the function adds an item to the cart and returens the updated cart
         /// </summary>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public Cart Add(BO.Cart cart, int id)
         {
             DO.Product product = Dal.Product.Get(id);
@@ -59,22 +61,13 @@ namespace BlImplementation
                 cart.Items.Remove(item);
                 cart.Items.Add(item);
             }
-            cart.TotalPrice += product.Price;
-            //}
-            //else
-            //{
-            //    item.Amount -= 1;
-            //    item.TotalPrice = item.TotalPrice - item.Price;
-            //    cart.Items.Remove(item);
-            //    cart.Items.Add(item);
-            //    cart.TotalPrice -= product.Price;
-            //}
-
+            cart.TotalPrice += product.Price;          
             return cart;
         }
         /// <summary>
         /// the function updates the amount of the specific item and returns the updated cart
         /// </summary>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public Cart Update(Cart cart, int id, int newAmount)
         {
             if (cart.Items == null)
@@ -127,6 +120,7 @@ namespace BlImplementation
         /// <summary>
         /// the function confirms the order
         /// </summary>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void Confirm(Cart cart, string CustomerName, string CustomerEmail, string CustomerAdress)
         {
             var v = Regex.Match(CustomerEmail, @"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$");///doesn't realy work...

@@ -17,7 +17,7 @@
             <ColumnDefinition Width="577*"/>
             <!--ii-->
         </Grid.ColumnDefinitions>
-        <ListView x:Name="ProductsListview" MouseDoubleClick="product_Click"  d:ItemsSource="{d:SampleData ItemCount=9}" SelectionChanged="ProductsListview_SelectionChanged" Margin="18,50,17,16" Grid.ColumnSpan="7" Background="#FFCCCCCC">
+        <ListView x:Name="ProductsListview" MouseDoubleClick="product_Click"  ItemsSource="{Binding Path=Item1}" SelectionChanged="ProductsListview_SelectionChanged" Margin="18,50,17,16" Grid.ColumnSpan="7" Background="#FFCCCCCC">
             <ListView.View>
                 <GridView >
                     <GridViewColumn DisplayMemberBinding="{Binding Path=Id}" Header="Id" Width="100"/>
@@ -30,7 +30,7 @@
             </ListView.View>
         </ListView>
 
-        <ComboBox  Name="CategorySelector" SelectionChanged="SelectionChanged" HorizontalAlignment="Left" Margin="0,3,0,391" Width="137" BorderBrush="White" FontWeight="Bold" FontSize="14" Grid.Column="6" RenderTransformOrigin="0.511,0.842">
+        <ComboBox  Name="CategorySelector" ItemsSource="{Binding Path=Item2}" SelectionChanged="SelectionChanged" HorizontalAlignment="Left" Margin="0,3,0,391" Width="137" BorderBrush="White" FontWeight="Bold" FontSize="14" Grid.Column="6" RenderTransformOrigin="0.511,0.842">
             <ComboBox.Background>
                 <LinearGradientBrush EndPoint="0,1">
                     <GradientStop Color="#FFF0F0F0"/>

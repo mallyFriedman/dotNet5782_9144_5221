@@ -1,20 +1,10 @@
 ﻿using BlApi;
-using BlImplementation;
 using BO;
 using System;
+using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using static System.Net.Mime.MediaTypeNames;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace PL
 {
@@ -31,8 +21,8 @@ namespace PL
         private bool libby { get; set; }
         private bool flagProductForList { get; set; }
         private bool flagAdd { get; set; }
-        Tuple<BO.Product, bool,bool,bool> dct;
-        Tuple<BO.ProductItem, bool,bool,bool> dct1;
+        Tuple<BO.Product, bool,bool,bool,Array> dct;
+        Tuple<BO.ProductItem, bool,bool,bool,Array> dct1;
 
         /// <summary>
         /// constractor of the page
@@ -48,8 +38,7 @@ namespace PL
             this.q = q;
             this.cart = cart;
             InitializeComponent();
-            CategorySelector.ItemsSource = Bl.Product.GetAllForCustomer();
-            CategorySelector.ItemsSource = Enum.GetValues(typeof(BO.Category));
+          //  CategorySelector.ItemsSource = Enum.GetValues(typeof(BO.Category));
 
             //
             if (p != null)
@@ -58,7 +47,7 @@ namespace PL
                 this.flagProductForList = true;
                 flagAdd = false;
                 libby = false;
-        dct = new Tuple<Product, bool,bool,bool>(a, flagProductForList, flagAdd,libby);
+        dct = new Tuple<Product, bool,bool,bool,Array>(a, flagProductForList, flagAdd,libby, Enum.GetValues(typeof(BO.Category)));
                 DataContext = dct;
                 CategorySelector.SelectedItem = p.Category;
             }
@@ -68,7 +57,7 @@ namespace PL
                 flagProductForList = false;
                 flagAdd = false;
                 libby = true;
-                dct1 = new Tuple<ProductItem, bool, bool, bool>(q, flagProductForList, flagAdd, libby);
+                dct1 = new Tuple<ProductItem, bool, bool, bool, Array>(q, flagProductForList, flagAdd, libby,  Enum.GetValues(typeof(BO.Category)));
                 DataContext = dct1;
             }
             else
@@ -76,7 +65,7 @@ namespace PL
                 this.flagProductForList = false;
                 flagAdd = true;
                 libby = false;
-                dct1 = new Tuple<ProductItem, bool, bool, bool>(q, flagProductForList, flagAdd, libby);
+                dct1 = new Tuple<ProductItem, bool, bool, bool,Array>(q, flagProductForList, flagAdd, libby, Enum.GetValues(typeof(BO.Category)));
                 DataContext = dct1;
             }
         }

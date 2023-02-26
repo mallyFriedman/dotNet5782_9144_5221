@@ -4,6 +4,7 @@ using BO;
 using DO;
 using Dal;
 using System.Diagnostics;
+using System.Runtime.CompilerServices;
 
 namespace BlImplementation
 {
@@ -14,6 +15,7 @@ namespace BlImplementation
         /// returns all the products
         /// in a way that the customer can see
         /// </summary>
+         [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<BO.ProductForList> GetAllForCustomer(BO.Category? category = null)
         {
             List<DO.Product> a=new();
@@ -34,6 +36,7 @@ namespace BlImplementation
         /// returns all the products
         /// in a way that the manager can see
         /// </summary>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<BO.ProductItem> GetAllForManager(BO.Category? category = null)
         {
             Random rand = new Random();
@@ -58,6 +61,7 @@ namespace BlImplementation
         /// the function returns the specific product
         /// that the manager wanted
         /// </summary>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public BO.Product GetManager(int id)
         {
 
@@ -82,6 +86,7 @@ namespace BlImplementation
         /// the function returns the specific product
         /// that the customer wanted
         /// </summary>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public BO.Product GetCustomer(int id)
         {
             BO.Product bProduct = new BO.Product();
@@ -105,6 +110,7 @@ namespace BlImplementation
         /// the function adds a product 
         /// to the list of products
         /// </summary>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void Add(BO.Product product)
         {
             if (product.Price < 1 || product.ProductName == null || product.InStock < 0)
@@ -123,6 +129,7 @@ namespace BlImplementation
         /// <summary>
         /// the function deletes the product with the id it got
         /// </summary>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void Delete(int id)
         {
             if (id < 100000)
@@ -141,6 +148,7 @@ namespace BlImplementation
         /// <summary>
         /// the function updates the product with the id it got
         /// </summary>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void Update(BO.Product product)
         {
             if (product.Id < 100000 || product.Price < 0 || product.ProductName == null || product.InStock < 0)

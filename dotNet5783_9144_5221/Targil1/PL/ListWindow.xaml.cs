@@ -25,6 +25,7 @@ namespace PL
         private BlApi.IBl? Bl;
         private BO.Cart? cart = new();
         private Window lastWindow;
+        Tuple<IEnumerable<BO.ProductForList>, IEnumerable<BO.OrderForList>, Array> dct;
         /// <summary>
         /// constructor of the page
         /// </summary>
@@ -35,9 +36,10 @@ namespace PL
                 this.Bl = bl;
                 this.cart = cart;
                 InitializeComponent();
-                ProductsListview.ItemsSource = Bl.Product.GetAllForCustomer();
-                CategorySelector.ItemsSource = Enum.GetValues(typeof(BO.Category));
-                OrdersListview.ItemsSource = Bl.Order.GetAll();
+               
+                dct = new Tuple< IEnumerable<BO.ProductForList>, IEnumerable<BO.OrderForList>,Array>
+                    (Bl.Product.GetAllForCustomer(), Bl.Order.GetAll(), Enum.GetValues(typeof(BO.Category)));// CategorySelector.ItemsSource = Enum.GetValues(typeof(BO.Category));
+                DataContext = dct;
             }
             catch (BlIdNotValidException ex)
             {
@@ -51,7 +53,12 @@ namespace PL
         /// </summary>
         private void SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            ProductsListview.ItemsSource = Bl.Product.GetAllForCustomer((BO.Category)CategorySelector.SelectedItem);
+
+            Array a = Enum.GetValues(typeof(BO.Category));
+            /////////////////////////////////////////////
+            dct = new Tuple<IEnumerable<BO.ProductForList>, IEnumerable<BO.OrderForList>, Array>
+                   (Bl.Product.GetAllForCustomer((BO.Category)CategorySelector.SelectedItem), Bl.Order.GetAll(), a);// CategorySelector.ItemsSource = Enum.GetValues(typeof(BO.Category));
+            DataContext = dct;
         }
 
         /// <summary>

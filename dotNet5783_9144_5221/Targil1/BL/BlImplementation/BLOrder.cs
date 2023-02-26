@@ -4,6 +4,8 @@ using BlApi;
 using Dal;
 using DO;
 using System.Diagnostics;
+using System.Runtime.CompilerServices;
+using System.Data;
 
 namespace BlImplementation
 {
@@ -13,6 +15,7 @@ namespace BlImplementation
         /// <summary>
         /// the function  returns all orders
         /// </summary>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<BO.OrderForList> GetAll()
         {
             IEnumerable<DO.Order> orders = Dal.Order.Get();
@@ -33,6 +36,7 @@ namespace BlImplementation
         /// <summary>
         /// the function returnes the specific order by id
         /// </summary>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public BO.Order Get(int id = 0)
         {
             if (id < 500000)
@@ -68,13 +72,14 @@ namespace BlImplementation
                                    TotalPrice = ((item.Price) * (item.Amount))
                                };
             bOrder.OrderItem.Sum(item => sum += item.TotalPrice);
-           
+
             bOrder.TotalPrice = sum;
-            return bOrder;
+            return bOrder??throw new BlObjectNotFoundException();
         }
         /// <summary>
         /// updates the ship date to DateTime.Now
         /// </summary>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public BO.Order UpdateSupply(int id)
         {
             DO.Order dOrder = Dal.Order.Get(id);
@@ -96,6 +101,7 @@ namespace BlImplementation
         /// <summary>
         /// updates the delivery date to DateTime.Now
         /// </summary>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public BO.Order UpdateShipping(int id)
         {
             DO.Order dOrder = Dal.Order.Get(id);
@@ -128,15 +134,22 @@ namespace BlImplementation
             else
                 return (BO.eOrderStatus)0;
         }
-
+        /// <summary>
+        /// the function returnes the dld Order that orderd
+        ///</returns>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public OrderTracking GetOrderTracking(int id)
         {
-            BO.Order order = Get(id);
+                BO.Order? order = Get(id);
+            if (order.Id == 0)
+            {
+                throw new BlObjectNotFoundException();
+            }
             OrderTracking orderTracking = new();
             orderTracking.OrderStatus = order.OrderStatus;
             orderTracking.Id = id;
             orderTracking.StatusList = new();
-            if (!((DateTime)order.OrderDate == DateTime.MinValue))
+            if (!((DateTime)order?.OrderDate == DateTime.MinValue))
             {
                 orderTracking?.StatusList?.Add(new Tuple<DateTime, BO.eOrderStatus>((DateTime)order.OrderDate, (BO.eOrderStatus)0));
                 if (!((DateTime)order.ShipDate == DateTime.MinValue))

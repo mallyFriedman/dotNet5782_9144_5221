@@ -59,23 +59,23 @@
                 </LinearGradientBrush>
             </Button.BorderBrush>
         </Button>
-        <ListView  Grid.Row="1" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="295,6,0,106" Grid.ColumnSpan="2"  x:Name="OrderItemsListview" SelectionChanged="OrdersListview_SelectionChanged">
+        <ListView  Grid.Row="1" ItemsSource="{Binding Path=Item4}" Margin="172,6,10,121" Grid.ColumnSpan="2"  x:Name="OrderItemsListview" SelectionChanged="OrdersListview_SelectionChanged">
             <ListView.View>
                 <GridView>
                     <GridViewColumn DisplayMemberBinding="{Binding Path=Id}" Header="Id" Width="100"/>
                     <GridViewColumn DisplayMemberBinding="{Binding Path=ProductID}" Header="ProductID" Width="100"/>
-                    <GridViewColumn DisplayMemberBinding="{Binding Path=ProductName}" Header="ProductName" Width="100"/>
+                    <!-- <GridViewColumn DisplayMemberBinding="{Binding Path=ProductName}" Header="ProductName" Width="100"/>-->
                     <GridViewColumn DisplayMemberBinding="{Binding Path=Price}" Header="Price" Width="100"/>
                     <GridViewColumn DisplayMemberBinding="{Binding Path=Amount}" Header="Amount" Width="100"/>
                     <GridViewColumn DisplayMemberBinding="{Binding Path=TotalPrice}" Header="TotalPrice" Width="100"/>
                 </GridView>
             </ListView.View>
         </ListView>
-        <Label Content="{Binding Path=Id, Mode=TwoWay}" HorizontalAlignment="Left" Margin="21,37,0,0" Grid.Row="1" VerticalAlignment="Top" RenderTransformOrigin="0.053,0.232" Height="25" Width="117" FontWeight="Bold"/>
-        <Label Content="{Binding Path=CustomerName, Mode=TwoWay}" HorizontalAlignment="Left" Margin="21,103,0,0" Grid.Row="1" VerticalAlignment="Top" Width="94" Height="30" FontWeight="Bold"/>
-        <Label Content="{Binding Path=OrderStatus, Mode=TwoWay}" HorizontalAlignment="Left" Margin="20,190,0,0" Grid.Row="1" VerticalAlignment="Top" Width="109" Height="23" FontWeight="Bold"/>
-        <Label Name="amount"  HorizontalAlignment="Left" Margin="23,259,0,0" Grid.Row="1" VerticalAlignment="Top" Width="106" Height="25" FontWeight="Bold"/>
-        <Label Content="{Binding Path=TotalPrice, Mode=TwoWay}" HorizontalAlignment="Left" Margin="23,330,0,0" Grid.Row="1" VerticalAlignment="Top" Width="106" FontWeight="Bold" Height="48"/>
+        <Label Content="{Binding Path=Item1.Id, Mode=TwoWay}" HorizontalAlignment="Left" Margin="21,37,0,0" Grid.Row="1" VerticalAlignment="Top" RenderTransformOrigin="0.053,0.232" Height="25" Width="117" FontWeight="Bold"/>
+        <Label Content="{Binding Path=Item1.CustomerName, Mode=TwoWay}" HorizontalAlignment="Left" Margin="21,103,0,0" Grid.Row="1" VerticalAlignment="Top" Width="94" Height="30" FontWeight="Bold"/>
+        <Label Content="{Binding Path=Item1.OrderStatus, Mode=TwoWay}" HorizontalAlignment="Left" Margin="20,190,0,0" Grid.Row="1" VerticalAlignment="Top" Width="109" Height="23" FontWeight="Bold"/>
+        <Label Content="{Binding Path=Item3, Mode=OneWay}" Name="amount"  HorizontalAlignment="Left" Margin="23,259,0,0" Grid.Row="1" VerticalAlignment="Top" Width="106" Height="25" FontWeight="Bold"/>
+        <Label Content="{Binding Path=Item1.TotalPrice, Mode=TwoWay}" HorizontalAlignment="Left" Margin="23,330,0,0" Grid.Row="1" VerticalAlignment="Top" Width="106" FontWeight="Bold" Height="48"/>
 
     </Grid>
 </Window>

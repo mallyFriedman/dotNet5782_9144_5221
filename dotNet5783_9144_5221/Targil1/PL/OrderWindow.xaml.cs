@@ -1,23 +1,10 @@
 ﻿using BlApi;
 using BO;
-using Microsoft.VisualBasic;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using static DO.Enums;
-using static System.Net.Mime.MediaTypeNames;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace PL
 {
@@ -34,7 +21,7 @@ namespace PL
         /// <summary>
         /// constractor of the page
         /// </summary>
-        public OrderWindow(BlApi.IBl bl, BO.Cart cart,Window window, int id = 0, bool admin = false)
+        public OrderWindow(BlApi.IBl bl, BO.Cart cart, Window window, int id = 0, bool admin = false)
         {
             try
             {
@@ -42,34 +29,34 @@ namespace PL
                 this.cart = cart;
                 this.id = id;
                 this.Bl = bl;
+                int sum = 0;
                 adminFlag = true;
-                Tuple<BO.Order, bool> dct;
+                Tuple<BO.Order, bool, int, IEnumerable<OrderItem>> dct;
                 InitializeComponent();
-                BO.Order order=new Order();
-
+                BO.Order order = new Order();
                 if (!admin)
-                {
                     adminFlag = false;
-                    dct = new Tuple<BO.Order, bool>(order, adminFlag);
-                    DataContext = dct;
-                }
                 if (id != 0)
                 {
-                    
                     order = Bl.Order.Get(id);
-                    dct = new Tuple<BO.Order, bool>(order, adminFlag);
-                    int sum = 0;
                     order?.OrderItem?.Select(ord =>
                     {
                         sum = sum + 1;
                         return ord;
                     }).ToList();
-                    amount.Content = sum;
+                    dct = new Tuple<BO.Order, bool, int, IEnumerable<OrderItem>>(order, adminFlag, sum, order?.OrderItem);
                     DataContext = dct;
-                    OrderItemsListview.ItemsSource = order?.OrderItem;
                 }
             }
             catch (BlIdNotValidException ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            catch (BlObjectNotFoundException ex) 
+            {
+                MessageBox.Show(ex.Message);
+            }
+            catch (Exception ex) 
             {
                 MessageBox.Show(ex.Message);
             }
@@ -84,7 +71,7 @@ namespace PL
             {
                 Bl?.Order.UpdateSupply(id);
                 MessageBox.Show("updated succesfuly!");
-                new ListWindow(Bl, cart,this).Show();
+                new ListWindow(Bl, cart, this).Show();
                 this.Hide();
             }
             catch (BlCannotChangeTheStatusException ex)
@@ -99,7 +86,7 @@ namespace PL
             {
                 Bl?.Order.UpdateShipping(id);
                 MessageBox.Show("updated succesfuly!");
-                new ListWindow(Bl, cart,this).Show();
+                new ListWindow(Bl, cart, this).Show();
                 this.Hide();
             }
             catch (BlCannotChangeTheStatusException ex)
@@ -115,7 +102,7 @@ namespace PL
         private void BackToHome(object sender, RoutedEventArgs e)
         {
 
-           lastWindow.Show();
+            lastWindow.Show();
             this.Hide();
         }
 

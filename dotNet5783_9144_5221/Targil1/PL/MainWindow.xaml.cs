@@ -34,7 +34,7 @@ namespace PL
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             new ListWindow(Bl, cart, this).Show();
-            this.Hide();
+            //this.Hide();
         }
 
         private void Button_Click_1(object sender, RoutedEventArgs e)

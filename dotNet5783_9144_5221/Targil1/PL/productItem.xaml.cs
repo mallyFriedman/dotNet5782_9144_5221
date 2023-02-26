@@ -1,18 +1,9 @@
-﻿using BlApi;
-using BO;
+﻿using BO;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace PL
 {
@@ -25,14 +16,16 @@ namespace PL
         private BlApi.IBl Bl;
         private BO.Cart cart = new();
         private Window lastWindow;
+        Tuple<IEnumerable<BO.ProductItem>, Array> dct;
         public productItem(BlApi.IBl bl, BO.Cart cart, Window lastWindow)
         {
             this.lastWindow= lastWindow;
             this.Bl = bl;
             this.cart = cart;
+           
+            dct = new Tuple<IEnumerable<BO.ProductItem>, Array>(Bl.Product.GetAllForManager(), Enum.GetValues(typeof(BO.Category)));
             InitializeComponent();
-            ProductsListview.ItemsSource = Bl.Product.GetAllForManager();
-            CategorySelector.ItemsSource = Enum.GetValues(typeof(BO.Category));
+            DataContext = dct;
             this.lastWindow = lastWindow;   
         }
         private void product_Click(object sender, MouseButtonEventArgs e)
@@ -43,9 +36,10 @@ namespace PL
         }
         private void SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            ProductsListview.ItemsSource = Bl.Product.GetAllForManager((BO.Category)CategorySelector.SelectedItem);
+            dct = new Tuple<IEnumerable<BO.ProductItem>, Array>(Bl.Product.GetAllForManager((BO.Category)CategorySelector.SelectedItem), Enum.GetValues(typeof(BO.Category)));
+            DataContext = dct;
 
-            
+
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)

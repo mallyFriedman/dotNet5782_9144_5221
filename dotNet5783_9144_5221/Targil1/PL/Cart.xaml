@@ -47,12 +47,15 @@
             </ListView.View>
         </ListView>
         <Button Content="confirm" HorizontalAlignment="Left" Margin="660,327,0,0" VerticalAlignment="Top" Width="120" Height="64" Click="Button_Click" Grid.ColumnSpan="3" Background="#FFB7B7B7"/>
-        <TextBox Name="CustomerName"  HorizontalAlignment="Left" Margin="535,327,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <TextBox Name="CustomerName"   HorizontalAlignment="Left" Margin="535,327,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" TextChanged="CustomerName_TextChanged"/>
         <TextBox Name="CustomerEmail" HorizontalAlignment="Left" Margin="535,350,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" RenderTransformOrigin="2.377,-0.901"/>
         <TextBox Name="CustomerAdress" HorizontalAlignment="Left" Margin="535,373,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" RenderTransformOrigin="3.69,4.561"/>
         <Button Content="back to home" HorizontalAlignment="Center" Margin="0,14,0,0" VerticalAlignment="Top" Click="Button_Click_1" Width="54" Height="126" FontSize="8" Grid.Column="2" Background="#FFAFAFAF"/>
         <Label Content="total price" HorizontalAlignment="Left" Margin="114,336,0,0" VerticalAlignment="Top"/>
         <Label Name="labb"  Content="{Binding Path=TotalPrice}" HorizontalAlignment="Left" Margin="214,336,0,0" VerticalAlignment="Top"/>
+        <Label Content="CustomerName" HorizontalAlignment="Left" Margin="441,323,0,0" VerticalAlignment="Top"/>
+        <Label Content="CustomerEmail" HorizontalAlignment="Left" Margin="443,344,0,0" VerticalAlignment="Top"/>
+        <Label Content="CustomerAdress" HorizontalAlignment="Left" Margin="442,365,0,0" VerticalAlignment="Top"/>
 
     </Grid>
 </Window>

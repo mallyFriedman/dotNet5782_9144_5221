@@ -1,5 +1,4 @@
 ﻿using BlApi;
-using BlImplementation;
 
 namespace SimulatorProject
 {
@@ -10,12 +9,20 @@ namespace SimulatorProject
         public static event EventHandler ProgressChange;
         private static bool toContinue = true;
 
+        public static void Run()
+        {
+            Thread thread = new Thread(startSimulator);
+            thread.Start();
+        }
+
+
         // השלמת עצירת ההדמיה
         public static void startSimulator()//תהליכון גולמי לביצוע ההדמיה;
         {
-            while (toContinue)
+
+            try
             {
-                try
+                while (toContinue)
                 {
                     int? orderId = Bl.Order.GetOrderToUpdate();
                     if (orderId == null)
@@ -27,36 +34,42 @@ namespace SimulatorProject
                     }
                     BO.Order order = Bl.Order.Get((int)orderId);
                     Random rand = new Random();
-                    int seconds = rand.Next(1, 4);
+                    int seconds = rand.Next(1,2);
                     Details det = new Details(order, seconds);
                     if (ProgressChange != null)
                     {
                         ProgressChange(null, det);
                         Thread.Sleep(seconds * 1000);
+                        if (order.ShipDate == DateTime.MinValue)
+                        {
+                            Bl.Order.UpdateShipping(order.Id);
+                        }
+                        else
+                            Bl.Order.UpdateSupply(order.Id);
                     }
-                    if (order.ShipDate == DateTime.MinValue)
-                    {
-                        Bl.Order.UpdateShipping(order.Id);
-                    }
-                    else
-                        Bl.Order.UpdateSupply(order.Id);
                 }
-                catch (BlObjectNotFoundException ex)
-                {
-                    Console.WriteLine(ex.Message);
-                }
-                catch (BlCannotChangeTheStatusException ex)
-                {
-                    Console.WriteLine(ex.Message);
-                }
-
+            }
+            catch (BlObjectNotFoundException ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            catch (BlCannotChangeTheStatusException ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            catch (BlNoOrderToUpdateException ex)
+            {
+                Console.WriteLine(ex.Message);
             }
 
         }
+
+
         public static void stopSimulator()//volatile עצירת ההדמיה;
         {
             toContinue = false;
-            // volatile
+            if (StopSimulator != null)
+                StopSimulator(null, EventArgs.Empty);
         }
         public static void updateSimulator()//volatile עצירת ההדמיה;
         {

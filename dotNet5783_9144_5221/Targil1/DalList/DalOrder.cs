@@ -1,10 +1,12 @@
 ﻿using DalApi;
 using DO;
+using System.Runtime.CompilerServices;
 namespace Dal;
 
 
 public class DalOrder : IOrder
 {
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public int Add(Order obj)
     {//////////
         obj.Id = DataSource.Config.OrderId;
@@ -12,6 +14,8 @@ public class DalOrder : IOrder
         return obj.Id;
     }
 
+
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public void Delete(int id)
     {
         if (id < 500000)
@@ -21,6 +25,8 @@ public class DalOrder : IOrder
         DataSource.OrderArr.Remove(DataSource.OrderArr.Find(o => o.Id == id));
 
     }
+
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public Order Get(int id)
     {
         if (id < 500000)
@@ -35,17 +41,19 @@ public class DalOrder : IOrder
         return p;
     }
 
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public IEnumerable<Order>? Get(Func<Order, bool>? foo = null)
     {
         return foo == null ? DataSource.OrderArr : DataSource.OrderArr.Where(foo).ToList();
     }
 
-
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public Order? GetSingle(Func<Order, bool>? foo)
     {
         return  DataSource.OrderArr.Where(foo).ToList()[0] ;
     }
 
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public void Update(Order obj)
     {
         int i = DataSource.OrderArr.FindIndex(o => o.Id == obj.Id);
@@ -54,6 +62,7 @@ public class DalOrder : IOrder
         DataSource.OrderArr[i] = obj;
     }
 
+    [MethodImpl(MethodImplOptions.Synchronized)]
     Order ICrud<Order>.GetSingle(Func<Order, bool>? foo)
     {
         return DataSource.OrderArr.Where(foo).FirstOrDefault();
