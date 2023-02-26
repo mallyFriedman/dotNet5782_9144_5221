@@ -20,8 +20,19 @@ namespace BlImplementation
         {
             List<DO.Product> a=new();
             if (category == null)
-                a = Dal.Product.Get().ToList();
-            else a = Dal.Product.Get(p => (BO.Category)p.Category == category).ToList();
+            {
+                lock (Dal)
+                {
+                    a = Dal.Product.Get().ToList();
+                }
+            }
+            else
+            {
+                lock (Dal)
+                {
+                    a = Dal.Product.Get(p => (BO.Category)p.Category == category).ToList();
+                }
+            }
             var ForList = from item in a
                           select new BO.ProductForList
                           {
@@ -43,8 +54,19 @@ namespace BlImplementation
             IEnumerable<DO.Product>? a;
 
             if (category == null)
-                a = Dal.Product.Get();
-            else a = Dal.Product.Get(p => (BO.Category)p.Category == category);
+            {
+                lock (Dal)
+                {
+                    a = Dal.Product.Get();
+                }
+            }
+            else
+            {
+                lock (Dal)
+                {
+                    a = Dal.Product.Get(p => (BO.Category)p.Category == category);
+                }
+            }
             var Prod = from item in a
                           select new BO.ProductItem
                           {
@@ -70,7 +92,11 @@ namespace BlImplementation
             {
                 throw new BlIdNotValidException();
             }
-            DO.Product dProduct = Dal.Product.GetSingle(prod => prod.Id == id);
+            DO.Product dProduct;
+            lock (Dal)
+            {
+                dProduct = Dal.Product.GetSingle(prod => prod.Id == id);
+            }
             if (dProduct.Equals(default(DO.Product)))
             {
                 throw new BlObjectNotFoundException();
@@ -94,7 +120,11 @@ namespace BlImplementation
             {
                 throw new BlIdNotValidException();
             }
-            DO.Product dProduct = Dal.Product.Get(id);
+            DO.Product dProduct;
+            lock (Dal)
+            {
+                dProduct = Dal.Product.Get(id);
+            }
             if (dProduct.Equals(default(DO.Product)))
             {
                 throw new BlObjectNotFoundException();
@@ -124,7 +154,10 @@ namespace BlImplementation
             dProduct.InStock = product.InStock;
             dProduct.Price = product.Price;
             dProduct.ProductName = product.ProductName;
-            Dal.Product.Add(dProduct);
+            lock (Dal)
+            {
+                Dal.Product.Add(dProduct);
+            }
         }
         /// <summary>
         /// the function deletes the product with the id it got
@@ -137,13 +170,20 @@ namespace BlImplementation
                 throw new BlIdNotValidException();
 
             }
-            List<DO.OrderItem>? orderItem = Dal?.OrderItem?.Get()?.ToList();
+            List<DO.OrderItem>? orderItem;
+            lock (Dal)
+            {
+                orderItem = Dal?.OrderItem?.Get()?.ToList();
+            }
             orderItem?.Find(o => o.Id == id);
             if (orderItem.Equals(default(DO.OrderItem)))
             {
                 throw new BlObjectNotFoundException();
             }
-            Dal.Product.Delete(id);
+            lock (Dal)
+            {
+                Dal.Product.Delete(id);
+            }
         }
         /// <summary>
         /// the function updates the product with the id it got
@@ -163,7 +203,10 @@ namespace BlImplementation
             dProduct.InStock = 9;
             dProduct.Price = product.Price;
             dProduct.ProductName = product.ProductName;
-            Dal.Product.Update(dProduct);
+            lock (Dal)
+            {
+                Dal.Product.Update(dProduct);
+            }
         }
     }
 }

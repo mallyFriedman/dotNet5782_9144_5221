@@ -19,18 +19,20 @@ namespace BlImplementation
         public IEnumerable<BO.OrderForList> GetAll()
         {
             IEnumerable<DO.Order> orders = Dal.Order.Get();
-
-            var ordersForList = from item in orders
-                                let a = Get(item.Id)
-                                select new BO.OrderForList
-                                {
-                                    Id = item.Id,
-                                    CustomerName = item.CustomerName,
-                                    OrderStatus = a.OrderStatus,
-                                    AmountProduct = a.OrderItem?.Count() ?? 0,
-                                    TotalPrice = a.TotalPrice
-                                };
-            return ordersForList;
+            lock (Dal)
+            {
+                var ordersForList = from item in orders
+                                    let a = Get(item.Id)
+                                    select new BO.OrderForList
+                                    {
+                                        Id = item.Id,
+                                        CustomerName = item.CustomerName,
+                                        OrderStatus = a.OrderStatus,
+                                        AmountProduct = a.OrderItem?.Count() ?? 0,
+                                        TotalPrice = a.TotalPrice
+                                    };
+                return ordersForList;
+            }
         }
 
         /// <summary>
@@ -43,7 +45,11 @@ namespace BlImplementation
             {
                 throw new BlIdNotValidException();
             }
-            DO.Order dOrder = Dal.Order.GetSingle(ord => ord.Id == id);
+            DO.Order dOrder;
+            lock (Dal)
+            {
+                dOrder = Dal.Order.GetSingle(ord => ord.Id == id);
+            }
             if (dOrder.Equals(default(DO.OrderItem)))
             {
                 throw new BlObjectNotFoundException();
@@ -59,8 +65,17 @@ namespace BlImplementation
                 OrderStatus = status(dOrder.DeliveryDate, DateTime.MinValue, dOrder.ShipDate),
                 ShipDate = dOrder.ShipDate
             };
-            List<BO.OrderItem> orderItem = new List<BO.OrderItem>(Dal.Product.Get()?.Count() ?? 0);
-            IEnumerable<DO.OrderItem> dOrderItem = (IEnumerable<DO.OrderItem>)Dal.OrderItem.Get(ord => ord.OrderID == bOrder.Id);
+            List<BO.OrderItem> orderItem;
+            lock (Dal)
+            {
+                orderItem = new List<BO.OrderItem>(Dal.Product.Get()?.Count() ?? 0);
+            }
+            IEnumerable<DO.OrderItem> dOrderItem;
+            lock (Dal)
+            {
+                dOrderItem = (IEnumerable<DO.OrderItem>)Dal.OrderItem.Get(ord => ord.OrderID == bOrder.Id);
+            }
+
             double sum = 0;
             bOrder.OrderItem = from item in dOrderItem
                                select new BO.OrderItem
@@ -74,7 +89,7 @@ namespace BlImplementation
             bOrder.OrderItem.Sum(item => sum += item.TotalPrice);
 
             bOrder.TotalPrice = sum;
-            return bOrder??throw new BlObjectNotFoundException();
+            return bOrder ?? throw new BlObjectNotFoundException();
         }
         /// <summary>
         /// updates the ship date to DateTime.Now
@@ -82,7 +97,12 @@ namespace BlImplementation
         [MethodImpl(MethodImplOptions.Synchronized)]
         public BO.Order UpdateSupply(int id)
         {
-            DO.Order dOrder = Dal.Order.Get(id);
+            DO.Order dOrder;
+            lock (Dal)
+            {
+                dOrder = Dal.Order.Get(id);
+            }
+
             if (dOrder.Equals(default(DO.OrderItem)))
             {
                 throw new BlObjectNotFoundException();
@@ -93,9 +113,15 @@ namespace BlImplementation
                 throw new BlCannotChangeTheStatusException();
             }
             dOrder.DeliveryDate = DateTime.Now;
-            Dal.Order.Update(dOrder);
-            BO.Order bOrder = Get(id);
-
+            lock (Dal)
+            {
+                Dal.Order.Update(dOrder);
+            }
+            BO.Order bOrder;
+            lock (Dal)
+            {
+                bOrder = Get(id);
+            }
             return bOrder;
         }
         /// <summary>
@@ -104,7 +130,11 @@ namespace BlImplementation
         [MethodImpl(MethodImplOptions.Synchronized)]
         public BO.Order UpdateShipping(int id)
         {
-            DO.Order dOrder = Dal.Order.Get(id);
+            DO.Order dOrder;
+            lock (Dal)
+            {
+                dOrder = Dal.Order.Get(id);
+            }
             if (dOrder.Equals(default(DO.OrderItem)))
             {
                 throw new BlObjectNotFoundException();
@@ -116,8 +146,15 @@ namespace BlImplementation
 
             }
             dOrder.ShipDate = DateTime.Now;
-            Dal.Order.Update(dOrder);
-            BO.Order bOrder = Get(id);
+            lock (Dal)
+            {
+                Dal.Order.Update(dOrder);
+            }
+            BO.Order bOrder;
+            lock (Dal)
+            {
+                bOrder = Get(id);
+            }
             //  UpdateTrack(1, id);
             return bOrder;
         }
@@ -140,7 +177,11 @@ namespace BlImplementation
         [MethodImpl(MethodImplOptions.Synchronized)]
         public OrderTracking GetOrderTracking(int id)
         {
-                BO.Order? order = Get(id);
+            BO.Order? order;
+            lock (Dal)
+            {
+                order = Get(id);
+            }
             if (order.Id == 0)
             {
                 throw new BlObjectNotFoundException();
@@ -151,13 +192,22 @@ namespace BlImplementation
             orderTracking.StatusList = new();
             if (!((DateTime)order?.OrderDate == DateTime.MinValue))
             {
-                orderTracking?.StatusList?.Add(new Tuple<DateTime, BO.eOrderStatus>((DateTime)order.OrderDate, (BO.eOrderStatus)0));
+                lock (Dal)
+                {
+                    orderTracking?.StatusList?.Add(new Tuple<DateTime, BO.eOrderStatus>((DateTime)order.OrderDate, (BO.eOrderStatus)0));
+                }
                 if (!((DateTime)order.ShipDate == DateTime.MinValue))
                 {
-                    orderTracking?.StatusList?.Add(new Tuple<DateTime, BO.eOrderStatus>((DateTime)order.ShipDate, (BO.eOrderStatus)1));
+                    lock (Dal)
+                    {
+                        orderTracking?.StatusList?.Add(new Tuple<DateTime, BO.eOrderStatus>((DateTime)order.ShipDate, (BO.eOrderStatus)1));
+                    }
                     if (!((DateTime)order.DeliveryDate == DateTime.MinValue))
                     {
-                        orderTracking?.StatusList?.Add(new Tuple<DateTime, BO.eOrderStatus>((DateTime)order.DeliveryDate, (BO.eOrderStatus)2));
+                        lock (Dal)
+                        {
+                            orderTracking?.StatusList?.Add(new Tuple<DateTime, BO.eOrderStatus>((DateTime)order.DeliveryDate, (BO.eOrderStatus)2));
+                        }
                     }
                 }
             }
@@ -166,8 +216,16 @@ namespace BlImplementation
 
         public int? GetOrderToUpdate()
         {
-            IEnumerable<DO.Order>? ordered = Dal?.Order.Get(order => order.ShipDate == DateTime.MinValue);
-            IEnumerable<DO.Order>? shiped = Dal?.Order.Get(order => order.DeliveryDate == DateTime.MinValue);
+            IEnumerable<DO.Order>? ordered;
+            lock (Dal)
+            {
+                ordered = Dal?.Order.Get(order => order.ShipDate == DateTime.MinValue);
+            }
+            IEnumerable<DO.Order>? shiped;
+            lock (Dal)
+            {
+                shiped = Dal?.Order.Get(order => order.DeliveryDate == DateTime.MinValue);
+            }
             DateTime? minOrdered = ordered?.Min(x => x.OrderDate);
             DateTime? minShiped = shiped?.Min(x => x.ShipDate);
             int idMinOrdered = (from order in ordered
@@ -181,7 +239,7 @@ namespace BlImplementation
             if (minShiped < minOrdered || (minOrdered == default && minShiped != default))
                 return idMinShiped;
             else
-                throw new BlNoOrderToUpdateException();
+                return null;
         }
     }
 }

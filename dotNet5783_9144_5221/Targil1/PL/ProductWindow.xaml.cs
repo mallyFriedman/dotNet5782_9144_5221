@@ -21,15 +21,15 @@ namespace PL
         private bool libby { get; set; }
         private bool flagProductForList { get; set; }
         private bool flagAdd { get; set; }
-        Tuple<BO.Product, bool,bool,bool,Array> dct;
-        Tuple<BO.ProductItem, bool,bool,bool,Array> dct1;
+        Tuple<BO.Product, bool, bool, bool, Array> dct;
+        Tuple<BO.ProductItem, bool, bool, bool, Array> dct1;
 
         /// <summary>
         /// constractor of the page
         /// </summary>
-        public ProductWindow(BlApi.IBl bl, BO.Cart cart,Window lWindow, ProductForList? p = null, ProductItem? q = null)
+        public ProductWindow(BlApi.IBl bl, BO.Cart cart, Window lWindow, ProductForList? p = null, ProductItem? q = null)
         {
-            lastWindow=lWindow;
+            lastWindow = lWindow;
             libby = false;
             flagProductForList = false;
             flagAdd = false;
@@ -38,16 +38,13 @@ namespace PL
             this.q = q;
             this.cart = cart;
             InitializeComponent();
-          //  CategorySelector.ItemsSource = Enum.GetValues(typeof(BO.Category));
-
-            //
             if (p != null)
             {
                 BO.Product a = Bl.Product.GetManager(p.Id);
                 this.flagProductForList = true;
                 flagAdd = false;
                 libby = false;
-        dct = new Tuple<Product, bool,bool,bool,Array>(a, flagProductForList, flagAdd,libby, Enum.GetValues(typeof(BO.Category)));
+                dct = new Tuple<Product, bool, bool, bool, Array>(a, flagProductForList, flagAdd, libby, Enum.GetValues(typeof(BO.Category)));
                 DataContext = dct;
                 CategorySelector.SelectedItem = p.Category;
             }
@@ -57,7 +54,7 @@ namespace PL
                 flagProductForList = false;
                 flagAdd = false;
                 libby = true;
-                dct1 = new Tuple<ProductItem, bool, bool, bool, Array>(q, flagProductForList, flagAdd, libby,  Enum.GetValues(typeof(BO.Category)));
+                dct1 = new Tuple<ProductItem, bool, bool, bool, Array>(q, flagProductForList, flagAdd, libby, Enum.GetValues(typeof(BO.Category)));
                 DataContext = dct1;
             }
             else
@@ -65,7 +62,7 @@ namespace PL
                 this.flagProductForList = false;
                 flagAdd = true;
                 libby = false;
-                dct1 = new Tuple<ProductItem, bool, bool, bool,Array>(q, flagProductForList, flagAdd, libby, Enum.GetValues(typeof(BO.Category)));
+                dct1 = new Tuple<ProductItem, bool, bool, bool, Array>(q, flagProductForList, flagAdd, libby, Enum.GetValues(typeof(BO.Category)));
                 DataContext = dct1;
             }
         }
@@ -85,7 +82,7 @@ namespace PL
                 p.Category = (BO.Category)CategorySelector.SelectedItem;
                 Bl.Product.Update(p);
                 MessageBox.Show("updated succesfuly!");
-                new ListWindow(Bl, cart, this   ).Show();
+                new ListWindow(Bl, cart, this).Show();
                 this.Hide();
             }
             catch (BlObjectNotValidException ex)
@@ -130,14 +127,14 @@ namespace PL
             {
                 BO.Product p = new();
                 p.ProductName = ProductName.Text;
-                if(Price.Text==""|| InStock.Text=="")
+                if (Price.Text == "" || InStock.Text == "")
                 {
                     throw new NullValueException();
                 }
                 else
                 {
-                    p.Price = float.Parse(Price.Text  );
-                    p.InStock = int.Parse(InStock.Text );
+                    p.Price = float.Parse(Price.Text);
+                    p.InStock = int.Parse(InStock.Text);
                 }
                 p.Id = 0;
                 p.Category = (BO.Category)CategorySelector.SelectedItem;
@@ -170,7 +167,6 @@ namespace PL
         /// </summary>
         private void BackToHome(object sender, RoutedEventArgs e)
         {
-
             lastWindow.Show();
             this.Close();
         }
@@ -182,7 +178,7 @@ namespace PL
             {
                 this.cart = Bl.Cart.Add(cart, q.Id);
                 MessageBox.Show("add successfully");
-                new productItem(Bl, cart,this).Show();
+                new productItem(Bl, cart, this).Show();
                 this.Hide();
             }
             catch (BlOutOfStockException ex)

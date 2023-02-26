@@ -19,7 +19,6 @@ namespace PL
     {
         private Stopwatch stopWatch;
         private bool isTimerRun;
-        // BackgroundWorker timerworker;
         BackgroundWorker Worker;
         Tuple<BO.Order, int, eOrderStatus> dcT;
         int seconds = 3;
@@ -51,11 +50,12 @@ namespace PL
 
         private void Worker_DoWork(object? sender, DoWorkEventArgs e)
         {
-            SimulatorProject.Simulator.Run();
+           
             SimulatorProject.Simulator.ProgressChange += changeOrder;
             Simulator.StopSimulator += Stop;
             try
             {
+                SimulatorProject.Simulator.Run();
                 while (Worker.WorkerSupportsCancellation)
                 {
                     Worker.ReportProgress(1);
@@ -85,7 +85,7 @@ namespace PL
                 SimulatorProject.Simulator.ProgressChange -= changeOrder;
                 Simulator.StopSimulator -= Stop;
                 Simulator.stopSimulator();
-                stopWatch.Stop();////
+                stopWatch.Stop();
             }
         }
 
@@ -119,19 +119,19 @@ namespace PL
 
         void ProgressBarStart(int sec)
         {
-            if (ProgressBar != null)
-            {
-                progressBar.Items.Remove(ProgressBar);
-            }
-            ProgressBar = new ProgressBar();
-            ProgressBar.IsIndeterminate = false;
-            ProgressBar.Orientation = Orientation.Horizontal;
-            ProgressBar.Width = 500;
-            ProgressBar.Height = 30;
-            duration = new Duration(TimeSpan.FromSeconds(sec * 2));
-            doubleanimation = new DoubleAnimation(200.0, duration);
-            ProgressBar.BeginAnimation(ProgressBar.ValueProperty, doubleanimation);
-            progressBar.Items.Add(ProgressBar);
+                if (ProgressBar != null)
+                {
+                    progressBar.Items.Remove(ProgressBar);
+                }
+                ProgressBar = new ProgressBar();
+                ProgressBar.IsIndeterminate = false;
+                ProgressBar.Orientation = Orientation.Horizontal;
+                ProgressBar.Width = 500;
+                ProgressBar.Height = 30;
+                duration = new Duration(TimeSpan.FromSeconds(sec * 2));
+                doubleanimation = new DoubleAnimation(200.0, duration);
+                ProgressBar.BeginAnimation(ProgressBar.ValueProperty, doubleanimation);
+                progressBar.Items.Add(ProgressBar);
         }
 
         private void Stop(object sender, EventArgs e)
@@ -142,12 +142,13 @@ namespace PL
             }
             else
             {
-                if (Worker.WorkerSupportsCancellation == true)/////
-                    Worker.CancelAsync();//////
-               // this.Close();
+                if (Worker.WorkerSupportsCancellation == true)
+                    Worker.CancelAsync();
+                 MessageBox.Show("updating has completed");
+                stopWatch.Stop();
+                 this.Close();
             }
         }
-
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
@@ -156,13 +157,7 @@ namespace PL
                 isTimerRun = false;
                 SimulatorProject.Simulator.stopSimulator();
                 stopWatch.Stop();
-              //  progressBar.
-                //   this.Close();
             }
-
-
         }
-
     }
-
 }

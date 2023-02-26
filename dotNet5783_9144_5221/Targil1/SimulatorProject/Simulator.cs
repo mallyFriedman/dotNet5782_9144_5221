@@ -5,14 +5,15 @@ namespace SimulatorProject
     public static class Simulator
     {
         private static BlApi.IBl Bl = BlApi.Factory.Get();
-        public static event EventHandler StopSimulator;
-        public static event EventHandler ProgressChange;
+        public static event EventHandler? StopSimulator;
+        public static event EventHandler? ProgressChange;
         private static bool toContinue = true;
 
         public static void Run()
         {
-            Thread thread = new Thread(startSimulator);
-            thread.Start();
+                Thread thread = new Thread(startSimulator);
+                thread.Start();
+           
         }
 
 
@@ -31,10 +32,11 @@ namespace SimulatorProject
                         {
                             StopSimulator(null, EventArgs.Empty);
                         }
+                        break;
                     }
                     BO.Order order = Bl.Order.Get((int)orderId);
                     Random rand = new Random();
-                    int seconds = rand.Next(1,2);
+                    int seconds = rand.Next(1,6);
                     Details det = new Details(order, seconds);
                     if (ProgressChange != null)
                     {
@@ -60,8 +62,8 @@ namespace SimulatorProject
             catch (BlNoOrderToUpdateException ex)
             {
                 Console.WriteLine(ex.Message);
-            }
 
+            }
         }
 
 
@@ -70,10 +72,6 @@ namespace SimulatorProject
             toContinue = false;
             if (StopSimulator != null)
                 StopSimulator(null, EventArgs.Empty);
-        }
-        public static void updateSimulator()//volatile עצירת ההדמיה;
-        {
-
         }
     }
 

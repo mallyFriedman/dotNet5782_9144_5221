@@ -18,7 +18,11 @@ namespace BlImplementation
         [MethodImpl(MethodImplOptions.Synchronized)]
         public Cart Add(BO.Cart cart, int id)
         {
-            DO.Product product = Dal.Product.Get(id);
+            DO.Product product;
+            lock (Dal)
+            {
+                product = Dal.Product.Get(id);
+            }
             if (product.Equals(default(DO.Product)))
             {
                 throw new BlObjectNotFoundException();
@@ -43,7 +47,11 @@ namespace BlImplementation
             }
             if (item.ProductID == 0)
             {
-                DO.Product dProduct = Dal.Product.Get(id);
+                DO.Product dProduct;
+                lock (Dal)
+                {
+                    dProduct = Dal.Product.Get(id);
+                }
                 cart.Items.Add(new BO.OrderItem
                 {
                     Id = 0,
@@ -85,7 +93,11 @@ namespace BlImplementation
             if (item.Amount < newAmount)
             {
                 int amount = newAmount - item.Amount;
-                DO.Product product = Dal.Product.Get(id);
+                DO.Product product;
+                lock (Dal)
+                {
+                    product = Dal.Product.Get(id);
+                }
                 if (product.Equals(default(DO.OrderItem)))
                 {
                     throw new BlObjectNotFoundException();
@@ -131,7 +143,11 @@ namespace BlImplementation
             //////////////////////
             cart.Items?.Select(item =>
             {
-                DO.Product product = Dal.Product.Get(item.ProductID);
+                DO.Product product;
+                lock (Dal)
+                {
+                    product = Dal.Product.Get(item.ProductID);
+                }
                 if (product.Equals(default(DO.Product))) throw new BlObjectNotFoundException();
 
                 if (product.InStock < 0  || product.InStock - item.Amount < 0)

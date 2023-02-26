@@ -8,11 +8,11 @@
         Title="Cart_" Height="450" Width="801">
     <Grid Background="Gainsboro">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="707*"/>
-            <ColumnDefinition Width="18*"/>
-            <ColumnDefinition Width="76*"/>
+            <ColumnDefinition Width="478*"/>
+            <ColumnDefinition Width="287*"/>
+            <ColumnDefinition Width="36*"/>
         </Grid.ColumnDefinitions>
-        <ListView ItemsSource="{Binding}" x:Name="ProductsItemListview" Background="#FFB5B5B5" Foreground="#FF041F65" Margin="10,14,0,127" SelectionChanged="ProductsItemListview_SelectionChanged_1" Grid.ColumnSpan="2" >
+        <ListView ItemsSource="{Binding}" x:Name="ProductsItemListview" Background="#FFB5B5B5" Foreground="#FF041F65" Margin="10,14,228,118" SelectionChanged="ProductsItemListview_SelectionChanged_1" Grid.ColumnSpan="2" >
             <ListView.View >
                 <GridView AllowsColumnReorder="true" ColumnHeaderToolTip="Employee Information" >
                     <GridViewColumn DisplayMemberBinding="{Binding ProductName}" Header="ProductName" Width="100"/>
@@ -46,16 +46,16 @@
                 </GridView>
             </ListView.View>
         </ListView>
-        <Button Content="confirm" HorizontalAlignment="Left" Margin="660,327,0,0" VerticalAlignment="Top" Width="120" Height="64" Click="Button_Click" Grid.ColumnSpan="3" Background="#FFB7B7B7"/>
-        <TextBox Name="CustomerName"   HorizontalAlignment="Left" Margin="535,327,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" TextChanged="CustomerName_TextChanged"/>
-        <TextBox Name="CustomerEmail" HorizontalAlignment="Left" Margin="535,350,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" RenderTransformOrigin="2.377,-0.901"/>
-        <TextBox Name="CustomerAdress" HorizontalAlignment="Left" Margin="535,373,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" RenderTransformOrigin="3.69,4.561"/>
-        <Button Content="back to home" HorizontalAlignment="Center" Margin="0,14,0,0" VerticalAlignment="Top" Click="Button_Click_1" Width="54" Height="126" FontSize="8" Grid.Column="2" Background="#FFAFAFAF"/>
-        <Label Content="total price" HorizontalAlignment="Left" Margin="114,336,0,0" VerticalAlignment="Top"/>
-        <Label Name="labb"  Content="{Binding Path=TotalPrice}" HorizontalAlignment="Left" Margin="214,336,0,0" VerticalAlignment="Top"/>
-        <Label Content="CustomerName" HorizontalAlignment="Left" Margin="441,323,0,0" VerticalAlignment="Top"/>
-        <Label Content="CustomerEmail" HorizontalAlignment="Left" Margin="443,344,0,0" VerticalAlignment="Top"/>
-        <Label Content="CustomerAdress" HorizontalAlignment="Left" Margin="442,365,0,0" VerticalAlignment="Top"/>
+        <Button Content="confirm" HorizontalAlignment="Left" Margin="168,327,0,0" VerticalAlignment="Top" Width="84" Height="64" Click="Button_Click" Background="#FF848484" FontWeight="Bold" FontSize="16" Foreground="White" Grid.Column="1"/>
+        <TextBox Name="CustomerName"   HorizontalAlignment="Left" Margin="33,327,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" TextChanged="CustomerName_TextChanged" Grid.Column="1" Height="18"/>
+        <TextBox Name="CustomerEmail" HorizontalAlignment="Left" Margin="33,350,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" RenderTransformOrigin="2.377,-0.901" Grid.Column="1" Height="18"/>
+        <TextBox Name="CustomerAdress" HorizontalAlignment="Left" Margin="33,373,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" RenderTransformOrigin="3.69,4.561" Grid.Column="1" Height="18"/>
+        <Button Content="back to home 🏚" HorizontalAlignment="Left" Margin="76,259,0,0" VerticalAlignment="Top" Click="Button_Click_1" Width="176" Height="59" FontSize="22" Background="#FF888888" Foreground="White" FontFamily="Share-RegularOSF" FontWeight="Bold" Grid.Column="1"/>
+        <Label Content="total price" HorizontalAlignment="Left" Margin="99,138,0,0" VerticalAlignment="Top" FontWeight="Bold" FontSize="14" Height="29" Width="77" Grid.Column="1"/>
+        <Label Name="labb"  Content="{Binding Path=TotalPrice}" HorizontalAlignment="Left" Margin="185,139,0,0" VerticalAlignment="Top" FontWeight="Bold" FontSize="16" Height="44" Width="67" Grid.Column="1"/>
+        <Label Content="CustomerName" HorizontalAlignment="Left" Margin="382,321,0,0" VerticalAlignment="Top" FontWeight="Bold" FontSize="14" Grid.ColumnSpan="2" Height="29" Width="112"/>
+        <Label Content="CustomerEmail" HorizontalAlignment="Left" Margin="383,342,0,0" VerticalAlignment="Top" FontWeight="Bold" FontSize="14" Grid.ColumnSpan="2" Height="29" Width="109"/>
+        <Label Content="CustomerAdress" HorizontalAlignment="Left" Margin="381,364,0,0" VerticalAlignment="Top" FontWeight="Bold" FontSize="14" Grid.ColumnSpan="2" Height="29" Width="116"/>
 
     </Grid>
 </Window>
